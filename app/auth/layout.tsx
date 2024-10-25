@@ -15,7 +15,7 @@ const AuthLayout: FC<Props> = ({ children }) => {
               <Logo />
             </div>
 
-            <div className="w-[min(570px,_100%)] py-28">{children}</div>
+            <main className="w-[min(570px,_100%)] py-28">{children}</main>
           </div>
         </div>
       </Suspense>

@@ -14,6 +14,7 @@ const Logo = React.forwardRef<LogoRefTypes, LogoPropTypes>(
           href={'/'}
           className={cn('text-2xl font-semibold', className)}
           {...props}
+          ref={ref}
         >
           <span>
             Tech<span className="text-primary">Bazaar</span>
