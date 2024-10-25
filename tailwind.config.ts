@@ -19,7 +19,11 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      // padding: '2rem',
+      padding: {
+        DEFAULT: '1rem',
+        md: '2rem',
+      },
       screens: {
         '2xl': '1400px',
       },
@@ -76,7 +80,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
+        // sans: ['var(--font-sans)', ...fontFamily.sans],
+        SFProDisplay: ['var(--font-SFProDisplay)'],
       },
       keyframes: {
         'accordion-down': {
