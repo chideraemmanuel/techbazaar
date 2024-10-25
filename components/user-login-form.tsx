@@ -68,7 +68,7 @@ const UserLoginForm: FC<Props> = () => {
             error={errors.password?.message}
             disabled={isLoggingUserIn}
             addForgotPassword
-            passwordResetInitiationHref="/auth/reset-password/initiate"
+            passwordResetInitiationHref="/auth/reset-password/request"
           />
         </div>
 
