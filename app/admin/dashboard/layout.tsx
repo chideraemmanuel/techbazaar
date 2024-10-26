@@ -11,7 +11,7 @@ const AdminDashboardLayout: FC<Props> = ({ children }) => {
     <>
       <AdminDashboardSidebar />
       <AdminDashboardHeader />
-      <main className="xl:ml-[min(270px,_30vw)] min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] bg-secondary">
+      <main className="xl:ml-[min(270px,_30vw)] min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] bg-background">
         {children}
       </main>
     </>

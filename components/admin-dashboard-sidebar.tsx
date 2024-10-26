@@ -16,7 +16,7 @@ const AdminDashboardSidebar: FC<Props> = () => {
           <Logo />
         </div>
 
-        <aside>
+        <aside className="bg-secondary/30 h-full">
           <nav>
             {ADMIN_DASHBAORD_SIDEBAR_LINKS.map((sidebar_link, index) => (
               <div className="p-4" key={index}>

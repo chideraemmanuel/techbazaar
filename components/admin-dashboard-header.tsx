@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Logo from './logo';
 import AdminDashboardMobileNavigation from './admin-dashboard-mobile-navigation';
 import AdminDashboardHeaderUserDropdown from './admin-dashboard-header-account-dropdown';
+import ThemeSwitcher from './theme-switcher';
 
 interface Props {}
 
@@ -18,7 +19,9 @@ const AdminDashboardHeader: FC<Props> = () => {
             <Logo />
           </div>
 
-          <div className="xl:ml-auto">
+          <div className="xl:ml-auto flex flex-row lg:flex-row-reverse items-center gap-2 md:gap-3">
+            <ThemeSwitcher />
+
             <AdminDashboardHeaderUserDropdown />
           </div>
         </div>

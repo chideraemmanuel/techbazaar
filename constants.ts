@@ -1,4 +1,11 @@
-import { ChartArea, LineChart } from 'lucide-react';
+import {
+  ChartArea,
+  LineChart,
+  ShoppingBagIcon,
+  ShoppingCart,
+  Users,
+  Users2,
+} from 'lucide-react';
 
 export const NAME_REGEX = /^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/;
 
@@ -18,6 +25,21 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
         title: 'overview',
         href: '/admin/dashboard',
         icon: LineChart,
+      },
+      {
+        title: 'products',
+        href: '/admin/dashboard/products',
+        icon: ShoppingBagIcon,
+      },
+      {
+        title: 'orders',
+        href: '/admin/dashboard/orders',
+        icon: ShoppingCart,
+      },
+      {
+        title: 'users',
+        href: '/admin/dashboard/users',
+        icon: Users,
       },
     ],
   },

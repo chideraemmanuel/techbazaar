@@ -1,8 +1,16 @@
 'use client';
 
 import TailwindIndicator from '@/components/tailwind-indicator';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import dynamic from 'next/dynamic';
 import { FC } from 'react';
+
+const ThemeProvider = dynamic(
+  () =>
+    import('@/providers/theme-provider').then((module) => module.ThemeProvider),
+  {
+    ssr: false,
+  }
+);
 
 interface Props {
   children: React.ReactNode;
@@ -11,8 +19,10 @@ interface Props {
 const Providers: FC<Props> = ({ children }) => {
   return (
     <>
-      <TailwindIndicator />
-      {children}
+      <ThemeProvider defaultTheme="dark">
+        <TailwindIndicator />
+        {children}
+      </ThemeProvider>
     </>
   );
 };

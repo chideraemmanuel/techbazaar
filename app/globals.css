@@ -109,6 +109,11 @@ body {
   }
 }
 
+.popover-content-width-same-as-its-trigger {
+  width: var(--radix-popover-trigger-width);
+  max-height: var(--radix-popover-content-available-height);
+}
+
 /* @layer base {
   :root {
     --chart-1: 12 76% 61%;
