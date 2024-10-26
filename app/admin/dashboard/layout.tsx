@@ -1,6 +1,11 @@
 import AdminDashboardHeader from '@/components/admin-dashboard-header';
 import AdminDashboardSidebar from '@/components/admin-dashboard-sidebar';
+import { Metadata } from 'next';
 import { FC } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Dashboard Overview',
+};
 
 interface Props {
   children: React.ReactNode;

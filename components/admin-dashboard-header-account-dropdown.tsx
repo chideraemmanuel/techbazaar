@@ -73,7 +73,7 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
 
             <DropdownMenuItem
               asChild
-              className="text-[#EB5757] focus:text-[#EB5757] focus:bg-[rgba(235,_87,_87,_0.3)]"
+              className="text-destructive focus:text-destructive focus:bg-destructive/10"
             >
               <button
                 className="flex items-center gap-2 p-4 rounded-[8px]"
