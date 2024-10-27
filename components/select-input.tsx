@@ -82,8 +82,9 @@ const SelectInput = React.forwardRef<SelectInputRef, SelectInputProps>(
           <SelectTrigger
             {...selectInputTriggerProps}
             className={cn(
-              '',
+              'mt-1',
               !selectInputValue && 'text-muted-foreground',
+              selectInputValue && 'capitalize',
               error && 'border-destructive',
               icon && 'space-x-1',
               selectInputTriggerProps?.className

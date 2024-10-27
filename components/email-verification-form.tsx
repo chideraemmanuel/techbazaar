@@ -32,7 +32,7 @@ const EmailVerificationForm: FC<Props> = ({ email }) => {
       </div>
 
       <Button
-        className="w-full h-12"
+        className="w-full"
         disabled={isVerifyingEmail || OTP.length < 6}
         // onClick={() => verifyEmail({ email: email, OTP: OTP })}
       >

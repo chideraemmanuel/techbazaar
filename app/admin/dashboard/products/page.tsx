@@ -1,7 +1,10 @@
+import AdminDashboardProductsFilter from '@/components/admin-dashboard-products-filter';
+import AdminDashboardProductsSort from '@/components/admin-dashboard-products-sort';
 import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
 import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
+import NewProductDialog from '@/components/new-product-dialog';
 import ResourceSearch from '@/components/resource-search';
 import SelectInput from '@/components/select-input';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -66,26 +69,21 @@ const ProductsTable: FC = () => {
     <>
       <div className="rounded-2xl shadow border border-border overflow-hidden">
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 bg-background p-5">
-          <ResourceSearch
-            placeholder="Search products..."
-            className="shadow-sm text-base dark:bg-secondary/50"
-          />
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 pointer-events-none" />
+
+            <ResourceSearch
+              placeholder="Search products..."
+              className="shadow-sm text-base dark:bg-secondary/50 pl-10"
+            />
+          </div>
 
           <div className="space-x-2">
-            <Button size={'sm'} variant={'outline'}>
-              <RiFilter3Line />
-              <span className="md:inline-block hidden">Filter</span>
-            </Button>
+            <AdminDashboardProductsFilter />
 
-            <Button size={'sm'} variant={'outline'}>
-              <RiSortDesc />
-              <span className="md:inline-block hidden">Sort</span>
-            </Button>
+            <AdminDashboardProductsSort />
 
-            <Button size={'sm'}>
-              <Plus />
-              Add new product
-            </Button>
+            <NewProductDialog />
           </div>
         </div>
 
@@ -136,7 +134,7 @@ const ProductsTable: FC = () => {
                   <TableCell className="capitalize">
                     {PRODUCT_CATEGORIES.find(
                       (category) => category.value === product.category
-                    )?.title || '-'}
+                    )?.name || '-'}
                   </TableCell>
 
                   <TableCell>

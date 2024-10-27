@@ -50,7 +50,7 @@ const PasswordResetRequestForm: FC<Props> = () => {
           />
         </div>
 
-        <Button className="w-full h-12" disabled={isRequestingPasswordReset}>
+        <Button className="w-full" disabled={isRequestingPasswordReset}>
           {isRequestingPasswordReset && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}

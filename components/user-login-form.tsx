@@ -73,7 +73,7 @@ const UserLoginForm: FC<Props> = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <Button className="w-full h-12" disabled={isLoggingUserIn}>
+          <Button className="w-full" disabled={isLoggingUserIn}>
             {isLoggingUserIn && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}

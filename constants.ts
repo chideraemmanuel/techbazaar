@@ -47,31 +47,38 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
 
 export const PRODUCT_CATEGORIES = [
   {
-    title: 'smartphones',
+    id: 'smartphones',
+    name: 'smartphones',
     value: 'smartphones',
   },
   {
-    title: 'tablets',
+    id: 'tablets',
+    name: 'tablets',
     value: 'tablets',
   },
   {
-    title: 'laptops',
+    id: 'laptops',
+    name: 'laptops',
     value: 'laptops',
   },
   {
-    title: 'headphones',
+    id: 'headphones',
+    name: 'headphones',
     value: 'headphones',
   },
   {
-    title: 'speakers',
+    id: 'speakers',
+    name: 'speakers',
     value: 'speakers',
   },
   {
-    title: 'smartwatches',
+    id: 'smartwatches',
+    name: 'smartwatches',
     value: 'smartwatches',
   },
   {
-    title: 'gaming consoles',
+    id: 'gaming-consoles',
+    name: 'gaming consoles',
     value: 'gaming-consoles',
   },
 ];
