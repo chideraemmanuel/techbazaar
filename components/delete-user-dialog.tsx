@@ -1,9 +1,8 @@
 'use client';
 
-import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
+import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -16,15 +15,15 @@ import { Button } from './ui/button';
 import { Loader2, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
-type DeleteProductDialogTriggerProps = ComponentPropsWithoutRef<
+type DeleteUserDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
 >;
 
-type DeleteProductDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
+type DeleteUserDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
-const DeleteProductDialog = React.forwardRef<
-  DeleteProductDialogTriggerRef,
-  DeleteProductDialogTriggerProps
+const DeleteUserDialog = React.forwardRef<
+  DeleteUserDialogTriggerRef,
+  DeleteUserDialogTriggerProps
 >(({ className, ...props }, ref) => {
   return (
     <>
@@ -37,20 +36,20 @@ const DeleteProductDialog = React.forwardRef<
               'w-9 h-9 text-destructive hover:text-destructive hover:bg-destructive/10',
               className
             )}
-            title="Delete product"
+            title="Delete user"
             {...props}
           >
             <Trash2 />
-            <span className="sr-only">Delete product</span>
+            <span className="sr-only">Delete user</span>
           </Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete product</AlertDialogTitle>
+            <AlertDialogTitle>Delete user</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this product? This product will no
-              longer be available to consumers except when restored later.
+              Are you sure you want to delete this user? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -59,7 +58,7 @@ const DeleteProductDialog = React.forwardRef<
 
             <Button variant={'destructive'}>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Delete product
+              Delete user
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -68,4 +67,4 @@ const DeleteProductDialog = React.forwardRef<
   );
 });
 
-export default DeleteProductDialog;
+export default DeleteUserDialog;

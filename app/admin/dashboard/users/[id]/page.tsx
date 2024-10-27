@@ -1,0 +1,107 @@
+import DeleteUserDialog from '@/components/delete-user-dialog';
+import EditUserRoleDialog from '@/components/edit-user-role-dialog';
+import {
+  DisableUserDialog,
+  EnableUserDialog,
+} from '@/components/enable-disable-user-dialogs';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { DUMMY_USERS } from '@/dummy';
+import { CopyIcon, UserX } from 'lucide-react';
+import { notFound } from 'next/navigation';
+import { FC } from 'react';
+
+interface Props {}
+
+const AdminDashboardUserDetailsPage: FC<Props> = () => {
+  const user = DUMMY_USERS[0];
+
+  if (!user) notFound();
+
+  return (
+    <>
+      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+        <div className="sticky top-16 md:top-20 z-[1] p-5 border-b bg-background">
+          <div>
+            <span className="text-xs font-semibold text-muted-foreground">
+              Breadcrumbs here!
+            </span>
+
+            <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
+              User details
+            </h1>
+
+            {/* <span className="text-foreground/90 text-base font-medium">
+              {user.first_name}'s details
+            </span> */}
+          </div>
+        </div>
+
+        <div className="flex-1 p-5 space-y-7">
+          <div className="bg-background rounded-2xl px-5 py-4">
+            <div className="pb-4">
+              <h2 className="pb-2 text-foreground font-bold text-2xl">
+                {user.first_name} {user.last_name}
+              </h2>
+
+              <p className="flex items-center text-muted-foreground/80 text-sm font-medium">
+                User ID:{' '}
+                <span className="inline-block ml-2 text-muted-foreground">
+                  #{user._id}
+                </span>{' '}
+                {/* MAKE COPYTEXT COMPONENT */}
+                <button className="ml-2">
+                  <CopyIcon className="w-4 h-4" />
+                </button>
+              </p>
+            </div>
+
+            <Separator />
+
+            <div className="pt-4 pb-6 flex flex-col gap-3">
+              <UserDetail label="Email Address" value={user.email} />
+              <UserDetail
+                label="Email Verified"
+                value={`${user.email_verified}`}
+              />
+              <UserDetail label="Authentication Type" value={user.auth_type} />
+              <UserDetail label="Role" value={user.role.toUpperCase()} />
+              <UserDetail label="Disabled" value={`${user.disabled}`} />
+              <UserDetail label="Joined" value={`${user.createdAt}`} />
+            </div>
+
+            <Separator />
+
+            <div className="pt-4">
+              <span className="inline-block pb-3 text-muted-foreground font-Ci%]">
+                Actions:
+              </span>
+
+              <div className="flex justify-start items-center gap-5">
+                <EditUserRoleDialog />
+
+                {user.disabled ? <EnableUserDialog /> : <DisableUserDialog />}
+
+                <DeleteUserDialog />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AdminDashboardUserDetailsPage;
+
+const UserDetail: FC<{ label: string; value: string }> = ({ label, value }) => {
+  return (
+    <>
+      <div className="flex gap-2">
+        <span className="text-muted-foreground text-sm">{label}:</span>
+
+        <span className="text-foreground font-medium text-sm">{value}</span>
+      </div>
+    </>
+  );
+};

@@ -36,12 +36,14 @@ const EditProductDialog = React.forwardRef<
       <Sheet>
         <SheetTrigger asChild ref={ref}>
           <Button
-            {...props}
             size={'icon'}
             variant={'ghost'}
             className={cn('w-9 h-9 text-muted-foreground', className)}
+            title="Edit product"
+            {...props}
           >
             <Pencil />
+            <span className="sr-only">Edit product</span>
           </Button>
         </SheetTrigger>
 

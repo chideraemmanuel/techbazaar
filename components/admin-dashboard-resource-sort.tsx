@@ -8,9 +8,17 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
 import SelectInput from './select-input';
 
-interface Props {}
+interface SortSelectInputItem {
+  id: string;
+  name: string;
+  value: string;
+}
 
-const AdminDashboardProductsSort: FC<Props> = () => {
+interface Props {
+  sort_items: SortSelectInputItem[];
+}
+
+const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
   return (
     <>
       <Popover>
@@ -28,7 +36,7 @@ const AdminDashboardProductsSort: FC<Props> = () => {
                 placeholder="Select"
                 selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                 selectInputItemProps={{ className: 'capitalize' }}
-                selectInputItems={[]}
+                selectInputItems={sort_items}
                 onItemSelect={(value) => {}}
               />
             </SortSection>
@@ -61,7 +69,7 @@ const AdminDashboardProductsSort: FC<Props> = () => {
   );
 };
 
-export default AdminDashboardProductsSort;
+export default AdminDashboardResourceSort;
 
 const SortSection: FC<{ children: React.ReactNode; label: string }> = ({
   children,

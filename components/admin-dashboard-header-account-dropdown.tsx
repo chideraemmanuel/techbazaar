@@ -13,15 +13,15 @@ import {
   RiUserLine,
 } from '@remixicon/react';
 import Link from 'next/link';
+import { DUMMY_USERS } from '@/dummy';
+import { notFound } from 'next/navigation';
 
 interface Props {}
 
 const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
-  const user = {
-    first_name: 'Chidera',
-    last_name: 'Emmanuel',
-    email: 'chidera@email.com',
-  };
+  const user = DUMMY_USERS[0];
+
+  if (!user) notFound();
 
   return (
     <>
@@ -35,13 +35,13 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
           <DropdownMenuTrigger asChild>
             <button className="p-1 lg:p-2 rounded-full flex items-center gap-2 bg-secondary">
               <Avatar className="w-8 md:w-10 md:h-10 h-8">
-                <AvatarFallback className="bg-primary text-primary-foreground font-medium text-lg md:text-2xl tracking-[-3.44%]">
+                <AvatarFallback className="bg-primary text-primary-foreground font-medium text-lg md:text-xl">
                   {user.first_name && user.first_name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
 
               <div className="hidden lg:flex items-center gap-3">
-                <span className="text-secondary-foreground font-medium text-sm leading-[140%] tracking-[-0.44%] inline-block w-[70%] truncate">
+                <span className="text-secondary-foreground font-medium text-sm inline-block w-[70%] truncate">
                   {user.first_name} {user.last_name}
                 </span>
 

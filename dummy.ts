@@ -21,3 +21,18 @@ export const DUMMY_PRODUCTS = [
     is_deleted: false,
   },
 ];
+
+export const DUMMY_USERS = [
+  {
+    _id: '64b7a0f0cd5a5b00249f842b',
+    first_name: 'Chidera',
+    last_name: 'Emmanuel',
+    email: 'chidera@email.com',
+    email_verified: true,
+    auth_type: 'manual',
+    role: 'admin',
+    disabled: false,
+    createdAt: new Date(Date.now()),
+    updatedAt: new Date(Date.now()),
+  },
+];

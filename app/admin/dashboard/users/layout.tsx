@@ -2,15 +2,15 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const metadata: Metadata = {
-  title: 'All products',
+  title: 'All users',
 };
 
 interface Props {
   children: React.ReactNode;
 }
 
-const AdminDashboardProductsLayout: FC<Props> = ({ children }) => {
+const AdminDashboardUsersLayout: FC<Props> = ({ children }) => {
   return <>{children}</>;
 };
 
-export default AdminDashboardProductsLayout;
+export default AdminDashboardUsersLayout;
