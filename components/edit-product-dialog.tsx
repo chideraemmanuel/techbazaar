@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from './ui/sheet';
 import { Button } from './ui/button';
-import { Loader2, Plus } from 'lucide-react';
+import { Loader2, Pencil, Plus } from 'lucide-react';
 import FormInput from './form-input';
 import SelectInput from './select-input';
 import TextareaInput from './textarea-input';
@@ -19,45 +19,47 @@ import ImageInput from './image-input';
 import MoneyInput from './money-input';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
+import { cn } from '@/lib/cn';
 
-type NewProductDialogTriggerProps = ComponentPropsWithoutRef<
+type EditProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger
 >;
 
-type NewProductDialogTriggerRef = ElementRef<typeof SheetTrigger>;
+type EditProductDialogTriggerRef = ElementRef<typeof SheetTrigger>;
 
-const NewProductDialog = React.forwardRef<
-  NewProductDialogTriggerRef,
-  NewProductDialogTriggerProps
->(({ ...props }, ref) => {
+const EditProductDialog = React.forwardRef<
+  EditProductDialogTriggerRef,
+  EditProductDialogTriggerProps
+>(({ className, ...props }, ref) => {
   return (
     <>
       <Sheet>
         <SheetTrigger asChild ref={ref}>
-          <Button {...props} size={'sm'}>
-            <Plus />
-            Add new product
+          <Button
+            {...props}
+            size={'icon'}
+            variant={'ghost'}
+            className={cn('w-9 h-9 text-muted-foreground', className)}
+          >
+            <Pencil />
           </Button>
         </SheetTrigger>
 
         <SheetContent className="w-5/6 sm:max-w-[486px] overflow-y-auto">
           <SheetHeader className="pt-5 pb-7 text-start">
-            <SheetTitle>Add new product</SheetTitle>
-            <SheetDescription>
-              Fill in the details below to create a new product.
-            </SheetDescription>
+            <SheetTitle>Edit product</SheetTitle>
           </SheetHeader>
 
-          <NewProductForm />
+          <EditProductForm />
         </SheetContent>
       </Sheet>
     </>
   );
 });
 
-export default NewProductDialog;
+export default EditProductDialog;
 
-const NewProductForm: FC = () => {
+const EditProductForm: FC = () => {
   return (
     <>
       <form>
@@ -111,8 +113,8 @@ const NewProductForm: FC = () => {
         </div>
 
         <Button className="w-full">
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Add product
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Update
         </Button>
       </form>
     </>

@@ -4,6 +4,8 @@ import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-
 import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
+import DeleteProductDialog from '@/components/delete-product-dialog';
+import EditProductDialog from '@/components/edit-product-dialog';
 import NewProductDialog from '@/components/new-product-dialog';
 import ResourceSearch from '@/components/resource-search';
 import SelectInput from '@/components/select-input';
@@ -148,35 +150,21 @@ const ProductsTable: FC = () => {
                   <TableCell>{product.stock}</TableCell>
 
                   <TableCell>
-                    {' '}
                     <BooleanBadge truthy={product.is_archived}>
                       {`${product.is_archived}`}
                     </BooleanBadge>
                   </TableCell>
 
                   <TableCell>
-                    {' '}
                     <BooleanBadge truthy={product.is_deleted}>
                       {`${product.is_deleted}`}
                     </BooleanBadge>
                   </TableCell>
 
                   <TableCell className="space-x-1">
-                    <Button
-                      size={'icon'}
-                      variant={'ghost'}
-                      className="w-9 h-9 text-muted-foreground"
-                    >
-                      <Pencil />
-                    </Button>
+                    <EditProductDialog />
 
-                    <Button
-                      size={'icon'}
-                      variant={'ghost'}
-                      className="w-9 h-9 text-destructive hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 />
-                    </Button>
+                    <DeleteProductDialog />
                   </TableCell>
                 </TableRow>
               ))
