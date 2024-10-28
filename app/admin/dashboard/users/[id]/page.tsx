@@ -99,7 +99,7 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
                 <DeleteUserDialog />
 
                 <Button>
-                  <Link href={`/adminn/dashboard/users/1/orders`}>
+                  <Link href={`/admin/dashboard/users/1/orders`}>
                     View Orders
                   </Link>
                 </Button>

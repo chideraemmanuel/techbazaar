@@ -21,13 +21,24 @@ import { notFound } from 'next/navigation';
 import EditOrderStatusDialog from '@/components/edit-order-status-dialog';
 import AdminDashboardOrdersFilter from '@/components/admin-dashboard-orders-filter';
 
-interface Props {}
+interface Props {
+  params: Promise<{
+    id: string;
+  }>;
+}
 
-const AdminDashboardOrdersPage: FC<Props> = () => {
+const AdminDashboardUserOrdersPage: FC<Props> = async ({ params }) => {
+  const { id: userId } = await params;
+  const user = DUMMY_USERS[0];
+
+  if (!user) notFound();
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title="Orders" total={10} />
+        <AdminDashboardResourceHeader
+          title={`${user.first_name}'s Orders`}
+          total={10}
+        />
 
         <div className="flex-1 p-5 space-y-7">
           <OrdersTable />
@@ -37,7 +48,7 @@ const AdminDashboardOrdersPage: FC<Props> = () => {
   );
 };
 
-export default AdminDashboardOrdersPage;
+export default AdminDashboardUserOrdersPage;
 
 const headers = [
   '#',
