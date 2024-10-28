@@ -1,5 +1,6 @@
 import {
   ChartArea,
+  ChartColumn,
   LineChart,
   ShoppingBagIcon,
   ShoppingCart,
@@ -24,7 +25,8 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
       {
         title: 'overview',
         href: '/admin/dashboard',
-        icon: LineChart,
+        // icon: LineChart,
+        icon: ChartColumn,
       },
       {
         title: 'products',

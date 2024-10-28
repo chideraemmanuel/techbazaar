@@ -4,7 +4,10 @@ import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-
 import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
-import DeleteProductDialog from '@/components/delete-product-dialog';
+import {
+  DeleteProductDialog,
+  RestoreProductDialog,
+} from '@/components/delete-restore-product-dialogs';
 import EditProductDialog from '@/components/edit-product-dialog';
 import NewProductDialog from '@/components/new-product-dialog';
 import ResourceSearch from '@/components/resource-search';
@@ -155,7 +158,11 @@ const ProductsTable: FC = () => {
                   <TableCell className="space-x-1">
                     <EditProductDialog />
 
-                    <DeleteProductDialog />
+                    {product.is_deleted ? (
+                      <RestoreProductDialog />
+                    ) : (
+                      <DeleteProductDialog />
+                    )}
                   </TableCell>
                 </TableRow>
               ))
