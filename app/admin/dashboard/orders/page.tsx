@@ -1,9 +1,7 @@
 import AdminDashboardResourceSort from '@/components/admin-dashboard-resource-sort';
 import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
-import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
-import ResourceSearch from '@/components/resource-search';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,62 +12,56 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DUMMY_USERS } from '@/dummy';
+import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
-import { Search } from 'lucide-react';
 import { FC } from 'react';
-import DeleteUserDialog from '@/components/delete-user-dialog';
-import EditUserRoleDialog from '@/components/edit-user-role-dialog';
 import AdminDashboardUsersFilter from '@/components/admin-dashboard-users-filter';
 import Link from 'next/link';
-import {
-  DisableUserDialog,
-  EnableUserDialog,
-} from '@/components/enable-disable-user-dialogs';
+import { notFound } from 'next/navigation';
+import EditOrderStatusDialog from '@/components/edit-order-status-dialog';
 
 interface Props {}
 
-const AdminDashboardUsersPage: FC<Props> = () => {
+const AdminDashboardOrdersPage: FC<Props> = () => {
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title="Users" total={10} />
+        <AdminDashboardResourceHeader title="Orders" total={10} />
 
         <div className="flex-1 p-5 space-y-7">
-          <UsersTable />
+          <OrdersTable />
         </div>
       </div>
     </>
   );
 };
 
-export default AdminDashboardUsersPage;
+export default AdminDashboardOrdersPage;
 
 const headers = [
   '#',
-  'name',
-  'email',
-  'email verified',
-  'auth type',
-  'role',
-  'disabled',
+  'user',
+  'items',
+  'total',
+  'order date',
+  'status',
   'actions',
 ];
 
-const UsersTable: FC = () => {
+const OrdersTable: FC = () => {
+  const user = DUMMY_USERS[0];
+
+  if (!user) notFound();
+
+  const dateFormatter = new Intl.DateTimeFormat('en-us', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+
   return (
     <>
       <div className="rounded-2xl shadow border border-border overflow-hidden">
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 bg-background p-5">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 pointer-events-none" />
-
-            <ResourceSearch
-              placeholder="Search users..."
-              className="shadow-sm text-base dark:bg-secondary/50 pl-10"
-            />
-          </div>
-
+        <div className="flex flex-col sm:flex-row justify-end sm:items-center gap-3 bg-background p-5">
           <div className="space-x-2">
             <AdminDashboardUsersFilter />
 
@@ -95,10 +87,10 @@ const UsersTable: FC = () => {
           </TableHeader>
 
           <TableBody>
-            {DUMMY_USERS && DUMMY_USERS.length > 0 ? (
-              DUMMY_USERS.map((user, index) => (
+            {DUMMY_ORDERS && DUMMY_ORDERS.length > 0 ? (
+              DUMMY_ORDERS.map((order, index) => (
                 <TableRow
-                  key={user._id}
+                  key={order._id}
                   className="font-medium text-xs bg-background hover:bg-background"
                 >
                   <TableCell>{index + 1}</TableCell>
@@ -109,56 +101,30 @@ const UsersTable: FC = () => {
                     </span>
                   </TableCell>
 
-                  <TableCell title={user.email}>
+                  <TableCell>{order.items.length}</TableCell>
+
+                  <TableCell>{order.total_price}</TableCell>
+
+                  <TableCell>
                     <span className="inline-block w-[150px] sm:w-[180px] truncate">
-                      {user.email}
+                      {dateFormatter.format(order.createdAt)}
                     </span>
                   </TableCell>
 
                   <TableCell>
-                    <BooleanBadge truthy={user.email_verified}>
-                      {`${user.email_verified}`}
-                    </BooleanBadge>
-                  </TableCell>
-
-                  <TableCell className="capitalize">{user.auth_type}</TableCell>
-
-                  <TableCell>
-                    <Badge
-                      className={cn(
-                        'capitalize',
-                        user.role === 'admin'
-                          ? 'bg-orange-200 text-orange-700'
-                          : ''
-                      )}
-                      variant={'secondary'}
-                    >
-                      {user.role}
+                    <Badge className={cn('capitalize')} variant={'secondary'}>
+                      {order.status}
                     </Badge>
-                  </TableCell>
-
-                  <TableCell>
-                    <BooleanBadge truthy={user.disabled}>
-                      {`${user.disabled}`}
-                    </BooleanBadge>
                   </TableCell>
 
                   <TableCell className="flex items-center space-x-1">
                     <Button variant={'outline'} size={'sm'} asChild>
-                      <Link href={`/admin/dashboard/users/1`}>
+                      <Link href={`/admin/dashboard/orders/1`}>
                         View Details
                       </Link>
                     </Button>
 
-                    <EditUserRoleDialog />
-
-                    {user.disabled ? (
-                      <EnableUserDialog />
-                    ) : (
-                      <DisableUserDialog />
-                    )}
-
-                    <DeleteUserDialog />
+                    <EditOrderStatusDialog />
                   </TableCell>
                 </TableRow>
               ))
@@ -168,7 +134,7 @@ const UsersTable: FC = () => {
                   colSpan={headers.length}
                   className="h-24 text-center bg-background hover:bg-background"
                 >
-                  No users to display
+                  No orders to display
                 </TableCell>
               </TableRow>
             )}

@@ -11,19 +11,19 @@ import {
   AlertDialogTrigger,
 } from './ui/alert-dialog';
 import { Button } from './ui/button';
-import { Loader2, Pencil } from 'lucide-react';
+import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import SelectInput from './select-input';
 
-type EditUserRoleDialogTriggerProps = ComponentPropsWithoutRef<
+type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
 >;
 
-type EditUserRoleDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
+type EditOrderStatusDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
-const EditUserRoleDialog = React.forwardRef<
-  EditUserRoleDialogTriggerRef,
-  EditUserRoleDialogTriggerProps
+const EditOrderStatusDialog = React.forwardRef<
+  EditOrderStatusDialogTriggerRef,
+  EditOrderStatusDialogTriggerProps
 >(({ className, ...props }, ref) => {
   return (
     <>
@@ -33,22 +33,22 @@ const EditUserRoleDialog = React.forwardRef<
             size={'icon'}
             variant={'ghost'}
             className={cn('w-9 h-9 text-muted-foreground', className)}
-            title="Edit user role"
+            title="Edit order status"
             {...props}
           >
             <Pencil />
-            <span className="sr-only">Edit user role</span>
+            <span className="sr-only">Edit order status</span>
           </Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Edit user role</AlertDialogTitle>
+            <AlertDialogTitle>Edit order status</AlertDialogTitle>
           </AlertDialogHeader>
 
           <div>
             <SelectInput
-              placeholder="Select role"
+              placeholder="Select status"
               selectInputItems={[]}
               onItemSelect={(value) => {}}
             />
@@ -68,4 +68,4 @@ const EditUserRoleDialog = React.forwardRef<
   );
 });
 
-export default EditUserRoleDialog;
+export default EditOrderStatusDialog;

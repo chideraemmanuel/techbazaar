@@ -1,3 +1,4 @@
+import CopyToClipboard from '@/components/copy-to-clipboard';
 import DeleteUserDialog from '@/components/delete-user-dialog';
 import EditUserRoleDialog from '@/components/edit-user-role-dialog';
 import {
@@ -8,15 +9,26 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { DUMMY_USERS } from '@/dummy';
 import { CopyIcon, UserX } from 'lucide-react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
-interface Props {}
+interface Props {
+  params: Promise<{
+    id: string;
+  }>;
+}
 
-const AdminDashboardUserDetailsPage: FC<Props> = () => {
+const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
+  const { id } = await params;
   const user = DUMMY_USERS[0];
 
   if (!user) notFound();
+
+  const dateFormatter = new Intl.DateTimeFormat('en-us', {
+    dateStyle: 'long',
+    // timeStyle: 'medium',
+  });
 
   return (
     <>
@@ -40,7 +52,7 @@ const AdminDashboardUserDetailsPage: FC<Props> = () => {
         <div className="flex-1 p-5 space-y-7">
           <div className="bg-background rounded-2xl px-5 py-4">
             <div className="pb-4">
-              <h2 className="pb-2 text-foreground font-bold text-2xl">
+              <h2 className="pb-2 text-foreground font-bold text-xl md:text-2xl truncate">
                 {user.first_name} {user.last_name}
               </h2>
 
@@ -48,11 +60,10 @@ const AdminDashboardUserDetailsPage: FC<Props> = () => {
                 User ID:{' '}
                 <span className="inline-block ml-2 text-muted-foreground">
                   #{user._id}
-                </span>{' '}
-                {/* MAKE COPYTEXT COMPONENT */}
-                <button className="ml-2">
+                </span>
+                <CopyToClipboard text={user._id} className="ml-2">
                   <CopyIcon className="w-4 h-4" />
-                </button>
+                </CopyToClipboard>
               </p>
             </div>
 
@@ -67,13 +78,16 @@ const AdminDashboardUserDetailsPage: FC<Props> = () => {
               <UserDetail label="Authentication Type" value={user.auth_type} />
               <UserDetail label="Role" value={user.role.toUpperCase()} />
               <UserDetail label="Disabled" value={`${user.disabled}`} />
-              <UserDetail label="Joined" value={`${user.createdAt}`} />
+              <UserDetail
+                label="Joined"
+                value={`${dateFormatter.format(user.createdAt)}`}
+              />
             </div>
 
             <Separator />
 
             <div className="pt-4">
-              <span className="inline-block pb-3 text-muted-foreground font-Ci%]">
+              <span className="inline-block pb-3 text-muted-foreground">
                 Actions:
               </span>
 
@@ -83,6 +97,12 @@ const AdminDashboardUserDetailsPage: FC<Props> = () => {
                 {user.disabled ? <EnableUserDialog /> : <DisableUserDialog />}
 
                 <DeleteUserDialog />
+
+                <Button>
+                  <Link href={`/adminn/dashboard/users/1/orders`}>
+                    View Orders
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
