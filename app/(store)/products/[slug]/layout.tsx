@@ -2,15 +2,15 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Smartphones for you',
+  title: 'iPhone 12 Pro',
 };
 
 interface Props {
   children: React.ReactNode;
 }
 
-const CategoryLayout: FC<Props> = ({ children }) => {
+const ProductDetailsLayout: FC<Props> = ({ children }) => {
   return <>{children}</>;
 };
 
-export default CategoryLayout;
+export default ProductDetailsLayout;

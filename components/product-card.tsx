@@ -40,7 +40,11 @@ const ProductCard: FC<Props> = () => {
           </div>
         </Link>
 
-        <button className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-muted-foreground bg-background hover:bg-primary/80 hover:text-white transition-colors">
+        {/* <button className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-muted-foreground bg-background hover:bg-primary/80 hover:text-white transition-colors">
+          <Heart className="w-4 h-4" />
+        </button> */}
+
+        <button className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-background bg-foreground/30 hover:bg-primary/80 hover:text-white transition-colors">
           <Heart className="w-4 h-4" />
         </button>
       </div>
