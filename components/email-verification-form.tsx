@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FullScreenSpinner from './full-screen-spinner';
 import useVerifyEmail from '@/lib/hooks/use-verify-email';
+import useResendVerificationOTP from '@/lib/hooks/use-resend-verification-OTP';
 
 interface Props {
   email: string;
@@ -16,12 +17,10 @@ const EmailVerificationForm: FC<Props> = ({ email }) => {
 
   const { mutate: verifyEmail, isLoading: isVerifyingEmail } = useVerifyEmail();
 
-  // const {
-  //   mutate: resendVerificationOTP,
-  //   isLoading: isResendingVerificationOTP,
-  // } = useResendVerificationOTP();
-
-  const isResendingVerificationOTP = false;
+  const {
+    mutate: resendVerificationOTP,
+    isLoading: isResendingVerificationOTP,
+  } = useResendVerificationOTP();
 
   return (
     <>
@@ -48,7 +47,7 @@ const EmailVerificationForm: FC<Props> = ({ email }) => {
           <button
             className="text-primary underline disabled:pointer-events-none disabled:opacity-50"
             disabled={isResendingVerificationOTP}
-            // onClick={() => resendVerificationOTP(email)}
+            onClick={() => resendVerificationOTP(email)}
           >
             Resend
           </button>
