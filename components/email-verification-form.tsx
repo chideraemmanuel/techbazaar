@@ -5,6 +5,7 @@ import OTPInput from './ui/otp-input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FullScreenSpinner from './full-screen-spinner';
+import useVerifyEmail from '@/lib/hooks/use-verify-email';
 
 interface Props {
   email: string;
@@ -13,14 +14,13 @@ interface Props {
 const EmailVerificationForm: FC<Props> = ({ email }) => {
   const [OTP, setOTP] = React.useState('');
 
-  //   const { mutate: verifyEmail, isLoading: isVerifyingEmail } = useVerifyEmail();
+  const { mutate: verifyEmail, isLoading: isVerifyingEmail } = useVerifyEmail();
 
   // const {
   //   mutate: resendVerificationOTP,
   //   isLoading: isResendingVerificationOTP,
   // } = useResendVerificationOTP();
 
-  const isVerifyingEmail = false;
   const isResendingVerificationOTP = false;
 
   return (
@@ -34,7 +34,7 @@ const EmailVerificationForm: FC<Props> = ({ email }) => {
       <Button
         className="w-full"
         disabled={isVerifyingEmail || OTP.length < 6}
-        // onClick={() => verifyEmail({ email: email, OTP: OTP })}
+        onClick={() => verifyEmail({ email: email, OTP: OTP })}
       >
         {isVerifyingEmail && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Verify

@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import SelectInput from './select-input';
-import useUpdateSearchParams from '@/hooks/use-update-search-params';
+import useUpdateSearchParams from '@/lib/hooks/use-update-search-params';
 
 interface Props {}
 

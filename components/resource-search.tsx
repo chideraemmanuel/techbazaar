@@ -2,7 +2,7 @@
 
 import { ComponentPropsWithoutRef, FC, FormEvent, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import useUpdateSearchParams from '@/hooks/use-update-search-params';
+import useUpdateSearchParams from '@/lib/hooks/use-update-search-params';
 
 type Props = ComponentPropsWithoutRef<typeof Input>;
 

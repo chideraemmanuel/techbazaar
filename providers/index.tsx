@@ -3,6 +3,8 @@
 import TailwindIndicator from '@/components/tailwind-indicator';
 import dynamic from 'next/dynamic';
 import { FC } from 'react';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { Toaster } from '@/components/ui/sonner';
 
 const ThemeProvider = dynamic(
   () =>
@@ -17,11 +19,16 @@ interface Props {
 }
 
 const Providers: FC<Props> = ({ children }) => {
+  const client = new QueryClient();
+
   return (
     <>
       <ThemeProvider defaultTheme="dark">
-        <TailwindIndicator />
-        {children}
+        <QueryClientProvider client={client}>
+          <Toaster richColors />
+          <TailwindIndicator />
+          {children}
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   );

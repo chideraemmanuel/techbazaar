@@ -1,15 +1,23 @@
 import Logo from '@/components/logo';
+import getCurrentUser from '@/lib/data/get-current-user';
+import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const AuthLayout: FC<Props> = ({ children }) => {
+const AuthLayout: FC<Props> = async ({ children }) => {
+  const user = await getCurrentUser();
+
+  if (user && user.email_verified) {
+    redirect('/');
+  }
+
   return (
     <>
       <Suspense>
-        <div className="bg-white">
+        <div className="bg-background">
           <div className="container mx-auto relative flex items-center justify-center min-h-screen">
             <div className="absolute top-8 left-4 md:left-8">
               <Logo />

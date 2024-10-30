@@ -7,6 +7,7 @@ import FormInput from './form-input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FormBreak from './form-break';
+import useRegisterUser from '@/lib/hooks/use-register-user';
 
 interface Props {}
 
@@ -19,8 +20,8 @@ interface RegistrationFormTypes {
 }
 
 const UserRegistrationForm: FC<Props> = () => {
-  //   const { mutate: registerUser, isLoading: isRegisteringUser } = useRegisterUser();
-  const isRegisteringUser = false;
+  const { mutate: registerUser, isLoading: isRegisteringUser } =
+    useRegisterUser();
 
   const form = useForm<RegistrationFormTypes>();
 
@@ -33,7 +34,7 @@ const UserRegistrationForm: FC<Props> = () => {
 
   const onSubmit: SubmitHandler<RegistrationFormTypes> = (data, e) => {
     console.log('registration form data', data);
-    // registerUser(data);
+    registerUser(data);
   };
 
   return (
