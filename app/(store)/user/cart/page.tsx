@@ -53,47 +53,23 @@ const UserCartPage: FC<Props> = () => {
               </span>
             </div>
           </div>
-          {/* px-3 md:px-5 py-3 md:py-5 */}
-          <div className="dark:bg-secondary/30 shadow-sm rounded-xl border md:sticky md:top-[90px] self-start py-3 md:py-5 mb-5 space-y-3">
-            <h3 className="text-foreground/90 text-base sm:text-lg font-medium px-3 md:px-5">
+
+          <div className="dark:bg-secondary/30 shadow-sm rounded-xl border md:sticky md:top-[90px] self-start px-3 md:px-5 py-3 md:py-5 space-y-3">
+            <h3 className="text-foreground/90 text-base sm:text-lg font-medium">
               Cart summary
             </h3>
 
-            <div className="px-3 md:px-5">
-              <Separator />
-            </div>
+            <Separator />
 
-            {/* <div className="h-72"> */}
-            <ScrollArea className="h-52 space-y-3 px-3 md:px-5">
-              <ul className="space-y-3 pb-5">
-                {Array.from({ length: 17 }).map((item, index) => (
-                  <li key={index} className="flex items-center justify-between">
-                    <span className="text-muted-foreground text-sm sm:text-base">
-                      {product.name}{' '}
-                      <span className="text-muted-foreground/70">(x1)</span>
-                    </span>
-
-                    <span className="text-sm sm:text-base font-medium">
-                      ₦{product.price.toFixed(2)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </ScrollArea>
-            {/* </div> */}
-
-            <div className="px-3 md:px-5">
-              <Separator />
-            </div>
-
-            <ul className="space-y-3 px-3 md:px-5">
+            <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground text-sm sm:text-base font-medium">
-                  Subtotal
+                  Subtotal (7 items)
                 </span>
 
                 <span className="text-sm sm:text-base font-medium">
-                  ₦{product.price.toFixed(2)}
+                  {/* ₦{product.price.toFixed(2)} */}
+                  ₦1,000,000.00
                 </span>
               </li>
 
@@ -105,22 +81,24 @@ const UserCartPage: FC<Props> = () => {
                 <span className="text-sm sm:text-base font-medium">₦0.00</span>
               </li>
 
-              {/* <Separator /> */}
+              <Separator />
 
               <li className="flex items-center justify-between">
-                <span className="text-muted-foreground text-sm sm:text-base font-medium">
+                <span className="text-muted-foreground text-base sm:text-lg font-medium">
                   Total
                 </span>
 
-                <span className="text-base sm:text-lg font-medium">
+                <span className="text-lg sm:text-xl font-medium">
                   ₦{product.price.toFixed(2)}
                 </span>
               </li>
             </ul>
 
-            <div className="px-3 md:px-5">
+            <Separator />
+
+            <div>
               <Button asChild className="w-full">
-                <Link href={'#'}>Checkout</Link>
+                <Link href={'/user/cart/checkout'}>Checkout</Link>
               </Button>
             </div>
           </div>
