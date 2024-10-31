@@ -7,6 +7,7 @@ import { EMAIL_REGEX } from '@/constants';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FormBreak from './form-break';
+import useLoginUser from '@/lib/hooks/use-login-user';
 
 interface Props {}
 
@@ -16,8 +17,7 @@ interface LoginFormTypes {
 }
 
 const UserLoginForm: FC<Props> = () => {
-  //   const { mutate: loginUser, isLoading: isLoggingUserIn } = useLoginUser();
-  const isLoggingUserIn = false;
+  const { mutate: loginUser, isLoading: isLoggingUserIn } = useLoginUser();
 
   const form = useForm<LoginFormTypes>();
 
@@ -29,7 +29,7 @@ const UserLoginForm: FC<Props> = () => {
 
   const onSubmit: SubmitHandler<LoginFormTypes> = (data, e) => {
     console.log('login form data', data);
-    // loginUser(data);
+    loginUser(data);
   };
 
   return (

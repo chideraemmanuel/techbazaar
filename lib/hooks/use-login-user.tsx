@@ -6,41 +6,34 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-interface Credentials {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-}
-
-const registerUser = async (credentials: Credentials) => {
+const loginUser = async (credentials: { email: string; password: string }) => {
   const response = await axios.post<APISuccessResponse<UserTypes>>(
-    '/auth/register',
+    '/auth/login',
     credentials
   );
 
   return response.data;
 };
 
-const useRegisterUser = () => {
+const useLoginUser = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationKey: ['register user'],
-    mutationFn: registerUser,
+    mutationKey: ['login user'],
+    mutationFn: loginUser,
     onSuccess: (data) => {
-      toast.success('Registration successful');
-      // router.replace('/auth/verify-email');
+      toast.success('Login successful');
+      //   router.replace('/');
       router.refresh();
     },
     onError: (error: AxiosError<APIErrorResponse>) => {
       toast.error(
         error?.response?.data?.error ||
           error?.message ||
-          'Registration failed - Something went wrong'
+          'Login failed - Something went wrong'
       );
     },
   });
 };
 
-export default useRegisterUser;
+export default useLoginUser;

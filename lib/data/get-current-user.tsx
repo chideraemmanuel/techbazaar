@@ -13,6 +13,7 @@ const getCurrentUser = async () => {
       headers: {
         Cookie: `session_id=${session_id}`,
       },
+      cache: 'no-store',
     }
   );
 
@@ -20,7 +21,7 @@ const getCurrentUser = async () => {
 
   const user: UserTypes = await response.json();
 
-  //   console.log('[USER]', user);
+  console.log('[USER]', user);
 
   return user;
 };

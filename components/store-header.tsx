@@ -7,6 +7,7 @@ import { Search, ShoppingCart, User } from 'lucide-react';
 import ResourceSearch from './resource-search';
 import ThemeSwitcher from './theme-switcher';
 import StoreHeaderSearch from './store-header-search';
+import StoreHeaderAccountDropdown from './store-header-account-dropdown';
 
 interface Props {}
 
@@ -39,13 +40,7 @@ const StoreHeader: FC<Props> = () => {
               <ShoppingCart className="sm:!w-5 sm:!h-5" />
             </Button>
 
-            <Button
-              variant={'ghost'}
-              size={'icon'}
-              className="h-8 sm:h-10 w-8 sm:w-10"
-            >
-              <User className="sm:!w-5 sm:!h-5" />
-            </Button>
+            <StoreHeaderAccountDropdown />
           </div>
         </div>
       </header>
