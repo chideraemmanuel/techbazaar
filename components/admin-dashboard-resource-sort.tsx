@@ -6,16 +6,10 @@ import { Button } from './ui/button';
 import { RiSortDesc } from '@remixicon/react';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
-import SelectInput from './select-input';
-
-interface SortSelectInputItem {
-  id: string;
-  name: string;
-  value: string;
-}
+import SelectInput, { SelectInputItem } from './select-input';
 
 interface Props {
-  sort_items: SortSelectInputItem[];
+  sort_items: SelectInputItem[];
 }
 
 const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {

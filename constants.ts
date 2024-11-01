@@ -34,6 +34,11 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
         icon: ShoppingBagIcon,
       },
       {
+        title: 'brands',
+        href: '/admin/dashboard/brands',
+        icon: LineChart,
+      },
+      {
         title: 'orders',
         href: '/admin/dashboard/orders',
         icon: ShoppingCart,

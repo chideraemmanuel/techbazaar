@@ -6,7 +6,7 @@ import ThemeSwitcher from './theme-switcher';
 
 interface Props {}
 
-const AdminDashboardHeader: FC<Props> = () => {
+const AdminDashboardHeader: FC<Props> = async () => {
   return (
     <>
       <header className="sticky top-0 z-10 h-16 md:h-20 border-b xl:ml-[min(270px,_30vw)] px-6 bg-background">

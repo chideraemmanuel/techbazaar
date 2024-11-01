@@ -13,7 +13,6 @@ const getCurrentUser = async () => {
       headers: {
         Cookie: `session_id=${session_id}`,
       },
-      cache: 'no-store',
     }
   );
 

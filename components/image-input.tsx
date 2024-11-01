@@ -5,6 +5,8 @@ import {
   ElementRef,
   FC,
   forwardRef,
+  KeyboardEvent,
+  useRef,
   useState,
 } from 'react';
 import { Label } from './ui/label';
@@ -41,6 +43,16 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
       undefined | { name: string; src: string | ArrayBuffer | null }
     >(undefined);
 
+    const cardRef = useRef<HTMLDivElement | null>(null);
+
+    const handleKeyUp = (e: KeyboardEvent<HTMLDivElement>) => {
+      if (!e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        if (e.which === 32 || e.which === 13) {
+          cardRef.current?.click();
+        }
+      }
+    };
+
     return (
       <>
         <div className="w-full">
@@ -50,6 +62,7 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
             </span>
 
             <Input
+              {...props}
               type="file"
               accept="image/png,image/jpg,image/jpeg"
               className="hidden"
@@ -73,16 +86,18 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
                   onChange(e);
                 }
               }}
-              {...props}
             />
 
             <Card
               className={cn(
-                'w-full h-28 cursor-pointer relative flex justify-center items-center p-5 border-dashed overflow-hidden mt-1',
+                'w-full h-28 cursor-pointer relative flex justify-center items-center p-5 border-dashed overflow-hidden mt-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                 error && 'border-destructive',
                 disabled && 'cursor-not-allowed',
                 className
               )}
+              tabIndex={0}
+              ref={cardRef}
+              onKeyUp={handleKeyUp}
             >
               {(selectedImage?.src ?? defaultImage) && (
                 <Image

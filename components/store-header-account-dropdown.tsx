@@ -12,7 +12,7 @@ import CurrentUser from './current-user';
 import Link from 'next/link';
 import { RiLogoutCircleLine, RiUserLine } from '@remixicon/react';
 import { Button, buttonVariants } from './ui/button';
-import { User } from 'lucide-react';
+import { ChartColumn, User } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import LogoutUserButton from './logout-user-button';
 
@@ -51,6 +51,13 @@ const ActiveUserDropdown: FC<{ user: UserTypes }> = ({ user }) => {
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
+            <Link href={`/admin/dashboard`}>
+              <ChartColumn className="h-4 w-4" />
+              <span>Admin Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
             <LogoutUserButton className="text-destructive focus:text-destructive focus:bg-destructive/10">
               <RiLogoutCircleLine className="h-4 w-4" />
               <span>Logout</span>
@@ -80,6 +87,13 @@ const InactiveUserDropdown: FC = () => {
           className="w-[242px] flex flex-col gap-2 p-2"
           align="end"
         >
+          <DropdownMenuItem asChild>
+            <Link href={`/admin/dashboard`}>
+              <ChartColumn className="h-4 w-4" />
+              <span>Admin Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+
           <DropdownMenuItem asChild>
             <Link
               href={'/auth/login'}

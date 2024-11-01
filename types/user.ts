@@ -1,7 +1,7 @@
 export type UserAuthType = 'manual' | 'google';
 export type UserRole = 'user' | 'admin';
 
-interface User {
+interface IUser {
   _id: string;
   first_name: string;
   last_name: string;
@@ -11,11 +11,11 @@ interface User {
   disabled: boolean;
 }
 
-export interface IGoogleUser extends User {
+export interface IGoogleUser extends IUser {
   auth_type: 'google';
 }
 
-export interface IManualUser extends User {
+export interface IManualUser extends IUser {
   password: string;
   auth_type: 'manual';
 }

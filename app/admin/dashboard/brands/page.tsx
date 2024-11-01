@@ -1,4 +1,4 @@
-import AdminDashboardProductsFilter from '@/components/admin-dashboard-products-filter';
+import AdminDashboardBrandsFilter from '@/components/admin-dashboard-brands-filter';
 import AdminDashboardResourceSort from '@/components/admin-dashboard-resource-sort';
 import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
 import BooleanBadge from '@/components/boolean-badge';
@@ -8,8 +8,8 @@ import {
   DeleteProductDialog,
   RestoreProductDialog,
 } from '@/components/delete-restore-product-dialogs';
-import EditProductDialog from '@/components/edit-product-dialog';
-import NewProductDialog from '@/components/new-product-dialog';
+import EditBrandDialog from '@/components/edit-product-dialog';
+import NewBrandDialog from '@/components/new-brand-dialog';
 import ResourceSearch from '@/components/resource-search';
 import {
   Table,
@@ -19,27 +19,25 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PRODUCT_CATEGORIES } from '@/constants';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { FC, Suspense } from 'react';
 import getCurrentUser from '@/lib/data/get-current-user';
 import { redirect } from 'next/navigation';
-import { getAllProducts } from '@/lib/data/product';
+import { getAllBrands } from '@/lib/data/brand';
 
 interface Props {}
 
-const AdminDashboardProductsPage: FC<Props> = async () => {
+const AdminDashboardBrandsPage: FC<Props> = async () => {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/admin/dashboard/products');
+    redirect('/auth/login?return_to=/admin/dashboard/brands');
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/admin/dashboard/products');
+    redirect('/auth/verify-email?return_to=/admin/dashboard/brands');
   }
 
   return (
@@ -52,11 +50,11 @@ const AdminDashboardProductsPage: FC<Props> = async () => {
             </span>
 
             <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
-              Products
+              Brands
             </h1>
 
             <div className="text-foreground/90 text-base font-medium">
-              All products{' '}
+              All brands{' '}
               <Suspense>
                 <TotalResource />
               </Suspense>
@@ -66,7 +64,7 @@ const AdminDashboardProductsPage: FC<Props> = async () => {
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
-            <ProductsTable />
+            <BrandsTable />
           </Suspense>
         </div>
       </div>
@@ -74,10 +72,10 @@ const AdminDashboardProductsPage: FC<Props> = async () => {
   );
 };
 
-export default AdminDashboardProductsPage;
+export default AdminDashboardBrandsPage;
 
 const TotalResource: FC = async () => {
-  const { data: products, pagination } = await getAllProducts();
+  const { data: brands, pagination } = await getAllBrands();
 
   return (
     <>
@@ -88,21 +86,10 @@ const TotalResource: FC = async () => {
   );
 };
 
-const headers = [
-  '#',
-  'product',
-  'brand',
-  'category',
-  'featured',
-  'price',
-  'stock count',
-  'archived',
-  'deleted',
-  'actions',
-];
+const headers = ['#', 'brand', 'deleted', 'actions'];
 
-const ProductsTable: FC = async () => {
-  const { data: products, pagination } = await getAllProducts();
+const BrandsTable: FC = async () => {
+  const { data: brands, pagination } = await getAllBrands();
 
   return (
     <>
@@ -112,18 +99,18 @@ const ProductsTable: FC = async () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5 pointer-events-none" />
 
             <ResourceSearch
-              placeholder="Search products..."
+              placeholder="Search brands..."
               className="shadow-sm text-base dark:bg-secondary/50 pl-10"
             />
           </div>
 
           <div className="space-x-2">
-            <AdminDashboardProductsFilter />
+            <AdminDashboardBrandsFilter />
 
             <AdminDashboardResourceSort sort_items={[]} />
 
             <Suspense>
-              <NewProductDialog />
+              <NewBrandDialog />
             </Suspense>
           </div>
         </div>
@@ -146,70 +133,51 @@ const ProductsTable: FC = async () => {
           </TableHeader>
 
           <TableBody>
-            {products && products.length > 0 ? (
-              products.map((product, index) => (
+            {brands && brands.length > 0 ? (
+              brands.map((brand, index) => (
                 <TableRow
-                  key={product._id}
+                  key={brand._id}
                   className="font-medium text-xs bg-background hover:bg-background"
                 >
                   <TableCell>{index + 1}</TableCell>
 
                   <TableCell
                     className="flex items-center gap-3 min-w-[200px] sm:min-w-[300px]"
-                    title={product.name}
+                    title={brand.name}
                   >
                     <div className="w-[70px] h-[70px] object-cover bg-secondary p-2 rounded">
-                      <Image
-                        className="w-full h-full"
-                        src={product.image}
-                        alt={product.name}
-                        width={426}
-                        height={585}
-                      />
+                      {brand.logo ? (
+                        <Image
+                          className="w-full h-full"
+                          src={brand.logo}
+                          alt={brand.name}
+                          width={426}
+                          height={585}
+                        />
+                      ) : (
+                        <span className="h-full flex items-center justify-center text-xl">
+                          {brand.name.charAt(0).toUpperCase()}
+                        </span>
+                      )}
                     </div>
 
                     <span className="w-[120px] sm:w-[200px] truncate">
-                      {product.name}
+                      {brand.name}
                     </span>
                   </TableCell>
 
-                  <TableCell>{product.brand.name}</TableCell>
-
-                  <TableCell className="capitalize">
-                    {PRODUCT_CATEGORIES.find(
-                      (category) => category.value === product.category
-                    )?.name || '-'}
-                  </TableCell>
-
                   <TableCell>
-                    <BooleanBadge truthy={product.is_featured}>
-                      {`${product.is_featured}`}
-                    </BooleanBadge>
-                  </TableCell>
-
-                  <TableCell>{product.price}</TableCell>
-
-                  <TableCell>{product.stock}</TableCell>
-
-                  <TableCell>
-                    <BooleanBadge truthy={product.is_archived}>
-                      {`${product.is_archived}`}
-                    </BooleanBadge>
-                  </TableCell>
-
-                  <TableCell>
-                    <BooleanBadge truthy={product.is_deleted}>
-                      {`${product.is_deleted}`}
+                    <BooleanBadge truthy={brand.is_deleted}>
+                      {`${brand.is_deleted}`}
                     </BooleanBadge>
                   </TableCell>
 
                   <TableCell className="space-x-1">
-                    <EditProductDialog />
-
-                    {product.is_deleted ? (
-                      <RestoreProductDialog />
+                    <EditBrandDialog /> {/* TODO: change */}
+                    {brand.is_deleted ? (
+                      <RestoreProductDialog /> // TODO: change
                     ) : (
-                      <DeleteProductDialog />
+                      <DeleteProductDialog /> // TODO: change
                     )}
                   </TableCell>
                 </TableRow>
@@ -220,7 +188,7 @@ const ProductsTable: FC = async () => {
                   colSpan={headers.length}
                   className="h-24 text-center bg-background hover:bg-background"
                 >
-                  No products to display
+                  No brands to display
                 </TableCell>
               </TableRow>
             )}

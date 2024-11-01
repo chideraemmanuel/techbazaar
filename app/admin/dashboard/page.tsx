@@ -1,21 +1,32 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import getCurrentUser from '@/lib/data/get-current-user';
 import { DollarSign } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 interface Props {}
 
-const AdminDashboardOverviewPage: FC<Props> = () => {
+const AdminDashboardOverviewPage: FC<Props> = async () => {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect('/auth/login?return_to=/admin/dashboard');
+  }
+
+  if (user && !user.email_verified) {
+    redirect('/auth/verify-email?return_to=/admin/dashboard');
+  }
   return (
     <>
       <div className="px-6 py-6 h-full">
         <div className="flex flex-wrap items-center justify-between gap-6 pb-[30px]">
           <div>
-            <span className="inline-block pb-2 font-bold text-muted-foreground text-[20px] leading-[140%] tracking-[-0.44%]">
-              Welcome, Chidera. 👋🏾
+            <span className="inline-block pb-2 font-bold text-muted-foreground text-xl">
+              Welcome, {user.first_name}. 👋🏾
             </span>
 
-            <h1 className="text-foreground font-medium text-base leading-[140%] tracking-[0%]">
-              Your Overview
+            <h1 className="text-foreground font-medium text-base">
+              Dashboard Overview
             </h1>
           </div>
 

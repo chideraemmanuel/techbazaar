@@ -13,15 +13,26 @@ import {
   RiUserLine,
 } from '@remixicon/react';
 import Link from 'next/link';
-import { DUMMY_USERS } from '@/dummy';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import getCurrentUser from '@/lib/data/get-current-user';
+import LogoutUserButton from './logout-user-button';
+import { headers } from 'next/headers';
 
 interface Props {}
 
-const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
-  const user = DUMMY_USERS[0];
+const AdminDashboardHeaderUserDropdown: FC<Props> = async ({}) => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/';
 
-  if (!user) notFound();
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(`/auth/login?return_to=${pathname}`);
+  }
+
+  if (user && !user.email_verified) {
+    redirect(`/auth/verify-email?return_to=${pathname}`);
+  }
 
   return (
     <>
@@ -30,7 +41,6 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
           <Skeleton className="hidden md:inline-block h-10 md:h-14 w-10 md:w-14 rounded-full" />
         )} */}
 
-        {/* {!isFetchingUser && user && ( */}
         <>
           <DropdownMenuTrigger asChild>
             <button className="p-1 lg:p-2 rounded-full flex items-center gap-2 bg-secondary">
@@ -52,17 +62,8 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
             </button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent
-            className="w-[242px] flex flex-col gap-2 p-2"
-            align="end"
-          >
-            <CurrentUser
-              user={{
-                first_name: 'Chidera',
-                last_name: 'Emmanuel',
-                email: 'chidera@email.com',
-              }}
-            />
+          <DropdownMenuContent className="flex flex-col gap-2 p-2" align="end">
+            <CurrentUser user={user} />
 
             <DropdownMenuItem asChild>
               <Link href={`#`} className="">
@@ -71,21 +72,14 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = () => {
               </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem
-              asChild
-              className="text-destructive focus:text-destructive focus:bg-destructive/10"
-            >
-              <button
-                className="flex items-center gap-2 p-4 rounded-[8px]"
-                //   onClick={() => logout()}
-              >
+            <DropdownMenuItem asChild>
+              <LogoutUserButton className="text-destructive focus:text-destructive focus:bg-destructive/10">
                 <RiLogoutCircleLine className="h-4 w-4" />
                 <span>Logout</span>
-              </button>
+              </LogoutUserButton>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </>
-        {/* )} */}
       </DropdownMenu>
     </>
   );

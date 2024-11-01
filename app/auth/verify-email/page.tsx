@@ -1,24 +1,36 @@
 import AuthPageBackButton from '@/components/auth-page-back-button';
 import EmailVerificationForm from '@/components/email-verification-form';
+import LogoutUserButton from '@/components/logout-user-button';
 import getCurrentUser from '@/lib/data/get-current-user';
+import { RiArrowLeftLine } from '@remixicon/react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
-interface Props {}
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
-const EmailVerificationPage: FC<Props> = async () => {
+const EmailVerificationPage: FC<Props> = async ({ searchParams }) => {
+  const return_to = (await searchParams).return_to;
   const user = await getCurrentUser();
 
   if (!user || (user && user.email_verified)) {
-    redirect('/');
+    const path =
+      return_to && Array.isArray(return_to)
+        ? return_to[0]
+        : return_to && !Array.isArray(return_to)
+        ? return_to
+        : '/';
+
+    redirect(path);
   }
 
   return (
     <>
       <div>
-        <AuthPageBackButton
-        // onClick={() => logout()}
-        />
+        <LogoutUserButton className="p-4 rounded-full bg-secondary text-secondary-foreground mb-9 md:mb-6">
+          <RiArrowLeftLine />
+        </LogoutUserButton>
 
         <div className="pb-6 flex flex-col gap-1 text-start">
           <h1 className="font-medium text-[32px] md:text-[48px] text-foreground">

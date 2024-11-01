@@ -2,7 +2,7 @@ import axios from '@/config/axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { UserTypes } from '@/types/user';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
@@ -17,6 +17,7 @@ const verifyEmail = async (credentials: { email: string; OTP: string }) => {
 
 const useVerifyEmail = () => {
   const router = useRouter();
+  //  const return_to = useSearchParams().get('return_to');
 
   return useMutation({
     mutationKey: ['verify email'],
@@ -24,7 +25,9 @@ const useVerifyEmail = () => {
     onSuccess: (data) => {
       toast.success('Email verified successfully');
 
-      router.replace('/');
+      // router.replace('/');
+      //  return_to ? router.replace(return_to) : router.refresh();
+      router.refresh();
     },
     onError: (error: AxiosError<APIErrorResponse>) => {
       toast.error(

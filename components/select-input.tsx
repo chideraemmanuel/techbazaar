@@ -16,7 +16,7 @@ import {
 import { Label } from './ui/label';
 import { cn } from '@/lib/cn';
 
-interface SelectInputItem {
+export interface SelectInputItem {
   id: string;
   name: string;
   value: string;
