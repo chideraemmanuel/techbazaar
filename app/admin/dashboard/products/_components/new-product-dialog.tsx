@@ -6,8 +6,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
-import { Button } from './ui/button';
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { getAvailableBrands } from '@/lib/data/brand';
 import NewProductForm from './new-product-form';

@@ -1,9 +1,9 @@
 'use client';
 
 import { FC } from 'react';
-import Logo from './logo';
+import Logo from '@/components/logo';
 import { ADMIN_DASHBAORD_SIDEBAR_LINKS } from '@/constants';
-import { Separator } from './ui/separator';
+import { Separator } from '@/components/ui/separator';
 import AdminDashboardSidebarLink from './admin-dashboard-sidebar-link';
 
 interface Props {}

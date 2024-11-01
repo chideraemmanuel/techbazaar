@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import Logo from './logo';
+import Logo from '@/components/logo';
 import AdminDashboardMobileNavigation from './admin-dashboard-mobile-navigation';
 import AdminDashboardHeaderUserDropdown from './admin-dashboard-header-account-dropdown';
-import ThemeSwitcher from './theme-switcher';
+import ThemeSwitcher from '@/components/theme-switcher';
 
 interface Props {}
 

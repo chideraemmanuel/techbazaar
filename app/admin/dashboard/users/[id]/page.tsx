@@ -1,10 +1,10 @@
 import CopyToClipboard from '@/components/copy-to-clipboard';
-import DeleteUserDialog from '@/components/delete-user-dialog';
-import EditUserRoleDialog from '@/components/edit-user-role-dialog';
+import DeleteUserDialog from '@/app/admin/dashboard/users/_components/delete-user-dialog';
+import EditUserRoleDialog from '@/app/admin/dashboard/users/_components/edit-user-role-dialog';
 import {
   DisableUserDialog,
   EnableUserDialog,
-} from '@/components/enable-disable-user-dialogs';
+} from '@/app/admin/dashboard/users/_components/enable-disable-user-dialogs';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { DUMMY_USERS } from '@/dummy';

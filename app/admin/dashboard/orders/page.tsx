@@ -1,5 +1,5 @@
-import AdminDashboardResourceSort from '@/components/admin-dashboard-resource-sort';
-import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
+import AdminDashboardResourceSort from '@/app/admin/dashboard/_components/admin-dashboard-resource-sort';
+import AdminDashboardResourceHeader from '@/app/admin/dashboard/_components/admin-dashboard-resource-header';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
 import { Badge } from '@/components/ui/badge';
@@ -15,11 +15,11 @@ import {
 import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { FC } from 'react';
-import AdminDashboardUsersFilter from '@/components/admin-dashboard-users-filter';
+import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import EditOrderStatusDialog from '@/components/edit-order-status-dialog';
-import AdminDashboardOrdersFilter from '@/components/admin-dashboard-orders-filter';
+import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
+import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-dashboard-orders-filter';
 
 interface Props {}
 

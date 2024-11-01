@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import CurrentUser from './current-user';
+import CurrentUser from '@/components/current-user';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Avatar, AvatarFallback } from './ui/avatar';
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   RiArrowDownSLine,
   RiLogoutCircleLine,
@@ -15,7 +15,7 @@ import {
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import getCurrentUser from '@/lib/data/get-current-user';
-import LogoutUserButton from './logout-user-button';
+import LogoutUserButton from '@/components/logout-user-button';
 import { headers } from 'next/headers';
 
 interface Props {}

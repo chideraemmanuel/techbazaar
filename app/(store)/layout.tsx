@@ -1,4 +1,4 @@
-import StoreHeader from '@/components/store-header';
+import StoreHeader from '@/app/(store)/_components/store-header';
 import { FC } from 'react';
 
 interface Props {

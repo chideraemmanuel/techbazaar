@@ -7,13 +7,13 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
-} from './ui/sheet';
-import { Button } from './ui/button';
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 import { RiMenuLine } from '@remixicon/react';
-import Logo from './logo';
+import Logo from '@/components/logo';
 import { ADMIN_DASHBAORD_SIDEBAR_LINKS } from '@/constants';
 import AdminDashboardSidebarLink from './admin-dashboard-sidebar-link';
-import { Separator } from './ui/separator';
+import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { usePathname } from 'next/navigation';

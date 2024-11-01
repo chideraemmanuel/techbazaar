@@ -8,13 +8,13 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
-import { Button } from './ui/button';
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 import { Loader2, Plus } from 'lucide-react';
 import useAddBrand from '@/lib/hooks/use-add-brand';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import FormInput from './form-input';
-import ImageInput from './image-input';
+import FormInput from '@/components/form-input';
+import ImageInput from '@/components/image-input';
 
 const NewBrandDialog: FC = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);

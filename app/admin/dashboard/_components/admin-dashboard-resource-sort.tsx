@@ -1,12 +1,16 @@
 'use client';
 
 import { FC } from 'react';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Button } from './ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { RiSortDesc } from '@remixicon/react';
-import { RadioGroup, RadioGroupItem } from './ui/radio-group';
-import { Label } from './ui/label';
-import SelectInput, { SelectInputItem } from './select-input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import SelectInput, { SelectInputItem } from '@/components/select-input';
 
 interface Props {
   sort_items: SelectInputItem[];

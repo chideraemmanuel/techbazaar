@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react';
 import { FC } from 'react';
-import ResourceSearch from './resource-search';
-import { Button } from './ui/button';
+import ResourceSearch from '@/components/resource-search';
+import { Button } from '@/components/ui/button';
 
 interface Props {}
 

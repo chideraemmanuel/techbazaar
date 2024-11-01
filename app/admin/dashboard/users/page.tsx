@@ -1,5 +1,5 @@
-import AdminDashboardResourceSort from '@/components/admin-dashboard-resource-sort';
-import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
+import AdminDashboardResourceSort from '@/app/admin/dashboard/_components/admin-dashboard-resource-sort';
+import AdminDashboardResourceHeader from '@/app/admin/dashboard/_components/admin-dashboard-resource-header';
 import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
@@ -18,14 +18,14 @@ import { DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
 import { FC } from 'react';
-import DeleteUserDialog from '@/components/delete-user-dialog';
-import EditUserRoleDialog from '@/components/edit-user-role-dialog';
-import AdminDashboardUsersFilter from '@/components/admin-dashboard-users-filter';
+import DeleteUserDialog from '@/app/admin/dashboard/users/_components/delete-user-dialog';
+import EditUserRoleDialog from '@/app/admin/dashboard/users/_components/edit-user-role-dialog';
+import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
 import Link from 'next/link';
 import {
   DisableUserDialog,
   EnableUserDialog,
-} from '@/components/enable-disable-user-dialogs';
+} from '@/app/admin/dashboard/users/_components/enable-disable-user-dialogs';
 
 interface Props {}
 

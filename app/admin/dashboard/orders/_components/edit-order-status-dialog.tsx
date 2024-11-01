@@ -9,11 +9,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog';
-import { Button } from './ui/button';
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import SelectInput from './select-input';
+import SelectInput from '@/components/select-input';
 
 type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger

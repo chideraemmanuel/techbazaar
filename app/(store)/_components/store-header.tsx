@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import Logo from './logo';
-import { Button } from './ui/button';
+import Logo from '@/components/logo';
+import { Button } from '@/components/ui/button';
 import { RiMenuLine } from '@remixicon/react';
-import FormInput from './form-input';
+import FormInput from '@/components/form-input';
 import { Search, ShoppingCart, User } from 'lucide-react';
-import ResourceSearch from './resource-search';
-import ThemeSwitcher from './theme-switcher';
+import ResourceSearch from '@/components/resource-search';
+import ThemeSwitcher from '@/components/theme-switcher';
 import StoreHeaderSearch from './store-header-search';
 import StoreHeaderAccountDropdown from './store-header-account-dropdown';
 

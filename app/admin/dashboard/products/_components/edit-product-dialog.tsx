@@ -8,17 +8,17 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
-import { Button } from './ui/button';
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 import { Loader2, Pencil, Plus } from 'lucide-react';
-import FormInput from './form-input';
-import SelectInput from './select-input';
-import TextareaInput from './textarea-input';
+import FormInput from '@/components/form-input';
+import SelectInput from '@/components/select-input';
+import TextareaInput from '@/components/textarea-input';
 import { PRODUCT_CATEGORIES } from '@/constants';
-import ImageInput from './image-input';
-import MoneyInput from './money-input';
-import { Label } from './ui/label';
-import { Switch } from './ui/switch';
+import ImageInput from '@/components/image-input';
+import MoneyInput from '@/components/money-input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/cn';
 
 type EditProductDialogTriggerProps = ComponentPropsWithoutRef<

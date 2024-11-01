@@ -1,5 +1,5 @@
-import AdminDashboardHeader from '@/components/admin-dashboard-header';
-import AdminDashboardSidebar from '@/components/admin-dashboard-sidebar';
+import AdminDashboardHeader from '@/app/admin/dashboard/_components/admin-dashboard-header';
+import AdminDashboardSidebar from '@/app/admin/dashboard/_components/admin-dashboard-sidebar';
 import getCurrentUser from '@/lib/data/get-current-user';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';

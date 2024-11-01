@@ -1,15 +1,15 @@
-import AdminDashboardBrandsFilter from '@/components/admin-dashboard-brands-filter';
-import AdminDashboardResourceSort from '@/components/admin-dashboard-resource-sort';
-import AdminDashboardResourceHeader from '@/components/admin-dashboard-resource-header';
+import AdminDashboardBrandsFilter from '@/app/admin/dashboard/_components/admin-dashboard-brands-filter';
+import AdminDashboardResourceSort from '@/app/admin/dashboard/_components/admin-dashboard-resource-sort';
+import AdminDashboardResourceHeader from '@/app/admin/dashboard/_components/admin-dashboard-resource-header';
 import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
 import {
   DeleteProductDialog,
   RestoreProductDialog,
-} from '@/components/delete-restore-product-dialogs';
-import EditBrandDialog from '@/components/edit-product-dialog';
-import NewBrandDialog from '@/components/new-brand-dialog';
+} from '@/app/admin/dashboard/products/_components/delete-restore-product-dialogs';
+import EditBrandDialog from '@/app/admin/dashboard/products/_components/edit-product-dialog';
+import NewBrandDialog from '@/app/admin/dashboard/brands/_components/new-brand-dialog';
 import ResourceSearch from '@/components/resource-search';
 import {
   Table,

@@ -1,15 +1,15 @@
 'use client';
 
 import { FC } from 'react';
-import FormInput from './form-input';
-import SelectInput, { SelectInputItem } from './select-input';
-import TextareaInput from './textarea-input';
+import FormInput from '@/components/form-input';
+import SelectInput, { SelectInputItem } from '@/components/select-input';
+import TextareaInput from '@/components/textarea-input';
 import { PRODUCT_CATEGORIES } from '@/constants';
-import ImageInput from './image-input';
-import MoneyInput from './money-input';
-import { Label } from './ui/label';
-import { Switch } from './ui/switch';
-import { Button } from './ui/button';
+import ImageInput from '@/components/image-input';
+import MoneyInput from '@/components/money-input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 
 interface Props {

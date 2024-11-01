@@ -1,5 +1,5 @@
 import CopyToClipboard from '@/components/copy-to-clipboard';
-import EditOrderStatusDialog from '@/components/edit-order-status-dialog';
+import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';

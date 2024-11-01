@@ -6,15 +6,15 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Avatar, AvatarFallback } from './ui/avatar';
-import CurrentUser from './current-user';
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import CurrentUser from '@/components/current-user';
 import Link from 'next/link';
 import { RiLogoutCircleLine, RiUserLine } from '@remixicon/react';
-import { Button, buttonVariants } from './ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { ChartColumn, User } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import LogoutUserButton from './logout-user-button';
+import LogoutUserButton from '@/components/logout-user-button';
 
 interface Props {}
 
