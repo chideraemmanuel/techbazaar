@@ -64,7 +64,24 @@ const NewBrandForm: FC<{
     if (brandAddSuccess) {
       setDialogOpen(false);
     }
-  }, [brandAddSuccess]);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+    };
+
+    if (isAddingBrand) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.pointerEvents = 'none';
+
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [brandAddSuccess, isAddingBrand]);
 
   const form = useForm<IBrandForm>();
 

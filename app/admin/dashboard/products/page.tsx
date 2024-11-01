@@ -28,6 +28,7 @@ import { FC, Suspense } from 'react';
 import getCurrentUser from '@/lib/data/get-current-user';
 import { redirect } from 'next/navigation';
 import { getAllProducts } from '@/lib/data/product';
+import NewProduct from './_components/new-product';
 
 interface Props {}
 
@@ -123,7 +124,7 @@ const ProductsTable: FC = async () => {
             <AdminDashboardResourceSort sort_items={[]} />
 
             <Suspense>
-              <NewProductDialog />
+              <NewProduct />
             </Suspense>
           </div>
         </div>

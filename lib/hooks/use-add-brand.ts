@@ -6,7 +6,11 @@ import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
 const addBrand = async (data: { name: string; logo?: File }) => {
-  const response = await axios.post('/brands', data);
+  const response = await axios.post('/brands', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return response.data;
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FC } from 'react';
 import {
   Sheet,
@@ -8,22 +10,36 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { getAvailableBrands } from '@/lib/data/brand';
-import NewProductForm from './new-product-form';
+import useAddProduct, { IProductData } from '@/lib/hooks/use-add-product';
+import SelectInput, { SelectInputItem } from '@/components/select-input';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import FormInput from '@/components/form-input';
+import TextareaInput from '@/components/textarea-input';
+import { PRODUCT_CATEGORIES } from '@/constants';
+import { IAvailableBrand, ProductCategory } from '@/types/product';
+import ImageInput from '@/components/image-input';
+import MoneyInput from '@/components/money-input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
-const NewProductDialog: FC = async () => {
-  const brands = await getAvailableBrands();
+interface Props {
+  brands: IAvailableBrand[];
+}
 
+const NewProductDialog: FC<Props> = ({ brands }) => {
   const formatted_brands = brands.map((brand) => ({
     id: brand._id,
     name: brand.name,
     value: brand._id,
   }));
 
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
   return (
     <>
-      <Sheet>
+      <Sheet open={dialogOpen} onOpenChange={setDialogOpen}>
         <SheetTrigger asChild>
           <Button size={'sm'}>
             <Plus />
@@ -39,7 +55,10 @@ const NewProductDialog: FC = async () => {
             </SheetDescription>
           </SheetHeader>
 
-          <NewProductForm brands={formatted_brands} />
+          <NewProductForm
+            brands={formatted_brands}
+            setDialogOpen={setDialogOpen}
+          />
         </SheetContent>
       </Sheet>
     </>
@@ -47,3 +66,210 @@ const NewProductDialog: FC = async () => {
 };
 
 export default NewProductDialog;
+
+interface IProductForm extends Omit<IProductData, 'image'> {
+  image: FileList;
+}
+
+interface NewProductFormProps {
+  brands: SelectInputItem[];
+  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
+  const {
+    mutate: addProduct,
+    isLoading: isAddingProduct,
+    isSuccess: productAddSuccess,
+  } = useAddProduct();
+
+  React.useEffect(() => {
+    if (productAddSuccess) {
+      setDialogOpen(false);
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+    };
+
+    if (isAddingProduct) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.pointerEvents = 'none';
+
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [productAddSuccess, isAddingProduct]);
+
+  const form = useForm<IProductForm>();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    clearErrors,
+    setValue,
+  } = form;
+
+  const onSubmit: SubmitHandler<IProductForm> = (data, e) => {
+    addProduct({
+      ...data,
+      price: +data.price,
+      stock: +data.stock,
+      ...(data.image && { image: data.image?.[0] }),
+    });
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="pb-12 flex flex-col gap-5">
+          <FormInput
+            label="Name"
+            id="name"
+            placeholder="Enter product name"
+            {...register('name', {
+              required: {
+                value: true,
+                message: 'Product name is required',
+              },
+            })}
+            error={errors.name?.message}
+            disabled={isAddingProduct}
+          />
+
+          <SelectInput
+            label="Brand"
+            placeholder="Select a brand"
+            selectInputTriggerProps={{
+              id: 'brand',
+              ...register('brand', {
+                required: { value: true, message: 'Product brand is required' },
+              }),
+            }}
+            selectInputItemProps={{ className: 'capitalize' }}
+            selectInputItems={brands}
+            onItemSelect={(value) => {
+              clearErrors('brand');
+              setValue('brand', value);
+            }}
+            error={errors.brand?.message}
+            disabled={isAddingProduct}
+          />
+
+          <TextareaInput
+            label="Description"
+            id="description"
+            placeholder="Enter a product description"
+            className="h-28"
+            {...register('description', {
+              required: {
+                value: true,
+                message: 'Product description is required',
+              },
+            })}
+            error={errors.description?.message}
+            disabled={isAddingProduct}
+          />
+
+          <SelectInput
+            label="Category"
+            placeholder="Select a category"
+            // selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
+            selectInputTriggerProps={{
+              id: 'category',
+              ...register('category', {
+                required: {
+                  value: true,
+                  message: 'Product category is required',
+                },
+              }),
+            }}
+            selectInputItemProps={{ className: 'capitalize' }}
+            selectInputItems={PRODUCT_CATEGORIES}
+            onItemSelect={(value) => {
+              clearErrors('category');
+              setValue('category', value as ProductCategory);
+            }}
+            error={errors.category?.message}
+            disabled={isAddingProduct}
+          />
+
+          <ImageInput
+            label="Image"
+            id="image"
+            {...register('image', {
+              required: {
+                value: true,
+                message: 'Product image is required',
+              },
+            })}
+            error={errors.image?.message}
+            disabled={isAddingProduct}
+          />
+
+          <MoneyInput
+            label="Price"
+            id="price"
+            {...register('price', {
+              required: {
+                value: true,
+                message: 'Product price is required',
+              },
+            })}
+            error={errors.price?.message}
+            disabled={isAddingProduct}
+          />
+
+          <FormInput
+            label="Stock"
+            type="number"
+            pattern="\d*"
+            {...register('stock', {
+              required: {
+                value: true,
+                message: 'Product stock is required',
+              },
+            })}
+            error={errors.stock?.message}
+            disabled={isAddingProduct}
+          />
+
+          <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center sm:space-x-7 gap-5 sm:gap-0">
+            <div className="flex items-center gap-2">
+              <Label className="text-foreground/80 font-medium text-sm">
+                Feature product
+              </Label>
+              <Switch
+                onCheckedChange={(checked) =>
+                  setValue('is_featured', checked as boolean)
+                }
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Label className="text-foreground/80 font-medium text-sm">
+                Archive product
+              </Label>
+              <Switch
+                onCheckedChange={(checked) =>
+                  setValue('is_archived', checked as boolean)
+                }
+              />
+            </div>
+          </div>
+        </div>
+
+        <Button className="w-full" disabled={isAddingProduct}>
+          {isAddingProduct && <Loader2 className="h-4 w-4 animate-spin" />}
+          Add product
+        </Button>
+      </form>
+    </>
+  );
+};

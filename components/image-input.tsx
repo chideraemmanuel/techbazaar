@@ -64,7 +64,7 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
             <Input
               {...props}
               type="file"
-              accept="image/png,image/jpg,image/jpeg"
+              accept="image/png,image/jpg,image/jpeg,image/webp"
               className="hidden"
               ref={ref}
               disabled={disabled}
@@ -95,7 +95,7 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
                 disabled && 'cursor-not-allowed',
                 className
               )}
-              tabIndex={0}
+              tabIndex={disabled ? undefined : 0}
               ref={cardRef}
               onKeyUp={handleKeyUp}
             >

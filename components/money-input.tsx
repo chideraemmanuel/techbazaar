@@ -13,6 +13,7 @@ interface MoneyInputProps extends ComponentPropsWithoutRef<typeof Input> {
   label?: string;
   labelProps?: ComponentPropsWithoutRef<typeof Label>;
   currencySymbol?: string;
+  error?: string;
 }
 
 type MoneyInputRef = ElementRef<typeof Input>;
@@ -22,6 +23,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
     {
       label,
       labelProps,
+      error,
       placeholder,
       onChange,
       currencySymbol,
@@ -64,6 +66,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
           >
             {label}
           </Label>
+
           <div className="relative mt-1">
             <div className="absolute left-0 top-0 bottom-0 w-[58px] flex items-center justify-center border bg-secondary rounded-tl-sm rounded-bl-sm text-secondary-foreground/80 font-bold text-base">
               {currencySymbol || '₦'}
@@ -76,7 +79,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
               // pattern="\d*"
               inputMode="numeric"
               className={cn(
-                //   `${error && 'border-destructive'}`,
+                `${error && 'border-destructive'}`,
                 'bg-background shadow-sm text-foreground pl-[calc(58px_+_8px)] text-base',
                 className
               )}
@@ -85,6 +88,8 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
               {...props}
             />
           </div>
+
+          <span className="text-xs text-destructive">{error}</span>
         </div>
       </>
     );

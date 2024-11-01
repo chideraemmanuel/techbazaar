@@ -74,7 +74,6 @@ const SelectInput = React.forwardRef<SelectInputRef, SelectInputProps>(
         <Select
           defaultValue={defautlValue}
           onValueChange={(value) => {
-            console.log({ value });
             setSelectInputValue(value);
             onItemSelect(value);
           }}
