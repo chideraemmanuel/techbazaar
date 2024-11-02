@@ -15,20 +15,39 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import useDeleteProduct from '@/lib/hooks/use-delete-product';
+import { ProductTypes } from '@/types/product';
+import useRestoreProduct from '@/lib/hooks/use-restore=product';
 
 type DeleteProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
->;
+> & {
+  product: ProductTypes;
+};
 
 type DeleteProductDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
 export const DeleteProductDialog = React.forwardRef<
   DeleteProductDialogTriggerRef,
   DeleteProductDialogTriggerProps
->(({ className, ...props }, ref) => {
+>(({ product, className, ...props }, ref) => {
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const {
+    mutate: deleteProduct,
+    isLoading: isDeletingProduct,
+    isSuccess: productDeletionSuccessful,
+  } = useDeleteProduct();
+
+  React.useEffect(() => {
+    if (productDeletionSuccessful) {
+      setDialogOpen(false);
+    }
+  }, [productDeletionSuccessful]);
+
   return (
     <>
-      <AlertDialog>
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogTrigger asChild ref={ref}>
           <Button
             size={'icon'}
@@ -55,10 +74,18 @@ export const DeleteProductDialog = React.forwardRef<
           </AlertDialogHeader>
 
           <AlertDialogFooter className="mt-3 sm:mt-5">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeletingProduct}>
+              Cancel
+            </AlertDialogCancel>
 
-            <Button variant={'destructive'}>
-              <Loader2 className="h-4 w-4 animate-spin" />
+            <Button
+              variant={'destructive'}
+              onClick={() => deleteProduct(product._id)}
+              disabled={isDeletingProduct}
+            >
+              {isDeletingProduct && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
               Delete product
             </Button>
           </AlertDialogFooter>
@@ -70,17 +97,33 @@ export const DeleteProductDialog = React.forwardRef<
 
 type RestoreProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
->;
+> & {
+  product: ProductTypes;
+};
 
 type RestoreProductDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
 export const RestoreProductDialog = React.forwardRef<
   RestoreProductDialogTriggerRef,
   RestoreProductDialogTriggerProps
->(({ className, ...props }, ref) => {
+>(({ product, className, ...props }, ref) => {
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const {
+    mutate: restoreProduct,
+    isLoading: isRestoringProduct,
+    isSuccess: productRestorationSuccessful,
+  } = useRestoreProduct();
+
+  React.useEffect(() => {
+    if (productRestorationSuccessful) {
+      setDialogOpen(false);
+    }
+  }, [productRestorationSuccessful]);
+
   return (
     <>
-      <AlertDialog>
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogTrigger asChild ref={ref}>
           <Button
             size={'icon'}
@@ -107,8 +150,13 @@ export const RestoreProductDialog = React.forwardRef<
           <AlertDialogFooter className="mt-3 sm:mt-5">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-            <Button>
-              <Loader2 className="h-4 w-4 animate-spin" />
+            <Button
+              onClick={() => restoreProduct(product._id)}
+              disabled={isRestoringProduct}
+            >
+              {isRestoringProduct && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
               Restore product
             </Button>
           </AlertDialogFooter>

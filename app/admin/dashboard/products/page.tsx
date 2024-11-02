@@ -211,9 +211,9 @@ const ProductsTable: FC = async () => {
                     </Suspense>
 
                     {product.is_deleted ? (
-                      <RestoreProductDialog />
+                      <RestoreProductDialog product={product} />
                     ) : (
-                      <DeleteProductDialog />
+                      <DeleteProductDialog product={product} />
                     )}
                   </TableCell>
                 </TableRow>
