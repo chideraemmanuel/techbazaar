@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC } from 'react';
+import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -23,12 +23,20 @@ import ImageInput from '@/components/image-input';
 import MoneyInput from '@/components/money-input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import ComboBoxInput from '@/components/combobox-input';
 
-interface Props {
+type NewProductDialogTriggerProps = ComponentPropsWithoutRef<
+  typeof SheetTrigger
+> & {
   brands: IAvailableBrand[];
-}
+};
 
-const NewProductDialog: FC<Props> = ({ brands }) => {
+type NewProductDialogTriggerRef = ElementRef<typeof SheetTrigger>;
+
+const NewProductDialog = React.forwardRef<
+  NewProductDialogTriggerRef,
+  NewProductDialogTriggerProps
+>(({ brands, ...props }, ref) => {
   const formatted_brands = brands.map((brand) => ({
     id: brand._id,
     name: brand.name,
@@ -40,8 +48,8 @@ const NewProductDialog: FC<Props> = ({ brands }) => {
   return (
     <>
       <Sheet open={dialogOpen} onOpenChange={setDialogOpen}>
-        <SheetTrigger asChild>
-          <Button size={'sm'}>
+        <SheetTrigger asChild ref={ref}>
+          <Button size={'sm'} {...props}>
             <Plus />
             Add new product
           </Button>
@@ -63,7 +71,7 @@ const NewProductDialog: FC<Props> = ({ brands }) => {
       </Sheet>
     </>
   );
-};
+});
 
 export default NewProductDialog;
 
@@ -77,6 +85,8 @@ interface NewProductFormProps {
 }
 
 const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
+  const [brandsComboboxOpen, setBrandsComboboxOpen] = React.useState(false);
+
   const {
     mutate: addProduct,
     isLoading: isAddingProduct,
@@ -143,17 +153,19 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
             disabled={isAddingProduct}
           />
 
-          <SelectInput
+          <ComboBoxInput
             label="Brand"
             placeholder="Select a brand"
-            selectInputTriggerProps={{
+            comboboxOpen={brandsComboboxOpen}
+            setComboboxOpen={setBrandsComboboxOpen}
+            comboboxTriggerProps={{
               id: 'brand',
               ...register('brand', {
                 required: { value: true, message: 'Product brand is required' },
               }),
             }}
-            selectInputItemProps={{ className: 'capitalize' }}
-            selectInputItems={brands}
+            comboboxItemProps={{ className: 'capitalize' }}
+            comboboxItems={brands}
             onItemSelect={(value) => {
               clearErrors('brand');
               setValue('brand', value);

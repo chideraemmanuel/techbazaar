@@ -1,6 +1,6 @@
 import axios from '@/config/axios';
-import { APIErrorResponse } from '@/types';
-import { ProductCategory } from '@/types/product';
+import { APIErrorResponse, APISuccessResponse } from '@/types';
+import { ProductCategory, ProductTypes } from '@/types/product';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
@@ -20,11 +20,15 @@ export interface IProductData {
 
 const addProduct = async (data: IProductData) => {
   console.log('dataaa', data);
-  const response = await axios.post('/products', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const response = await axios.post<APISuccessResponse<ProductTypes>>(
+    '/products',
+    data,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
 
   return response.data;
 };
@@ -35,7 +39,7 @@ const useAddProduct = () => {
   return useMutation({
     mutationKey: ['add product'],
     mutationFn: addProduct,
-    onSuccess: (data) => {
+    onSuccess: (response) => {
       toast.success('Product added successfully');
 
       router.refresh();

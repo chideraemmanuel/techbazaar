@@ -22,7 +22,7 @@ import { Check, ChevronsUpDownIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Button } from './ui/button';
 
-interface ComboboxItem {
+export interface ComboboxItem {
   id: string;
   name: string;
   value: string;
@@ -79,8 +79,6 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
     const [comboboxValue, setComboboxValue] = useState<null | ComboboxItem>(
       defautlValue
     );
-
-    console.log({ comboboxItems });
 
     return (
       <>
@@ -145,7 +143,7 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
                         .map((comboboxItem) => {
                           return (
                             <CommandItem
-                              // key={comboboxItem.id}
+                              key={comboboxItem.id}
                               // value={comboboxItem.value}
                               // uses .name instead of .value because search functionality searches whatever is used
                               // this is corrected in onItemSelect where the value is set to .value (the actual value)

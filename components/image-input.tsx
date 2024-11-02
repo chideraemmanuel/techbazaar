@@ -80,6 +80,8 @@ const ImageInput = forwardRef<ImageInputRef, ImageInputProps>(
                       src: reader.result,
                     });
                   };
+                } else {
+                  setSelectedImage(undefined);
                 }
 
                 if (onChange) {

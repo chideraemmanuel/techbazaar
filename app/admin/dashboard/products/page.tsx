@@ -29,6 +29,7 @@ import getCurrentUser from '@/lib/data/get-current-user';
 import { redirect } from 'next/navigation';
 import { getAllProducts } from '@/lib/data/product';
 import NewProduct from './_components/new-product';
+import EditProduct from './_components/edit-product';
 
 interface Props {}
 
@@ -205,7 +206,9 @@ const ProductsTable: FC = async () => {
                   </TableCell>
 
                   <TableCell className="space-x-1">
-                    <EditProductDialog />
+                    <Suspense>
+                      <EditProduct product={product} />
+                    </Suspense>
 
                     {product.is_deleted ? (
                       <RestoreProductDialog />
