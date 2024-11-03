@@ -46,7 +46,7 @@ const DataTableItemsPerPage: FC<Props> = () => {
 
         <SelectInput
           selectInputItems={items}
-          defautlValue="20"
+          defaultValue="20"
           onItemSelect={(value) => updateSearchParams('limit', value)}
           selectInputTriggerProps={{
             className: '!p-[5px] h-[auto] text-xs shadow-sm',

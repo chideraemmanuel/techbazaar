@@ -38,7 +38,6 @@ const NewProductDialog = React.forwardRef<
   NewProductDialogTriggerProps
 >(({ brands, ...props }, ref) => {
   const formatted_brands = brands.map((brand) => ({
-    id: brand._id,
     name: brand.name,
     value: brand._id,
   }));

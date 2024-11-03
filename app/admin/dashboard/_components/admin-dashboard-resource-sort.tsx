@@ -48,7 +48,7 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
       newSearchParams.set('sort_order', sortOrder);
     }
 
-    router.replace(`?${newSearchParams}`);
+    router.replace(`?${newSearchParams}`, { scroll: false });
 
     setPopoverOpen(false);
   };
@@ -62,7 +62,7 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
     newSearchParams.delete('sort_by');
     newSearchParams.delete('sort_order');
 
-    router.replace(`?${newSearchParams}`);
+    router.replace(`?${newSearchParams}`, { scroll: false });
 
     setPopoverOpen(false);
   };
@@ -85,7 +85,7 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
                 selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                 selectInputItemProps={{ className: 'capitalize' }}
                 selectInputItems={sort_items}
-                defautlValue={sortBy ?? undefined}
+                defaultValue={sortBy || undefined}
                 onItemSelect={setSortBy}
               />
             </SortSection>

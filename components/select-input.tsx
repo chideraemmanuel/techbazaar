@@ -17,7 +17,6 @@ import { Label } from './ui/label';
 import { cn } from '@/lib/cn';
 
 export interface SelectInputItem {
-  id: string;
   name: string;
   value: string;
 }
@@ -28,8 +27,9 @@ interface SelectInputProps {
   error?: string;
   disabled?: boolean;
   placeholder?: string;
-  //   defautlValue?: SelectInputItem;
-  defautlValue?: string;
+  //   defaultValue?: SelectInputItem;
+  defaultValue?: string;
+  value?: string;
   selectInputItems: SelectInputItem[];
   selectInputTriggerProps?: Omit<
     ComponentPropsWithoutRef<typeof SelectTrigger>,
@@ -55,7 +55,8 @@ const SelectInput = React.forwardRef<SelectInputRef, SelectInputProps>(
       disabled,
       placeholder,
       selectInputItems,
-      defautlValue,
+      defaultValue,
+      value,
       selectInputTriggerProps,
       selectInputContentProps,
       onItemSelect,
@@ -66,13 +67,14 @@ const SelectInput = React.forwardRef<SelectInputRef, SelectInputProps>(
     //  FOR MANAGING TRIGGER STYLES
     const [selectInputValue, setSelectInputValue] = useState<
       undefined | string
-    >(defautlValue);
+    >(defaultValue || value);
 
     return (
       <div>
         <Label htmlFor={selectInputTriggerProps?.id}>{label}</Label>
         <Select
-          defaultValue={defautlValue}
+          value={value}
+          defaultValue={defaultValue}
           onValueChange={(value) => {
             setSelectInputValue(value);
             onItemSelect(value);
@@ -97,8 +99,8 @@ const SelectInput = React.forwardRef<SelectInputRef, SelectInputProps>(
           <SelectContent {...selectInputContentProps}>
             {selectInputItems.map((item) => (
               <SelectItem
-                key={item.id}
-                value={item.id}
+                key={item.value}
+                value={item.value}
                 {...selectInputItemProps}
               >
                 {item.name}

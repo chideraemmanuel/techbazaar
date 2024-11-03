@@ -9,20 +9,50 @@ import {
 import { PRODUCT_CATEGORIES } from '@/constants';
 import { cn } from '@/lib/cn';
 import { ChevronRight, Laptop } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ComponentPropsWithoutRef, FC } from 'react';
+import heroImage from '@/assets/images/hero-image.png';
+import phone from '@/assets/images/phone.png';
+import ProductsGridContainer from './_components/products-grid-container';
+import { DUMMY_PRODUCTS } from '@/dummy';
 
 interface Props {}
 
 const Home: FC<Props> = () => {
+  const product = DUMMY_PRODUCTS[0];
   return (
     <>
-      {/* hero */}
-      <section className="h-[50vh] bg-secondary"></section>
+      <section className="h-[60vh] md:h-[70vh] bg-secondary">
+        <div className="container h-full flex items-center gap-5">
+          <div className="flex-[3] space-y-5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
+              Lorem ipsum, dolor sit amet consectetur adipisicing.
+            </h1>
 
-      {/* body */}
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
+              dolorem laboriosam optio quasi perspiciatis minus rerum nam
+              obcaecati aliquam sint deserunt eveniet facilis omnis explicabo
+              modi maiores, voluptatem, tempore sed.
+            </p>
+
+            <Button size={'lg'}>Shop now</Button>
+          </div>
+
+          <div className="flex-[2] h-full py-7 hidden md:block">
+            <Image
+              src={heroImage.src}
+              alt="hero"
+              width={295}
+              height={379}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      </section>
+
       <div className="py-7 space-y-14">
-        {/* categories */}
         <section>
           <div className="container">
             <SectionHeader title="Categories" />
@@ -32,10 +62,19 @@ const Home: FC<Props> = () => {
                 <Link
                   key={category.id}
                   href={`/categories/${category.id}`}
-                  className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:ring-2 hover:ring-ring hover:ring-offset-2"
+                  className="group rounded-lg"
                 >
-                  <Card className="px-3 sm:px-5 py-3 sm:py-5 flex items-center space-x-2 sm:space-x-3">
-                    <Laptop />
+                  <Card className="px-3 sm:px-5 py-3 sm:py-5 flex items-center space-x-2 sm:space-x-3 group-hover:border-foreground/20 group-hover:bg-secondary/50 transition-colors">
+                    <div className="w-[50px] h-[50px]">
+                      <Image
+                        src={phone.src}
+                        alt="#"
+                        width={426}
+                        height={585}
+                        className="w-full h-full object-contain transition-transform group-hover:scale-110"
+                      />
+                    </div>
+                    {/* <Laptop /> */}
                     <span className="capitalize text-sm sm:text-base">
                       {category.name}
                     </span>
@@ -54,14 +93,14 @@ const Home: FC<Props> = () => {
               seeAllHref="#"
             />
 
-            <div className="grid grid-cols-[repeat(auto-fill,_minmax(130px,_1fr))] sm:grid-cols-[repeat(auto-fill,_minmax(170px,_1fr))] gap-4 sm:gap-5">
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-            </div>
+            <ProductsGridContainer>
+              <ProductCard product={product} />
+              <ProductCard product={product} />
+              <ProductCard product={product} />
+              <ProductCard product={product} />
+              <ProductCard product={product} />
+              <ProductCard product={product} />
+            </ProductsGridContainer>
           </div>
         </section>
 

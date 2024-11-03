@@ -41,21 +41,8 @@ export const getAllBrands = async (searchParams: ISearchParams = {}) => {
 };
 
 export const getAvailableBrands = async () => {
-  const session_id = (await cookies()).get('session_id')?.value;
-
-  if (!session_id) throw new Error('Unauthorized access');
-
-  const user = await getCurrentUser();
-
-  if (!user) throw new Error('Unauthorized access');
-
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands`,
-    {
-      headers: {
-        Cookie: `session_id=${session_id}`,
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands`
   );
 
   if (!response.ok) {

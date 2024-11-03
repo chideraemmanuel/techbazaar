@@ -38,7 +38,7 @@ interface Props {
 }
 
 const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
-  const params = await searchParams;
+  const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
@@ -73,7 +73,7 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
-            <ProductsTable searchParams={params} />
+            <ProductsTable searchParams={searchParamsObject} />
           </Suspense>
         </div>
       </div>
@@ -120,7 +120,6 @@ const ProductsTable: FC<{ searchParams: ISearchParams }> = async ({
   ]);
 
   const formatted_brands = brands.map((brand) => ({
-    id: brand._id,
     name: brand.name,
     value: brand._id,
   }));

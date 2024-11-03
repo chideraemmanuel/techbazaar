@@ -81,7 +81,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
       newSearchParams.set('is_deleted', isDeleted);
     }
 
-    router.replace(`?${newSearchParams}`);
+    router.replace(`?${newSearchParams}`, { scroll: false });
 
     setPopoverOpen(false);
   };
@@ -105,7 +105,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
     newSearchParams.delete('is_archived');
     newSearchParams.delete('is_deleted');
 
-    router.replace(`?${newSearchParams}`);
+    router.replace(`?${newSearchParams}`, { scroll: false });
 
     setPopoverOpen(false);
   };
@@ -129,7 +129,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
                   selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                   selectInputItemProps={{ className: 'capitalize' }}
                   selectInputItems={PRODUCT_CATEGORIES}
-                  defautlValue={category ?? undefined}
+                  defaultValue={category || undefined}
                   onItemSelect={(value) => setCategory(value)}
                 />
               </FilterSection>
@@ -140,7 +140,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
                   selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                   selectInputItemProps={{ className: 'capitalize' }}
                   selectInputItems={brands}
-                  defautlValue={brand ?? undefined}
+                  defaultValue={brand || undefined}
                   onItemSelect={(value) => setBrand(value)}
                 />
               </FilterSection>

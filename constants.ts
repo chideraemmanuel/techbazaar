@@ -54,37 +54,30 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
 
 export const PRODUCT_CATEGORIES = [
   {
-    id: 'smartphones',
     name: 'smartphones',
     value: 'smartphones',
   },
   {
-    id: 'tablets',
     name: 'tablets',
     value: 'tablets',
   },
   {
-    id: 'laptops',
     name: 'laptops',
     value: 'laptops',
   },
   {
-    id: 'headphones',
     name: 'headphones',
     value: 'headphones',
   },
   {
-    id: 'speakers',
     name: 'speakers',
     value: 'speakers',
   },
   {
-    id: 'smartwatches',
     name: 'smartwatches',
     value: 'smartwatches',
   },
   {
-    id: 'gaming-consoles',
     name: 'gaming consoles',
     value: 'gaming-consoles',
   },
@@ -92,22 +85,18 @@ export const PRODUCT_CATEGORIES = [
 
 export const PRODUCTS_SORT_ITEMS = [
   {
-    id: 'name',
     name: 'name',
     value: 'name',
   },
   {
-    id: 'price',
     name: 'price',
     value: 'price',
   },
   {
-    id: 'date_created',
     name: 'date created',
     value: 'date_created',
   },
   {
-    id: 'date_updated',
     name: 'date updated',
     value: 'date_updated',
   },
@@ -115,17 +104,14 @@ export const PRODUCTS_SORT_ITEMS = [
 
 export const BRANDS_SORT_ITEMS = [
   {
-    id: 'name',
     name: 'name',
     value: 'name',
   },
   {
-    id: 'date_created',
     name: 'date created',
     value: 'date_created',
   },
   {
-    id: 'date_updated',
     name: 'date updated',
     value: 'date_updated',
   },

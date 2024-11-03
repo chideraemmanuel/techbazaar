@@ -34,7 +34,7 @@ interface Props {
 }
 
 const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
-  const params = await searchParams;
+  const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
@@ -69,7 +69,7 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
-            <BrandsTable searchParams={params} />
+            <BrandsTable searchParams={searchParamsObject} />
           </Suspense>
         </div>
       </div>

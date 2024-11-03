@@ -23,7 +23,6 @@ import { cn } from '@/lib/cn';
 import { Button } from './ui/button';
 
 export interface ComboboxItem {
-  id: string;
   name: string;
   value: string;
 }
@@ -34,7 +33,7 @@ interface ComboBoxInputProps {
   placeholder?: string;
   error?: string;
   disabled?: boolean;
-  defautlValue?: ComboboxItem;
+  defaultValue?: ComboboxItem;
   comboboxOpen: boolean;
   setComboboxOpen: Dispatch<SetStateAction<boolean>>;
   comboboxItems: ComboboxItem[];
@@ -62,7 +61,7 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
       placeholder,
       error,
       disabled,
-      defautlValue = null,
+      defaultValue = null,
       comboboxOpen,
       setComboboxOpen,
       comboboxItems,
@@ -77,7 +76,7 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
   ) => {
     //  FOR MANAGING POPOVER TRIGGER DISPLAY AND STYLES
     const [comboboxValue, setComboboxValue] = useState<null | ComboboxItem>(
-      defautlValue
+      defaultValue
     );
 
     return (
@@ -121,8 +120,8 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
 
             <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0">
               {/* uses .name instead if .value becaues 'value' attribute on CommandItem uses .name */}
-              {/* <Command className="w-full" defaultValue={defautlValue?.name}> */}
-              <Command className="w-full" defaultValue={defautlValue?.value}>
+              {/* <Command className="w-full" defaultValue={defaultValue?.name}> */}
+              <Command className="w-full" defaultValue={defaultValue?.value}>
                 {/* CommandList must wrap the entire components for the component to work properly. And the data-[disabled] in the CommandItem styling should be changed to data-[disabled='true']. */}
                 <CommandList>
                   {/* <ScrollArea className="h-72"></ScrollArea> */}
@@ -143,7 +142,7 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
                         .map((comboboxItem) => {
                           return (
                             <CommandItem
-                              key={comboboxItem.id}
+                              key={comboboxItem.value}
                               // value={comboboxItem.value}
                               // uses .name instead of .value because search functionality searches whatever is used
                               // this is corrected in onItemSelect where the value is set to .value (the actual value)
@@ -151,8 +150,6 @@ const ComboBoxInput = React.forwardRef<ComboBoxTriggerRef, ComboBoxInputProps>(
                               onSelect={(value) => {
                                 setComboboxOpen(false);
                                 setComboboxValue({
-                                  id: comboboxItem.id,
-                                  // value,
                                   value: comboboxItem.value,
                                   name: comboboxItem.name,
                                 });

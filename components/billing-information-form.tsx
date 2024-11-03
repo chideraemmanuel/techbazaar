@@ -130,7 +130,7 @@ const BillingInformationForm: FC<Props> = () => {
             clearErrors('address');
             setValue('address.country', value);
           }}
-          //  defautlValue={}
+          //  defaultValue={}
           //  disabled={isPlacingOrder}
         />
 
@@ -155,7 +155,7 @@ const BillingInformationForm: FC<Props> = () => {
             clearErrors('address');
             setValue('address.state', value);
           }}
-          //  defautlValue={}
+          //  defaultValue={}
           //  disabled={isPlacingOrder}
         />
 
@@ -180,7 +180,7 @@ const BillingInformationForm: FC<Props> = () => {
             clearErrors('address');
             setValue('address.city', value);
           }}
-          //  defautlValue={}
+          //  defaultValue={}
           //  disabled={isPlacingOrder}
         />
       </div>

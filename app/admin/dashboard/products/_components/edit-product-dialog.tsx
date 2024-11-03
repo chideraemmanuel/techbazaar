@@ -44,7 +44,6 @@ const EditProductDialog = React.forwardRef<
   EditProductDialogTriggerProps
 >(({ product, brands, className, ...props }, ref) => {
   const formatted_brands = brands.map((brand) => ({
-    id: brand._id,
     name: brand.name,
     value: brand._id,
   }));
@@ -269,8 +268,8 @@ const EditProductForm: FC<EditProductFormProps> = ({
               clearErrors('brand');
               setValue('brand', value);
             }}
-            defautlValue={brands.find(
-              (brand) => brand.id === product.brand._id
+            defaultValue={brands.find(
+              (brand) => brand.value === product.brand._id
             )}
             error={errors.brand?.message}
             disabled={isEditingProduct}
@@ -309,7 +308,7 @@ const EditProductForm: FC<EditProductFormProps> = ({
               clearErrors('category');
               setValue('category', value as ProductCategory);
             }}
-            defautlValue={product.category}
+            defaultValue={product.category}
             error={errors.category?.message}
             disabled={isEditingProduct}
           />

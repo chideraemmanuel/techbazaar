@@ -79,7 +79,7 @@ const ProductDetailsPage: FC<Props> = () => {
                   key={index}
                   className="basis-[80%] [@media_(min-width:_375px)]:basis-[60%] [@media_(min-width:_520px)]:basis-[30%] sm:!basis-[30%] md:!basis-[23%] lg:!basis-[19%]"
                 >
-                  <ProductCard />
+                  <ProductCard product={product} />
                 </CarouselItem>
               ))}
             </CarouselContent>
