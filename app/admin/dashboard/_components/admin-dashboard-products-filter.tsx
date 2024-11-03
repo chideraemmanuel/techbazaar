@@ -129,7 +129,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
                   selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                   selectInputItemProps={{ className: 'capitalize' }}
                   selectInputItems={PRODUCT_CATEGORIES}
-                  defautlValue={category ? category : undefined}
+                  defautlValue={category ?? undefined}
                   onItemSelect={(value) => setCategory(value)}
                 />
               </FilterSection>
@@ -140,7 +140,7 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
                   selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                   selectInputItemProps={{ className: 'capitalize' }}
                   selectInputItems={brands}
-                  defautlValue={brand ? brand : undefined}
+                  defautlValue={brand ?? undefined}
                   onItemSelect={(value) => setBrand(value)}
                 />
               </FilterSection>

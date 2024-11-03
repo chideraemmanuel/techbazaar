@@ -1,20 +1,20 @@
 import { useMutation } from 'react-query';
-import { IProductData } from './use-add-product';
+import { IBrandData } from './use-add-brand';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { useRouter } from 'next/navigation';
 import axios from '@/config/axios';
-import { ProductTypes } from '@/types/product';
+import { BrandTypes } from '@/types/product';
 
 interface IParams {
   id: string;
-  data: Partial<IProductData>;
+  data: Partial<IBrandData>;
 }
 
-const editProduct = async ({ id, data }: IParams) => {
-  const response = await axios.put<APISuccessResponse<ProductTypes>>(
-    `/products/${id}`,
+const editBrand = async ({ id, data }: IParams) => {
+  const response = await axios.put<APISuccessResponse<BrandTypes>>(
+    `/brands/${id}`,
     data,
     {
       headers: {
@@ -26,14 +26,14 @@ const editProduct = async ({ id, data }: IParams) => {
   return response.data;
 };
 
-const useEditProduct = () => {
+const useEditBrand = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationKey: ['edit product'],
-    mutationFn: editProduct,
+    mutationKey: ['edit brand'],
+    mutationFn: editBrand,
     onSuccess: (response) => {
-      toast.success('Product updated successfully');
+      toast.success('Brand updated successfully');
 
       router.refresh();
     },
@@ -41,10 +41,10 @@ const useEditProduct = () => {
       toast.error(
         error?.response?.data?.error ||
           error?.message ||
-          'Failed to update product'
+          'Failed to update brand'
       );
     },
   });
 };
 
-export default useEditProduct;
+export default useEditBrand;

@@ -85,7 +85,7 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
                 selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                 selectInputItemProps={{ className: 'capitalize' }}
                 selectInputItems={sort_items}
-                defautlValue={sortBy ? sortBy : undefined}
+                defautlValue={sortBy ?? undefined}
                 onItemSelect={setSortBy}
               />
             </SortSection>

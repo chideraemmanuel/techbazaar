@@ -15,35 +15,35 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import useDeleteProduct from '@/lib/hooks/use-delete-product';
-import { ProductTypes } from '@/types/product';
-import useRestoreProduct from '@/lib/hooks/use-restore-product';
+import useDeleteBrand from '@/lib/hooks/use-delete-brand';
+import { BrandTypes } from '@/types/product';
+import useRestoreBrand from '@/lib/hooks/use-restore-brand';
 
-type DeleteProductDialogTriggerProps = ComponentPropsWithoutRef<
+type DeleteBrandDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
 > & {
-  product: ProductTypes;
+  brand: BrandTypes;
 };
 
-type DeleteProductDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
+type DeleteBrandDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
-export const DeleteProductDialog = React.forwardRef<
-  DeleteProductDialogTriggerRef,
-  DeleteProductDialogTriggerProps
->(({ product, className, ...props }, ref) => {
+export const DeleteBrandDialog = React.forwardRef<
+  DeleteBrandDialogTriggerRef,
+  DeleteBrandDialogTriggerProps
+>(({ brand, className, ...props }, ref) => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
-    mutate: deleteProduct,
-    isLoading: isDeletingProduct,
-    isSuccess: productDeletionSuccessful,
-  } = useDeleteProduct();
+    mutate: deleteBrand,
+    isLoading: isDeletingBrand,
+    isSuccess: brandDeletionSuccessful,
+  } = useDeleteBrand();
 
   React.useEffect(() => {
-    if (productDeletionSuccessful) {
+    if (brandDeletionSuccessful) {
       setDialogOpen(false);
     }
-  }, [productDeletionSuccessful]);
+  }, [brandDeletionSuccessful]);
 
   return (
     <>
@@ -56,37 +56,35 @@ export const DeleteProductDialog = React.forwardRef<
               'w-9 h-9 text-destructive hover:text-destructive hover:bg-destructive/10',
               className
             )}
-            title="Delete product"
+            title="Delete brand"
             {...props}
           >
             <Trash2 />
-            <span className="sr-only">Delete product</span>
+            <span className="sr-only">Delete brand</span>
           </Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete product</AlertDialogTitle>
+            <AlertDialogTitle>Delete brand</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this product? This product will no
+              Are you sure you want to delete this brand? This brand will no
               longer be available to consumers except if restored later.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter className="mt-3 sm:mt-5">
-            <AlertDialogCancel disabled={isDeletingProduct}>
+            <AlertDialogCancel disabled={isDeletingBrand}>
               Cancel
             </AlertDialogCancel>
 
             <Button
               variant={'destructive'}
-              onClick={() => deleteProduct(product._id)}
-              disabled={isDeletingProduct}
+              onClick={() => deleteBrand(brand._id)}
+              disabled={isDeletingBrand}
             >
-              {isDeletingProduct && (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              )}
-              Delete product
+              {isDeletingBrand && <Loader2 className="h-4 w-4 animate-spin" />}
+              Delete brand
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -95,31 +93,31 @@ export const DeleteProductDialog = React.forwardRef<
   );
 });
 
-type RestoreProductDialogTriggerProps = ComponentPropsWithoutRef<
+type RestoreBrandDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
 > & {
-  product: ProductTypes;
+  brand: BrandTypes;
 };
 
-type RestoreProductDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
+type RestoreBrandDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
-export const RestoreProductDialog = React.forwardRef<
-  RestoreProductDialogTriggerRef,
-  RestoreProductDialogTriggerProps
->(({ product, className, ...props }, ref) => {
+export const RestoreBrandDialog = React.forwardRef<
+  RestoreBrandDialogTriggerRef,
+  RestoreBrandDialogTriggerProps
+>(({ brand, className, ...props }, ref) => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
-    mutate: restoreProduct,
-    isLoading: isRestoringProduct,
-    isSuccess: productRestorationSuccessful,
-  } = useRestoreProduct();
+    mutate: restoreBrand,
+    isLoading: isRestoringBrand,
+    isSuccess: brandRestorationSuccessful,
+  } = useRestoreBrand();
 
   React.useEffect(() => {
-    if (productRestorationSuccessful) {
+    if (brandRestorationSuccessful) {
       setDialogOpen(false);
     }
-  }, [productRestorationSuccessful]);
+  }, [brandRestorationSuccessful]);
 
   return (
     <>
@@ -129,21 +127,21 @@ export const RestoreProductDialog = React.forwardRef<
             size={'icon'}
             variant={'ghost'}
             className={cn('w-9 h-9 text-muted-foreground', className)}
-            title="Restore product"
+            title="Restore brand"
             {...props}
           >
             {/* <RotateCcw /> */}
             <ArchiveRestore />
-            <span className="sr-only">Restore product</span>
+            <span className="sr-only">Restore brand</span>
           </Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Restore product</AlertDialogTitle>
+            <AlertDialogTitle>Restore brand</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to restore this product? This product will
-              now be available to consumers.
+              Are you sure you want to restore this brand? This brand will now
+              be available to consumers.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -151,13 +149,11 @@ export const RestoreProductDialog = React.forwardRef<
             <AlertDialogCancel>Cancel</AlertDialogCancel>
 
             <Button
-              onClick={() => restoreProduct(product._id)}
-              disabled={isRestoringProduct}
+              onClick={() => restoreBrand(brand._id)}
+              disabled={isRestoringBrand}
             >
-              {isRestoringProduct && (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              )}
-              Restore product
+              {isRestoringBrand && <Loader2 className="h-4 w-4 animate-spin" />}
+              Restore brand
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

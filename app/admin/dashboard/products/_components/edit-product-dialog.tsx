@@ -85,7 +85,7 @@ const EditProductDialog = React.forwardRef<
 
 export default EditProductDialog;
 
-interface IProductForm extends Omit<IProductData, 'image' | 'is_archived'> {
+interface IProductForm extends Omit<IProductData, 'image'> {
   image: FileList;
 }
 
@@ -367,18 +367,6 @@ const EditProductForm: FC<EditProductFormProps> = ({
                 }
               />
             </div>
-
-            {/* <div className="flex items-center gap-2">
-              <Label className="text-foreground/80 font-medium text-sm">
-                Archive product
-              </Label>
-              <Switch
-                defaultChecked={product.is_archived}
-                onCheckedChange={(checked) =>
-                  setValue('is_archived', checked as boolean)
-                }
-              />
-            </div> */}
           </div>
         </div>
 

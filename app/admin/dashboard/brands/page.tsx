@@ -5,10 +5,9 @@ import BooleanBadge from '@/components/boolean-badge';
 import DataTableItemsPerPage from '@/components/data-table-items-per-page';
 import DataTablePagination from '@/components/data-table-pagination';
 import {
-  DeleteProductDialog,
-  RestoreProductDialog,
-} from '@/app/admin/dashboard/products/_components/delete-restore-product-dialogs';
-import EditBrandDialog from '@/app/admin/dashboard/products/_components/edit-product-dialog';
+  DeleteBrandDialog,
+  RestoreBrandDialog,
+} from '@/app/admin/dashboard/brands/_components/delete-restore-brand-dialogs';
 import NewBrandDialog from '@/app/admin/dashboard/brands/_components/new-brand-dialog';
 import ResourceSearch from '@/components/resource-search';
 import {
@@ -26,6 +25,7 @@ import { FC, Suspense } from 'react';
 import getCurrentUser from '@/lib/data/get-current-user';
 import { redirect } from 'next/navigation';
 import { getAllBrands } from '@/lib/data/brand';
+import EditBrandDialog from './_components/edit-brand-dialog';
 
 interface Props {}
 
@@ -173,11 +173,12 @@ const BrandsTable: FC = async () => {
                   </TableCell>
 
                   <TableCell className="space-x-1">
-                    <EditBrandDialog /> {/* TODO: change */}
+                    <EditBrandDialog brand={brand} />
+
                     {brand.is_deleted ? (
-                      <RestoreProductDialog /> // TODO: change
+                      <RestoreBrandDialog brand={brand} />
                     ) : (
-                      <DeleteProductDialog /> // TODO: change
+                      <DeleteBrandDialog brand={brand} />
                     )}
                   </TableCell>
                 </TableRow>

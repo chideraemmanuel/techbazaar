@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Loader2, Plus } from 'lucide-react';
-import useAddBrand from '@/lib/hooks/use-add-brand';
+import useAddBrand, { IBrandData } from '@/lib/hooks/use-add-brand';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '@/components/form-input';
 import ImageInput from '@/components/image-input';
@@ -46,8 +46,7 @@ const NewBrandDialog: FC = () => {
 
 export default NewBrandDialog;
 
-interface IBrandForm {
-  name: string;
+interface IBrandForm extends Omit<IBrandData, 'logo'> {
   logo?: FileList;
 }
 
