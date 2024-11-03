@@ -89,3 +89,26 @@ export const PRODUCT_CATEGORIES = [
     value: 'gaming-consoles',
   },
 ];
+
+export const PRODUCTS_SORT_ITEMS = [
+  {
+    id: 'name',
+    name: 'name',
+    value: 'name',
+  },
+  {
+    id: 'price',
+    name: 'price',
+    value: 'price',
+  },
+  {
+    id: 'date_created',
+    name: 'date created',
+    value: 'date_created',
+  },
+  {
+    id: 'date_updated',
+    name: 'date updated',
+    value: 'date_updated',
+  },
+];

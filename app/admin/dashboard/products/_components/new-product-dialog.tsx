@@ -263,17 +263,6 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
                 }
               />
             </div>
-
-            <div className="flex items-center gap-2">
-              <Label className="text-foreground/80 font-medium text-sm">
-                Archive product
-              </Label>
-              <Switch
-                onCheckedChange={(checked) =>
-                  setValue('is_archived', checked as boolean)
-                }
-              />
-            </div>
           </div>
         </div>
 

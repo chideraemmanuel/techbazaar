@@ -17,3 +17,7 @@ export interface APIPaginatedResponse<T> {
 export interface APIErrorResponse {
   error: string;
 }
+
+export interface ISearchParams {
+  [key: string]: string | string[] | undefined;
+}

@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PRODUCT_CATEGORIES } from '@/constants';
+import { PRODUCT_CATEGORIES, PRODUCTS_SORT_ITEMS } from '@/constants';
 import { DUMMY_PRODUCTS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
@@ -30,10 +30,15 @@ import { redirect } from 'next/navigation';
 import { getAllProducts } from '@/lib/data/product';
 import NewProduct from './_components/new-product';
 import EditProduct from './_components/edit-product';
+import { ISearchParams } from '@/types';
+import { getAvailableBrands } from '@/lib/data/brand';
 
-interface Props {}
+interface Props {
+  searchParams: Promise<ISearchParams>;
+}
 
-const AdminDashboardProductsPage: FC<Props> = async () => {
+const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
+  const params = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
@@ -68,7 +73,7 @@ const AdminDashboardProductsPage: FC<Props> = async () => {
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
-            <ProductsTable />
+            <ProductsTable searchParams={params} />
           </Suspense>
         </div>
       </div>
@@ -103,8 +108,22 @@ const headers = [
   'actions',
 ];
 
-const ProductsTable: FC = async () => {
-  const { data: products, pagination } = await getAllProducts();
+const ProductsTable: FC<{ searchParams: ISearchParams }> = async ({
+  searchParams,
+}) => {
+  const productsPromise = getAllProducts(searchParams);
+  const brandsPromise = getAvailableBrands();
+
+  const [{ data: products, pagination }, brands] = await Promise.all([
+    productsPromise,
+    brandsPromise,
+  ]);
+
+  const formatted_brands = brands.map((brand) => ({
+    id: brand._id,
+    name: brand.name,
+    value: brand._id,
+  }));
 
   return (
     <>
@@ -120,9 +139,9 @@ const ProductsTable: FC = async () => {
           </div>
 
           <div className="space-x-2">
-            <AdminDashboardProductsFilter />
+            <AdminDashboardProductsFilter brands={formatted_brands} />
 
-            <AdminDashboardResourceSort sort_items={[]} />
+            <AdminDashboardResourceSort sort_items={PRODUCTS_SORT_ITEMS} />
 
             <Suspense>
               <NewProduct />

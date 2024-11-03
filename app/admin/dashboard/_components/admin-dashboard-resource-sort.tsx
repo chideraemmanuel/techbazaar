@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import React, { FC } from 'react';
 import {
   Popover,
   PopoverContent,
@@ -11,15 +11,65 @@ import { RiSortDesc } from '@remixicon/react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
   sort_items: SelectInputItem[];
 }
 
 const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
+  const [popoverOpen, setPopoverOpen] = React.useState(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const default_sort_by = searchParams.get('sort_by');
+
+  const sort_order_param = searchParams.get('sort_order');
+  const default_sort_order =
+    sort_order_param &&
+    (sort_order_param === 'ascending' || sort_order_param === 'descending')
+      ? sort_order_param
+      : 'ascending';
+
+  const [sortBy, setSortBy] = React.useState<string | null>(default_sort_by);
+  const [sortOrder, setSortOrder] = React.useState(default_sort_order);
+
+  const applySort = () => {
+    console.log({ sortBy, sortOrder });
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    if (!sortBy || sortBy === '' || !sortOrder || sortOrder === '') {
+      newSearchParams.delete('sort_by');
+      newSearchParams.delete('sort_order');
+    } else {
+      newSearchParams.set('sort_by', sortBy);
+      newSearchParams.set('sort_order', sortOrder);
+    }
+
+    router.replace(`?${newSearchParams}`);
+
+    setPopoverOpen(false);
+  };
+
+  const resetSort = () => {
+    setSortBy(null);
+    setSortOrder('ascending');
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    newSearchParams.delete('sort_by');
+    newSearchParams.delete('sort_order');
+
+    router.replace(`?${newSearchParams}`);
+
+    setPopoverOpen(false);
+  };
+
   return (
     <>
-      <Popover>
+      <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger asChild>
           <Button size={'sm'} variant={'outline'}>
             <RiSortDesc />
@@ -35,12 +85,17 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
                 selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                 selectInputItemProps={{ className: 'capitalize' }}
                 selectInputItems={sort_items}
-                onItemSelect={(value) => {}}
+                defautlValue={sortBy ? sortBy : undefined}
+                onItemSelect={setSortBy}
               />
             </SortSection>
 
             <SortSection label="Sort order">
-              <RadioGroup className="flex items-center space-x-3">
+              <RadioGroup
+                className="flex items-center space-x-3"
+                value={sortOrder}
+                onValueChange={setSortOrder}
+              >
                 <div className="flex items-center space-x-1">
                   <RadioGroupItem id="ascending" value="ascending" />
                   <Label htmlFor="ascending">Ascending</Label>
@@ -55,11 +110,13 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
           </div>
 
           <div className="px-2 pt-2 pb-2 flex items-center justify-between border-t border-muted">
-            <Button variant={'outline'} size={'sm'}>
+            <Button variant={'outline'} size={'sm'} onClick={() => resetSort()}>
               Reset
             </Button>
 
-            <Button size={'sm'}>Apply</Button>
+            <Button size={'sm'} onClick={() => applySort()}>
+              Apply
+            </Button>
           </div>
         </PopoverContent>
       </Popover>

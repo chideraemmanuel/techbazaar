@@ -15,7 +15,6 @@ export interface IProductData {
   price: number;
   stock: number;
   is_featured?: boolean;
-  is_archived?: boolean;
 }
 
 const addProduct = async (data: IProductData) => {
