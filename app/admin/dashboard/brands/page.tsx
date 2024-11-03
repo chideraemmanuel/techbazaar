@@ -26,10 +26,15 @@ import getCurrentUser from '@/lib/data/get-current-user';
 import { redirect } from 'next/navigation';
 import { getAllBrands } from '@/lib/data/brand';
 import EditBrandDialog from './_components/edit-brand-dialog';
+import { BRANDS_SORT_ITEMS } from '@/constants';
+import { ISearchParams } from '@/types';
 
-interface Props {}
+interface Props {
+  searchParams: Promise<ISearchParams>;
+}
 
-const AdminDashboardBrandsPage: FC<Props> = async () => {
+const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
+  const params = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
@@ -64,7 +69,7 @@ const AdminDashboardBrandsPage: FC<Props> = async () => {
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
-            <BrandsTable />
+            <BrandsTable searchParams={params} />
           </Suspense>
         </div>
       </div>
@@ -88,8 +93,10 @@ const TotalResource: FC = async () => {
 
 const headers = ['#', 'brand', 'deleted', 'actions'];
 
-const BrandsTable: FC = async () => {
-  const { data: brands, pagination } = await getAllBrands();
+const BrandsTable: FC<{ searchParams: ISearchParams }> = async ({
+  searchParams,
+}) => {
+  const { data: brands, pagination } = await getAllBrands(searchParams);
 
   return (
     <>
@@ -107,7 +114,7 @@ const BrandsTable: FC = async () => {
           <div className="space-x-2">
             <AdminDashboardBrandsFilter />
 
-            <AdminDashboardResourceSort sort_items={[]} />
+            <AdminDashboardResourceSort sort_items={BRANDS_SORT_ITEMS} />
 
             <Suspense>
               <NewBrandDialog />

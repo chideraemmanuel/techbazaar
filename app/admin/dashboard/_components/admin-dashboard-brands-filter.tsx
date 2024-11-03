@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import React, { FC } from 'react';
 import {
   Popover,
   PopoverContent,
@@ -9,13 +9,49 @@ import {
 import { Button } from '@/components/ui/button';
 import { RiFilter3Line } from '@remixicon/react';
 import { Switch } from '@/components/ui/switch';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {}
 
 const AdminDashboardBrandsFilter: FC<Props> = () => {
+  const [popoverOpen, setPopoverOpen] = React.useState(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const isDeletedParam = searchParams.get('is_deleted');
+
+  const [isDeleted, setIsDeleted] = React.useState(isDeletedParam);
+
+  const applyFilter = () => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    newSearchParams.delete('is_deleted');
+
+    if (isDeleted) {
+      newSearchParams.set('is_deleted', isDeleted);
+    }
+
+    router.replace(`?${newSearchParams}`);
+
+    setPopoverOpen(false);
+  };
+
+  const resetFilter = () => {
+    setIsDeleted(null);
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    newSearchParams.delete('is_deleted');
+
+    router.replace(`?${newSearchParams}`);
+
+    setPopoverOpen(false);
+  };
+
   return (
     <>
-      <Popover>
+      <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger asChild>
           <Button size={'sm'} variant={'outline'}>
             <RiFilter3Line />
@@ -24,24 +60,33 @@ const AdminDashboardBrandsFilter: FC<Props> = () => {
         </PopoverTrigger>
 
         <PopoverContent align="end" className="p-0">
-          {/* <ScrollArea className="px-3 pt-5 pb-1 h-80"> */}
           <div className="space-y-3 px-3 py-5">
             <div className="flex items-center justify-between">
               <span className="inline-block pb-2 text-sm font-medium text-foreground/80">
                 Deleted
               </span>
 
-              <Switch />
+              <Switch
+                checked={isDeleted === 'true'}
+                onCheckedChange={(checkedValue) =>
+                  setIsDeleted(`${checkedValue}`)
+                }
+              />
             </div>
           </div>
-          {/* </ScrollArea> */}
 
           <div className="px-2 pt-2 pb-2 flex items-center justify-between border-t border-muted">
-            <Button variant={'outline'} size={'sm'}>
+            <Button
+              variant={'outline'}
+              size={'sm'}
+              onClick={() => resetFilter()}
+            >
               Reset
             </Button>
 
-            <Button size={'sm'}>Apply</Button>
+            <Button size={'sm'} onClick={() => applyFilter()}>
+              Apply
+            </Button>
           </div>
         </PopoverContent>
       </Popover>

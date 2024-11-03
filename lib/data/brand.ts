@@ -1,9 +1,10 @@
 import { cookies } from 'next/headers';
 import getCurrentUser from './get-current-user';
-import { APIErrorResponse, APIPaginatedResponse } from '@/types';
+import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';
 import { BrandTypes, IAvailableBrand } from '@/types/product';
+import createSearchParams from '../create-search-params';
 
-export const getAllBrands = async () => {
+export const getAllBrands = async (searchParams: ISearchParams = {}) => {
   const session_id = (await cookies()).get('session_id')?.value;
 
   if (!session_id) throw new Error('Unauthorized access');
@@ -12,8 +13,13 @@ export const getAllBrands = async () => {
 
   if (!user) throw new Error('Unauthorized access');
 
+  const params = createSearchParams(searchParams);
+
+  const formattedParams =
+    params.toString().length === 0 ? '' : `&${params.toString()}`;
+
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands/all?paginated=true`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands/all?paginated=true${formattedParams}`,
     {
       headers: {
         Cookie: `session_id=${session_id}`,

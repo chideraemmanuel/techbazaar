@@ -112,3 +112,21 @@ export const PRODUCTS_SORT_ITEMS = [
     value: 'date_updated',
   },
 ];
+
+export const BRANDS_SORT_ITEMS = [
+  {
+    id: 'name',
+    name: 'name',
+    value: 'name',
+  },
+  {
+    id: 'date_created',
+    name: 'date created',
+    value: 'date_created',
+  },
+  {
+    id: 'date_updated',
+    name: 'date updated',
+    value: 'date_updated',
+  },
+];
