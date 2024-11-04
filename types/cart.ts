@@ -6,3 +6,8 @@ export interface ICart {
   product: ProductTypes;
   quantity: number;
 }
+
+export interface ICartSummary {
+  total_items: number;
+  total_amount: number;
+}

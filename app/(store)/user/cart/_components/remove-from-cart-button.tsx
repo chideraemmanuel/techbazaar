@@ -2,13 +2,14 @@
 
 import useAddItemToCart from '@/lib/hooks/use-add-item-to-cart';
 import useRemoveItemFromCart from '@/lib/hooks/use-remove-item-from-cart';
+import { ICart } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
 import { toast } from 'sonner';
 
 type RemoveFromCartButtonProps = ComponentPropsWithoutRef<'button'> & {
-  cartItemID: string;
+  cartItem: ICart;
   asChild?: boolean;
 };
 type RemoveFromCartButtonRef = ElementRef<'button'>;
@@ -16,7 +17,7 @@ type RemoveFromCartButtonRef = ElementRef<'button'>;
 const RemoveFromCartButton = React.forwardRef<
   RemoveFromCartButtonRef,
   RemoveFromCartButtonProps
->(({ cartItemID, asChild, onClick, ...props }, ref) => {
+>(({ cartItem, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
   const { mutate: removeItemFromCart, isLoading } = useRemoveItemFromCart();
@@ -27,7 +28,7 @@ const RemoveFromCartButton = React.forwardRef<
         {...props}
         // disabled={isLoading}
         onClick={(e) => {
-          removeItemFromCart(cartItemID);
+          removeItemFromCart(cartItem);
           onClick?.(e);
         }}
         ref={ref}

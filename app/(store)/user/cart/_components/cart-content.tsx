@@ -4,6 +4,8 @@ import CartItem from '@/app/(store)/user/cart/_components/cart-item';
 import DataTablePagination from '@/components/data-table-pagination';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
+import useCartSummary from '@/lib/hooks/use-cart-summary';
 import useCurrentUserCart from '@/lib/hooks/use-current-user-cart';
 import { ISearchParams } from '@/types';
 import { Loader2 } from 'lucide-react';
@@ -23,7 +25,7 @@ const CartContent: FC<Props> = ({ searchParams }) => {
     fetchNextPage,
     isError,
     error,
-  } = useCurrentUserCart(searchParams);
+  } = useCurrentUserCart();
 
   //   if (isFetching) return null;
 
@@ -93,6 +95,8 @@ const CartContent: FC<Props> = ({ searchParams }) => {
 export default CartContent;
 
 const CartSummary: FC<{}> = () => {
+  const { data, isLoading } = useCartSummary();
+
   return (
     <>
       <div className="dark:bg-secondary/30 shadow-sm rounded-xl border md:sticky md:top-[90px] self-start px-3 md:px-5 py-3 md:py-5 space-y-3">
@@ -102,37 +106,41 @@ const CartSummary: FC<{}> = () => {
 
         <Separator />
 
-        <ul className="space-y-3">
-          <li className="flex items-center justify-between">
-            <span className="text-muted-foreground text-sm sm:text-base font-medium">
-              Subtotal (7 items)
-            </span>
+        {isLoading && !data && <CartSummarySkeleton />}
 
-            <span className="text-sm sm:text-base font-medium">
-              ₦1,000,000.00
-            </span>
-          </li>
+        {!isLoading && data && (
+          <ul className="space-y-3">
+            <li className="flex items-center justify-between">
+              <span className="text-muted-foreground text-sm sm:text-base font-medium">
+                Subtotal ({data.total_items} items)
+              </span>
 
-          <li className="flex items-center justify-between">
-            <span className="text-muted-foreground text-sm sm:text-base font-medium">
-              Discount
-            </span>
+              <span className="text-sm sm:text-base font-medium">
+                ₦{data.total_amount}
+              </span>
+            </li>
 
-            <span className="text-sm sm:text-base font-medium">₦0.00</span>
-          </li>
+            <li className="flex items-center justify-between">
+              <span className="text-muted-foreground text-sm sm:text-base font-medium">
+                Discount
+              </span>
 
-          <Separator />
+              <span className="text-sm sm:text-base font-medium">₦0.00</span>
+            </li>
 
-          <li className="flex items-center justify-between">
-            <span className="text-muted-foreground text-base sm:text-lg font-medium">
-              Total
-            </span>
+            <Separator />
 
-            <span className="text-lg sm:text-xl font-medium">
-              ₦1,000,000.00
-            </span>
-          </li>
-        </ul>
+            <li className="flex items-center justify-between">
+              <span className="text-muted-foreground text-base sm:text-lg font-medium">
+                Total
+              </span>
+
+              <span className="text-lg sm:text-xl font-medium">
+                ₦{data.total_amount}
+              </span>
+            </li>
+          </ul>
+        )}
 
         <Separator />
 
@@ -143,5 +151,37 @@ const CartSummary: FC<{}> = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const CartSummarySkeleton: FC = () => {
+  return (
+    <ul className="space-y-3">
+      <li className="flex items-center justify-between">
+        <span className="text-muted-foreground text-sm sm:text-base font-medium flex items-center">
+          Subtotal (<Skeleton className="inline-block h-4 w-4 mr-1" /> items)
+        </span>
+
+        <Skeleton className="h-4 w-32" />
+      </li>
+
+      <li className="flex items-center justify-between">
+        <span className="text-muted-foreground text-sm sm:text-base font-medium">
+          Discount
+        </span>
+
+        <Skeleton className="h-4 w-32" />
+      </li>
+
+      <Separator />
+
+      <li className="flex items-center justify-between">
+        <span className="text-muted-foreground text-base sm:text-lg font-medium">
+          Total
+        </span>
+
+        <Skeleton className="h-5 w-40" />
+      </li>
+    </ul>
   );
 };

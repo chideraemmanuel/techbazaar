@@ -24,9 +24,10 @@ const useLogoutUser = () => {
     mutationFn: logoutUser,
     onSuccess: async (data) => {
       toast.success('Logout successful');
-
+      // TODO: clear these by setting queries' data..?
       await queryClient.invalidateQueries('get current user cart');
       await queryClient.invalidateQueries('get cart item by product ID');
+      await queryClient.invalidateQueries('get cart summary');
 
       router.refresh();
     },

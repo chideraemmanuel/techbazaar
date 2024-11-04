@@ -30,7 +30,7 @@ const CartAction: FC<Props> = ({ product }) => {
   const { mutate: addItemToCart } = useAddItemToCart();
 
   React.useEffect(() => {
-    if (productID) {
+    if (productID && productID === product._id) {
       addItemToCart(product);
       router.replace(pathname);
     }
@@ -69,7 +69,7 @@ const CartAction: FC<Props> = ({ product }) => {
       )}
 
       {!isLoading && data && (
-        <RemoveFromCartButton asChild cartItemID={data?._id}>
+        <RemoveFromCartButton asChild cartItem={data}>
           <Button variant={'destructive'} className="flex-1">
             <Trash2 /> Remove from cart
           </Button>

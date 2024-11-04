@@ -1,12 +1,12 @@
 import axios from '@/config/axios';
 import { APIErrorResponse, APIPaginatedResponse } from '@/types';
-import { ICart } from '@/types/cart';
+import { ICart, ICartSummary } from '@/types/cart';
 import { AxiosError } from 'axios';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 
-const removeItemFromCart = async (cartItemId: string) => {
-  const response = await axios.delete(`/users/me/cart/${cartItemId}`);
+const removeItemFromCart = async (cartItem: ICart) => {
+  const response = await axios.delete(`/users/me/cart/${cartItem._id}`);
 
   return response.data;
 };
@@ -17,14 +17,27 @@ const useRemoveItemFromCart = () => {
   return useMutation({
     mutationKey: ['remove item from cart'],
     mutationFn: removeItemFromCart,
-    onMutate: async (cartItemId) => {
+    onMutate: async (cartItem) => {
       await queryClient.cancelQueries('get current user cart');
+      await queryClient.cancelQueries('get cart item by product ID');
+      await queryClient.cancelQueries('get cart summary');
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
-      console.log('previous_cart_data', previous_cart_data);
+      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
+        'get cart item by product ID'
+      );
+
+      const previous_cart_summary_data =
+        queryClient.getQueryData<ICartSummary>('get cart summary');
+
+      console.log({
+        previous_cart_data,
+        previous_cart_item_data,
+        previous_cart_summary_data,
+      });
 
       queryClient.setQueryData(
         'get current user cart',
@@ -98,7 +111,29 @@ const useRemoveItemFromCart = () => {
         }
       );
 
-      return { previous_cart_data };
+      // TODO: make this work..?
+      queryClient.setQueryData('get cart item by product ID', '');
+
+      queryClient.setQueryData(
+        'get cart summary',
+        // @ts-ignore
+        (previous_cart_summary_data: ICartSummary | undefined) => {
+          return {
+            total_items:
+              previous_cart_summary_data?.total_items &&
+              previous_cart_summary_data?.total_items - 1,
+            total_amount:
+              previous_cart_summary_data?.total_amount &&
+              previous_cart_summary_data?.total_amount - cartItem.product.price,
+          };
+        }
+      );
+
+      return {
+        previous_cart_data,
+        previous_cart_item_data,
+        previous_cart_summary_data,
+      };
     },
     onError: (error: AxiosError<APIErrorResponse>, cartItemId, context) => {
       toast.error(
@@ -111,10 +146,21 @@ const useRemoveItemFromCart = () => {
         'get current user cart',
         context?.previous_cart_data
       );
+
+      queryClient.setQueryData(
+        'get cart item by product ID',
+        context?.previous_cart_item_data
+      );
+
+      queryClient.setQueryData(
+        'get cart summary',
+        context?.previous_cart_summary_data
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries('get current user cart');
       await queryClient.invalidateQueries('get cart item by product ID');
+      await queryClient.invalidateQueries('get cart summary');
     },
   });
 };

@@ -16,7 +16,6 @@ const getCartItemByProductID = async ({ queryKey }: { queryKey: any[] }) => {
 
 const useCartItem = (productID: string) => {
   return useQuery({
-    // TODO: move to separate `useCartItem` hook
     queryKey: ['get cart item by product ID', productID],
     queryFn: getCartItemByProductID,
     onSuccess: (data) => {},

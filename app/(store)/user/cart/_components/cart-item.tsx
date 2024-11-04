@@ -59,7 +59,7 @@ const CartItem: FC<Props> = ({ cart_item }) => {
             </Button>
           </div>
 
-          <RemoveFromCartButton asChild cartItemID={_id}>
+          <RemoveFromCartButton asChild cartItem={cart_item}>
             <Button
               variant={'ghost'}
               className="h-7 sm:h-9 w-7 sm:w-9 text-destructive hover:text-destructive hover:bg-destructive/20"
