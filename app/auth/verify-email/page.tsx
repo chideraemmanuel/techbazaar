@@ -1,7 +1,7 @@
 import AuthPageBackButton from '@/components/auth-page-back-button';
 import EmailVerificationForm from '@/components/email-verification-form';
 import LogoutUserButton from '@/components/logout-user-button';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { RiArrowLeftLine } from '@remixicon/react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';

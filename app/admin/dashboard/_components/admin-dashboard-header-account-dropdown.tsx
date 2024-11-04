@@ -14,7 +14,7 @@ import {
 } from '@remixicon/react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import LogoutUserButton from '@/components/logout-user-button';
 import { headers } from 'next/headers';
 

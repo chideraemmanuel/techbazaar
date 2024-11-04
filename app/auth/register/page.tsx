@@ -1,6 +1,6 @@
 import UserRegistrationForm from '@/components/user-registration-form';
 import axios from '@/config/axios';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';

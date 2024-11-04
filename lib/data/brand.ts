@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import getCurrentUser from './get-current-user';
+import { getCurrentUser } from './user';
 import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';
 import { BrandTypes, IAvailableBrand } from '@/types/product';
 import createSearchParams from '../create-search-params';

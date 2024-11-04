@@ -22,7 +22,7 @@ import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { FC, Suspense } from 'react';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { getAllBrands } from '@/lib/data/brand';
 import EditBrandDialog from './_components/edit-brand-dialog';

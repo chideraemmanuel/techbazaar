@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { DollarSign } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';

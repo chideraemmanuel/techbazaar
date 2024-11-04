@@ -25,7 +25,7 @@ import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { FC, Suspense } from 'react';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { getAllProducts } from '@/lib/data/product';
 import NewProduct from './_components/new-product';

@@ -1,19 +1,24 @@
 import { DUMMY_PRODUCTS } from '@/dummy';
 import Image from 'next/image';
 import { FC } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../../../../../components/ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Separator } from '../../../../../components/ui/separator';
+import { ProductTypes } from '@/types/product';
+import { ICart } from '@/types/cart';
 
-interface Props {}
+interface Props {
+  cart_item: ICart;
+}
 
-const CartItem: FC<Props> = () => {
-  const product = DUMMY_PRODUCTS[0];
+const CartItem: FC<Props> = ({ cart_item }) => {
+  const { product, quantity } = cart_item;
 
   return (
     <>
-      <div className="p-3 dark:bg-secondary/30 border shadow-sm rounded-md  flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-1">
-        <div className="flex-1 inline-flex items-center gap-2">
-          <div className="w-[50px] sm:w-[70px] h-[50px] sm:h-[70px] bg-secondary rounded-md sm:rounded-lg flex items-center justify-center">
+      <div className="p-3 sm:p-4 dark:bg-secondary/30 border shadow-sm rounded-md space-y-4 sm:space-y-5">
+        <div className="flex items-center gap-2">
+          <div className="w-[90px] sm:w-[120px] h-[90px] sm:h-[120px] bg-secondary rounded-md sm:rounded-lg flex items-center justify-center">
             <Image
               src={product.image}
               alt={product.name}
@@ -28,19 +33,25 @@ const CartItem: FC<Props> = () => {
               {product.brand.name}
             </span>
 
-            <span className="block text-sm sm:text-base font-medium">
+            <span className="block text-lg sm:text-xl font-semibold">
               {product.name}
+            </span>
+
+            <span className="block text-sm sm:text-base font-medium">
+              ₦{product.price}
             </span>
           </div>
         </div>
 
-        <div className="lg:flex-1 flex items-center justify-between space-x-3">
+        <Separator />
+
+        <div className="flex items-center justify-between space-x-5">
           <div className="space-x-3">
             <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
               <Minus />
             </Button>
 
-            <span>7</span>
+            <span>{quantity}</span>
 
             <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
               <Plus />

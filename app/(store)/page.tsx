@@ -60,8 +60,8 @@ const Home: FC<Props> = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {PRODUCT_CATEGORIES.map((category, index) => (
                 <Link
-                  key={category.id}
-                  href={`/categories/${category.id}`}
+                  key={category.value}
+                  href={`/categories/${category.value}`}
                   className="group rounded-lg"
                 >
                   <Card className="px-3 sm:px-5 py-3 sm:py-5 flex items-center space-x-2 sm:space-x-3 group-hover:border-foreground/20 group-hover:bg-secondary/50 transition-colors">
@@ -119,7 +119,7 @@ const Home: FC<Props> = () => {
                     key={index}
                     className="basis-[80%] [@media_(min-width:_375px)]:basis-[60%] [@media_(min-width:_520px)]:basis-[30%] sm:!basis-[30%] md:!basis-[23%] lg:!basis-[19%]"
                   >
-                    <ProductCard />
+                    <ProductCard product={product} />
                   </CarouselItem>
                 ))}
               </CarouselContent>

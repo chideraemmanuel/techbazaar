@@ -1,7 +1,7 @@
 import { UserTypes } from '@/types/user';
 import { cookies } from 'next/headers';
 
-const getCurrentUser = async () => {
+export const getCurrentUser = async () => {
   const session_id = (await cookies()).get('session_id')?.value;
 
   if (!session_id) return null;
@@ -24,5 +24,3 @@ const getCurrentUser = async () => {
 
   return user;
 };
-
-export default getCurrentUser;

@@ -1,5 +1,5 @@
 import Logo from '@/components/logo';
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 

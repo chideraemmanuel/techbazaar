@@ -1,4 +1,4 @@
-import getCurrentUser from '@/lib/data/get-current-user';
+import { getCurrentUser } from '@/lib/data/user';
 import { UserTypes } from '@/types/user';
 import { FC } from 'react';
 import {
