@@ -88,3 +88,39 @@ export const getProductByIdOrSlug = async (idOrSlug: string) => {
 
   return success_response;
 };
+
+export const getAvailableProductByIdOrSlug = async (idOrSlug: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${idOrSlug}`
+  );
+
+  if (!response.ok) {
+    if (response.status === 404) return null;
+
+    const error_response: APIErrorResponse = await response.json();
+    throw new Error(error_response.error || 'Something went wrong');
+  }
+
+  const success_response: IAvailableProduct = await response.json();
+
+  console.log('[PRODUCT_SUCCESS_RESPONSE]', success_response);
+
+  return success_response;
+};
+
+export const getRelatedProducts = async (idOrSlug: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${idOrSlug}/related`
+  );
+
+  if (!response.ok) {
+    const error_response: APIErrorResponse = await response.json();
+    throw new Error(error_response.error || 'Something went wrong');
+  }
+
+  const success_response: IAvailableProduct[] = await response.json();
+
+  console.log('[PRODUCT_SUCCESS_RESPONSE]', success_response);
+
+  return success_response;
+};

@@ -9,14 +9,24 @@ import { DUMMY_PRODUCTS } from '@/dummy';
 import { Heart, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
+import ProductsGridContainer from '../../_components/products-grid-container';
+import {
+  getAvailableProductByIdOrSlug,
+  getRelatedProducts,
+} from '@/lib/data/product';
 
-interface Props {}
+interface Props {
+  params: Promise<{ slug: string }>;
+}
 
-const ProductDetailsPage: FC<Props> = () => {
-  const product = DUMMY_PRODUCTS[0];
+const ProductDetailsPage: FC<Props> = async ({ params }) => {
+  const { slug } = await params;
+
+  const product = await getAvailableProductByIdOrSlug(slug);
 
   if (!product) notFound();
+
   return (
     <>
       <div className="container">
@@ -38,26 +48,31 @@ const ProductDetailsPage: FC<Props> = () => {
           </div>
 
           <div className="md:flex-1 flex flex-col gap-8 md:gap-10">
-            <div className="space-y-2 md:space-y-3">
+            <div>
               <span className="block text-sm text-muted-foreground">
                 {product.brand.name}
               </span>
-              <span className="block font-bold text-2xl" title={product.name}>
+
+              <span
+                className="block font-bold text-2xl md:text-4xl mb-5"
+                title={product.name}
+              >
                 {product.name}
               </span>
-              <span className="block font-normal text-base w-full truncate">
+
+              <span className="block font-semibold text-xl md:text-2xl w-full truncate">
                 ₦{product.price.toFixed(2)}
               </span>
             </div>
 
             <p
-              className="text-muted-foreground line-clamp-4"
+              className="text-muted-foreground line-clamp-4 md:w-[min(500px,_100%)]"
               title={product.description}
             >
               {product.description}
             </p>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 md:w-[min(500px,_100%)]">
               <Button className="flex-1">
                 <ShoppingBag /> Add to cart
               </Button>
@@ -72,18 +87,9 @@ const ProductDetailsPage: FC<Props> = () => {
         <section>
           <h2 className="font-bold text-xl mb-4">Related products</h2>
 
-          <Carousel>
-            <CarouselContent>
-              {Array.from({ length: 10 }).map((item, index) => (
-                <CarouselItem
-                  key={index}
-                  className="basis-[80%] [@media_(min-width:_375px)]:basis-[60%] [@media_(min-width:_520px)]:basis-[30%] sm:!basis-[30%] md:!basis-[23%] lg:!basis-[19%]"
-                >
-                  <ProductCard product={product} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+          <Suspense>
+            <RelatedProducts slug={slug} />
+          </Suspense>
         </section>
       </div>
     </>
@@ -91,3 +97,23 @@ const ProductDetailsPage: FC<Props> = () => {
 };
 
 export default ProductDetailsPage;
+
+const RelatedProducts: FC<{ slug: string }> = async ({ slug }) => {
+  const products = await getRelatedProducts(slug);
+
+  return (
+    <>
+      {products.length > 0 ? (
+        <ProductsGridContainer>
+          {products.map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
+        </ProductsGridContainer>
+      ) : (
+        <div>
+          <span>No related products</span>
+        </div>
+      )}
+    </>
+  );
+};

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import Logo from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { RiMenuLine } from '@remixicon/react';
@@ -40,7 +40,9 @@ const StoreHeader: FC<Props> = () => {
               <ShoppingCart className="sm:!w-5 sm:!h-5" />
             </Button>
 
-            <StoreHeaderAccountDropdown />
+            <Suspense>
+              <StoreHeaderAccountDropdown />
+            </Suspense>
           </div>
         </div>
       </header>
