@@ -3,14 +3,7 @@
 import useAddItemToCart from '@/lib/hooks/use-add-item-to-cart';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
-import { Loader2 } from 'lucide-react';
-import React, {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  FC,
-  useActionState,
-  useTransition,
-} from 'react';
+import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
 import { toast } from 'sonner';
 
 type AddToCartButtonProps = ComponentPropsWithoutRef<'button'> & {

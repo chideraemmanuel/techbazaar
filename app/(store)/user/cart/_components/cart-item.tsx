@@ -6,13 +6,14 @@ import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Separator } from '../../../../../components/ui/separator';
 import { ProductTypes } from '@/types/product';
 import { ICart } from '@/types/cart';
+import RemoveFromCartButton from './remove-from-cart-button';
 
 interface Props {
   cart_item: ICart;
 }
 
 const CartItem: FC<Props> = ({ cart_item }) => {
-  const { product, quantity } = cart_item;
+  const { _id, product, quantity } = cart_item;
 
   return (
     <>
@@ -58,12 +59,14 @@ const CartItem: FC<Props> = ({ cart_item }) => {
             </Button>
           </div>
 
-          <Button
-            variant={'ghost'}
-            className="h-7 sm:h-9 w-7 sm:w-9 text-destructive hover:text-destructive hover:bg-destructive/20"
-          >
-            <Trash2 />
-          </Button>
+          <RemoveFromCartButton asChild cartItemID={_id}>
+            <Button
+              variant={'ghost'}
+              className="h-7 sm:h-9 w-7 sm:w-9 text-destructive hover:text-destructive hover:bg-destructive/20"
+            >
+              <Trash2 />
+            </Button>
+          </RemoveFromCartButton>
         </div>
       </div>
     </>

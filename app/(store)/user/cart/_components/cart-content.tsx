@@ -4,7 +4,6 @@ import CartItem from '@/app/(store)/user/cart/_components/cart-item';
 import DataTablePagination from '@/components/data-table-pagination';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { getCurrentUserCart } from '@/lib/data/cart';
 import useCurrentUserCart from '@/lib/hooks/use-current-user-cart';
 import { ISearchParams } from '@/types';
 import { Loader2 } from 'lucide-react';
@@ -16,8 +15,15 @@ interface Props {
 }
 
 const CartContent: FC<Props> = ({ searchParams }) => {
-  const { data, isFetching, hasNextPage, fetchNextPage, isError, error } =
-    useCurrentUserCart(searchParams);
+  const {
+    data,
+    isFetching,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    isError,
+    error,
+  } = useCurrentUserCart(searchParams);
 
   //   if (isFetching) return null;
 

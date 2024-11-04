@@ -24,9 +24,11 @@ const StoreHeaderCartLink: FC<Props> = () => {
         >
           <ShoppingCart className="sm:!w-5 sm:!h-5" />
 
-          {isLoading ? (
+          {isLoading && (
             <Skeleton className="absolute -top-[20%] -right-[15%] flex h-5 sm:h-6 w-5 sm:w-6 shrink-0 items-center justify-center rounded-full" />
-          ) : (
+          )}
+
+          {data && (
             <Badge className="absolute bg-destructive text-destructive-foreground hover:bg-destructive hover:text-destructive-foreground -top-[20%] -right-[15%] flex h-5 sm:h-6 w-5 sm:w-6 shrink-0 items-center justify-center rounded-full">
               {data?.pages[0].pagination.total_records}
             </Badge>

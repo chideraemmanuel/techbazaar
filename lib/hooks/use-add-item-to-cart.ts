@@ -1,8 +1,14 @@
 import axios from '@/config/axios';
-import { APIPaginatedResponse, APISuccessResponse } from '@/types';
+import {
+  APIErrorResponse,
+  APIPaginatedResponse,
+  APISuccessResponse,
+} from '@/types';
 import { ICart } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';
+import { AxiosError } from 'axios';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
+import { toast } from 'sonner';
 
 const addItemToCart = async (product: IAvailableProduct) => {
   const response = await axios.post<Required<APISuccessResponse<ICart>>>(
@@ -26,7 +32,11 @@ const useAddItemToCart = () => {
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
-      console.log({ previous_cart_data });
+      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
+        'get cart item by product ID'
+      );
+
+      console.log({ previous_cart_data, previous_cart_item_data });
 
       queryClient.setQueryData(
         'get current user cart',
@@ -66,16 +76,30 @@ const useAddItemToCart = () => {
         }
       );
 
-      return { previous_cart_data };
+      queryClient.setQueryData('get cart item by product ID', '');
+
+      return { previous_cart_data, previous_cart_item_data };
     },
-    onError: (error, product, context) => {
+    onError: (error: AxiosError<APIErrorResponse>, product, context) => {
+      toast.error(
+        error?.response?.data?.error ||
+          error?.message ||
+          'Failed - Something went wrong'
+      );
+
       queryClient.setQueryData(
         'get current user cart',
         context?.previous_cart_data
       );
+
+      queryClient.setQueryData(
+        'get cart item by product ID',
+        context?.previous_cart_item_data
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries('get current user cart');
+      await queryClient.invalidateQueries('get cart item by product ID');
     },
   });
 };

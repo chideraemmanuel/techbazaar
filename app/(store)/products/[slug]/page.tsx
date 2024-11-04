@@ -16,6 +16,7 @@ import {
   getRelatedProducts,
 } from '@/lib/data/product';
 import AddToCartButton from '../../user/cart/_components/add-to-cart-button';
+import CartAction from './_components/cart-action';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -74,11 +75,7 @@ const ProductDetailsPage: FC<Props> = async ({ params }) => {
             </p>
 
             <div className="flex items-center space-x-2 md:w-[min(500px,_100%)]">
-              <AddToCartButton asChild product={product}>
-                <Button className="flex-1">
-                  <ShoppingBag /> Add to cart
-                </Button>
-              </AddToCartButton>
+              <CartAction product={product} />
 
               <Button variant={'secondary'}>
                 <Heart />
