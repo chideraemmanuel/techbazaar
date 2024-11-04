@@ -41,34 +41,41 @@ const useAddItemToCart = () => {
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore
-        (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {
+        (
+          previous_cart_data:
+            | InfiniteData<APIPaginatedResponse<ICart>>
+            | undefined
+        ) => {
           return {
             ...previous_cart_data,
             pages: [
-              ...previous_cart_data.pages,
+              ...(previous_cart_data?.pages ? previous_cart_data.pages : []),
               {
                 data: [{ product, quantity: 1 }],
                 pagination: {
                   next_page:
-                    previous_cart_data.pages[
-                      previous_cart_data.pages.length - 1
+                    previous_cart_data?.pages[
+                      previous_cart_data?.pages.length - 1
                     ].pagination.next_page,
                   current_page:
-                    previous_cart_data.pages[
-                      previous_cart_data.pages.length - 1
+                    previous_cart_data?.pages[
+                      previous_cart_data?.pages.length - 1
                     ].pagination.current_page,
                   previous_page:
-                    previous_cart_data.pages[
-                      previous_cart_data.pages.length - 1
+                    previous_cart_data?.pages[
+                      previous_cart_data?.pages.length - 1
                     ].pagination.previous_page,
                   total_pages:
-                    previous_cart_data.pages[
-                      previous_cart_data.pages.length - 1
+                    previous_cart_data?.pages[
+                      previous_cart_data?.pages.length - 1
                     ].pagination.total_pages,
                   total_records:
-                    previous_cart_data.pages[
-                      previous_cart_data.pages.length - 1
-                    ].pagination.total_records + 1,
+                    previous_cart_data?.pages?.[
+                      previous_cart_data?.pages.length - 1
+                    ]?.pagination?.total_records &&
+                    previous_cart_data?.pages?.[
+                      previous_cart_data?.pages.length - 1
+                    ]?.pagination?.total_records + 1,
                 },
               },
             ],

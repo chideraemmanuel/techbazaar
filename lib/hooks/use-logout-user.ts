@@ -3,7 +3,7 @@ import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { UserTypes } from '@/types/user';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 
 const logoutUser = async () => {
@@ -17,11 +17,17 @@ const logoutUser = async () => {
 const useLogoutUser = () => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ['logout user'],
     mutationFn: logoutUser,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success('Logout successful');
+
+      await queryClient.invalidateQueries('get current user cart');
+      await queryClient.invalidateQueries('get cart item by product ID');
+
       router.refresh();
     },
     onError: (error: AxiosError<APIErrorResponse>) => {

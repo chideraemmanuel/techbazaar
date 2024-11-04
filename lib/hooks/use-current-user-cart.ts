@@ -41,7 +41,7 @@ const useCurrentUserCart = (searchParams: ISearchParams = {}) => {
       return lastPage.pagination.next_page || undefined;
     },
     retry: false,
-    refetchOnMount: false,
+    // refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 };

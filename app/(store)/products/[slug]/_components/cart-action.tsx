@@ -5,12 +5,15 @@ import RemoveFromCartButton from '@/app/(store)/user/cart/_components/remove-fro
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import axios from '@/config/axios';
+import useAddItemToCart from '@/lib/hooks/use-add-item-to-cart';
+import useCartItem from '@/lib/hooks/use-cart-item';
 import { APIErrorResponse } from '@/types';
 import { ICart } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';
 import { AxiosError } from 'axios';
 import { ShoppingBag, Trash2 } from 'lucide-react';
-import { FC } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { FC } from 'react';
 import { useQuery } from 'react-query';
 
 interface Props {
@@ -18,39 +21,42 @@ interface Props {
 }
 
 const CartAction: FC<Props> = ({ product }) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['get cart item by product ID'],
-    queryFn: async () => {
-      const response = await axios.get<ICart | ''>(
-        `/users/me/cart/product?id=${product._id}`
-      );
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-      console.log('response', response);
+  const productID = searchParams.get('id');
 
-      return response.data;
-    },
-    onSuccess: (data) => {},
-    onError: (error: AxiosError<APIErrorResponse>) => {},
-    retry: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const { mutate: addItemToCart } = useAddItemToCart();
+
+  React.useEffect(() => {
+    if (productID) {
+      addItemToCart(product);
+      router.replace(pathname);
+    }
+  }, []);
+
+  const { data, isLoading, error } = useCartItem(product._id);
 
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
+    // if (error?.response?.status > 400 && error?.response?.status < 500) {
     return (
-      <Button className="flex-1">
+      <Button
+        className="flex-1"
+        onClick={() =>
+          router.push(`/auth/login?return_to=${pathname}?id=${product._id}`)
+        }
+      >
         <ShoppingBag /> Add to cart
       </Button>
     );
   }
 
-  // if (error) throw new Error();
+  if (error) throw new Error();
 
   if (isLoading) {
     return <Skeleton className="h-10 w-full rounded-md" />;
   }
-
-  console.log({ data });
 
   return (
     <>
