@@ -5,6 +5,9 @@ export interface ICart {
   user: string;
   product: ProductTypes;
   quantity: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 export interface ICartSummary {

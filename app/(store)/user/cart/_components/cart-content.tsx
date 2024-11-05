@@ -11,6 +11,7 @@ import { ISearchParams } from '@/types';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { FC } from 'react';
+import ClearCartButton from './clear-cart-button';
 
 interface Props {
   searchParams: ISearchParams;
@@ -43,12 +44,14 @@ const CartContent: FC<Props> = ({ searchParams }) => {
               )}
             </h2>
 
-            <Button
-              variant={'destructive'}
-              className="h-7 sm:h-9 rounded-md px-3"
-            >
-              Clear cart
-            </Button>
+            <ClearCartButton asChild>
+              <Button
+                variant={'destructive'}
+                className="h-7 sm:h-9 rounded-md px-3"
+              >
+                Clear cart
+              </Button>
+            </ClearCartButton>
           </div>
 
           {data && data.pages[0].data.length > 0 ? (

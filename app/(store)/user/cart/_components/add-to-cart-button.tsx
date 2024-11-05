@@ -4,7 +4,6 @@ import useAddItemToCart from '@/lib/hooks/use-add-item-to-cart';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
-import { toast } from 'sonner';
 
 type AddToCartButtonProps = ComponentPropsWithoutRef<'button'> & {
   product: IAvailableProduct;
@@ -18,13 +17,12 @@ const AddToCartButton = React.forwardRef<
 >(({ product, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
-  const { mutate: addItemToCart, isLoading } = useAddItemToCart();
+  const { mutate: addItemToCart } = useAddItemToCart();
 
   return (
     <>
       <Comp
         {...props}
-        // disabled={isLoading}
         onClick={(e) => {
           addItemToCart(product);
           onClick?.(e);

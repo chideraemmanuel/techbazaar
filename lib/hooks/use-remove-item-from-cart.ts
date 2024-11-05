@@ -26,6 +26,8 @@ const useRemoveItemFromCart = () => {
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
+      console.log('previous_cart_data', previous_cart_data);
+
       const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
         'get cart item by product ID'
       );
@@ -41,69 +43,32 @@ const useRemoveItemFromCart = () => {
             | InfiniteData<APIPaginatedResponse<ICart>>
             | undefined
         ) => {
-          const new_cart_data_pages = previous_cart_data?.pages.filter(
-            (item, index) => {
-              return index !== previous_cart_data.pages.length - 1;
-            }
-          );
+          if (!previous_cart_data) return previous_cart_data;
+
+          const updatedPages = previous_cart_data.pages.map((page) => {
+            // Filter out the cart item being removed
+            const newData = page.data.filter(
+              (item) => item._id !== cartItem._id
+            );
+
+            // Return the updated page with the item removed and the total_records adjusted
+            return {
+              ...page,
+              data: newData,
+              pagination: {
+                ...page.pagination,
+                total_records: page.pagination.total_records - 1, // Decrement total count
+              },
+            };
+          });
 
           return {
             ...previous_cart_data,
-            pages: [
-              ...(new_cart_data_pages ? new_cart_data_pages : []),
-              {
-                ...previous_cart_data?.pages?.[
-                  previous_cart_data?.pages.length - 1
-                ],
-                data: [
-                  ...(previous_cart_data?.pages?.[
-                    previous_cart_data?.pages.length - 1
-                  ]?.data
-                    ? previous_cart_data?.pages?.[
-                        previous_cart_data?.pages.length - 1
-                      ]?.data.filter((item, index) => {
-                        return (
-                          index !==
-                          previous_cart_data?.pages?.[
-                            previous_cart_data?.pages.length - 1
-                          ]?.data.length -
-                            1
-                        );
-                      })
-                    : []),
-                ],
-                pagination: {
-                  next_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.next_page,
-                  current_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.current_page,
-                  previous_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.previous_page,
-                  total_pages:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.total_pages,
-                  total_records:
-                    previous_cart_data?.pages?.[
-                      previous_cart_data?.pages.length - 1
-                    ]?.pagination?.total_records &&
-                    previous_cart_data?.pages?.[
-                      previous_cart_data?.pages.length - 1
-                    ]?.pagination?.total_records - 1,
-                },
-              },
-            ],
+            pages: updatedPages,
           };
         }
       );
 
-      // TODO: make this work..?
       queryClient.setQueryData(
         ['get cart item by product ID', cartItem.product._id],
         ''
@@ -113,13 +78,14 @@ const useRemoveItemFromCart = () => {
         'get cart summary',
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
+          if (!previous_cart_summary_data) return previous_cart_summary_data;
+
           return {
             total_items:
-              previous_cart_summary_data?.total_items &&
-              previous_cart_summary_data?.total_items - 1,
+              previous_cart_summary_data.total_items - cartItem.quantity,
             total_amount:
-              previous_cart_summary_data?.total_amount &&
-              previous_cart_summary_data?.total_amount - cartItem.product.price,
+              previous_cart_summary_data.total_amount -
+              cartItem.product.price * cartItem.quantity,
           };
         }
       );
@@ -152,9 +118,12 @@ const useRemoveItemFromCart = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async () => {
+    onSettled: async (data, error, product) => {
       await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart item by product ID');
+      await queryClient.invalidateQueries([
+        'get cart item by product ID',
+        product._id,
+      ]);
       await queryClient.invalidateQueries('get cart summary');
     },
   });

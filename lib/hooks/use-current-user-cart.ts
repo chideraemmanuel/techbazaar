@@ -20,7 +20,7 @@ const getCurrentUserCart = async ({
   pageParam?: number;
 }) => {
   const response = await axios.get<APIPaginatedResponse<ICart>>(
-    `/users/me/cart?page=${pageParam}&limit=1`
+    `/users/me/cart?page=${pageParam}&limit=2`
   );
 
   return response.data;

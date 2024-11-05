@@ -2,6 +2,9 @@ interface IBrand {
   _id: string;
   name: string;
   logo: string | null;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 export interface IAvailableBrand extends IBrand {
@@ -37,6 +40,9 @@ interface IProduct {
   slug: string;
   is_featured: boolean;
   is_archived: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 export interface IAvailableProduct extends IProduct {

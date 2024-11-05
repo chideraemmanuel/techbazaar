@@ -7,6 +7,8 @@ import { Separator } from '../../../../../components/ui/separator';
 import { ProductTypes } from '@/types/product';
 import { ICart } from '@/types/cart';
 import RemoveFromCartButton from './remove-from-cart-button';
+import IncrementCartItemButton from './increment-cart-item-button';
+import DecrementCartItemButton from './decrement-cart-item-button';
 
 interface Props {
   cart_item: ICart;
@@ -48,15 +50,19 @@ const CartItem: FC<Props> = ({ cart_item }) => {
 
         <div className="flex items-center justify-between space-x-5">
           <div className="space-x-3">
-            <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
-              <Minus />
-            </Button>
+            <DecrementCartItemButton asChild cartItem={cart_item}>
+              <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
+                <Minus />
+              </Button>
+            </DecrementCartItemButton>
 
             <span>{quantity}</span>
 
-            <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
-              <Plus />
-            </Button>
+            <IncrementCartItemButton asChild cartItem={cart_item}>
+              <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
+                <Plus />
+              </Button>
+            </IncrementCartItemButton>
           </div>
 
           <RemoveFromCartButton asChild cartItem={cart_item}>

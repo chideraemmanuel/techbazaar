@@ -49,44 +49,41 @@ const useAddItemToCart = () => {
             | InfiniteData<APIPaginatedResponse<ICart>>
             | undefined
         ) => {
+          if (!previous_cart_data) return previous_cart_data;
+
+          const updatedPages = previous_cart_data.pages.map((page, index) => {
+            if (index === 0) {
+              // Assuming you want to add to the first page
+              return {
+                ...page,
+                data: [
+                  {
+                    _id: product._id, // Use unique ID from the new product
+                    user: product._id,
+                    product,
+                    quantity: 1,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    __v: 0,
+                  },
+                  ...page.data,
+                ],
+                pagination: {
+                  ...page.pagination,
+                  total_records: page.pagination.total_records + 1, // Update total count
+                },
+              };
+            }
+            return page;
+          });
+
           return {
             ...previous_cart_data,
-            pages: [
-              ...(previous_cart_data?.pages ? previous_cart_data.pages : []),
-              {
-                data: [{ product, quantity: 1 }],
-                pagination: {
-                  next_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.next_page,
-                  current_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.current_page,
-                  previous_page:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.previous_page,
-                  total_pages:
-                    previous_cart_data?.pages[
-                      previous_cart_data?.pages.length - 1
-                    ].pagination.total_pages,
-                  total_records:
-                    previous_cart_data?.pages?.[
-                      previous_cart_data?.pages.length - 1
-                    ]?.pagination?.total_records &&
-                    previous_cart_data?.pages?.[
-                      previous_cart_data?.pages.length - 1
-                    ]?.pagination?.total_records + 1,
-                },
-              },
-            ],
+            pages: updatedPages,
           };
         }
       );
 
-      // TODO: make this work..?
       queryClient.setQueryData(
         ['get cart item by product ID', product._id],
         // @ts-ignore
@@ -102,13 +99,12 @@ const useAddItemToCart = () => {
         'get cart summary',
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
+          if (!previous_cart_summary_data) return previous_cart_summary_data;
+
           return {
-            total_items:
-              previous_cart_summary_data?.total_items &&
-              previous_cart_summary_data?.total_items + 1,
+            total_items: previous_cart_summary_data.total_items + 1,
             total_amount:
-              previous_cart_summary_data?.total_amount &&
-              previous_cart_summary_data?.total_amount + product.price,
+              previous_cart_summary_data.total_amount + product.price,
           };
         }
       );
@@ -141,9 +137,12 @@ const useAddItemToCart = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async () => {
+    onSettled: async (data, error, product) => {
       await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart item by product ID');
+      await queryClient.invalidateQueries([
+        'get cart item by product ID',
+        product._id,
+      ]);
       await queryClient.invalidateQueries('get cart summary');
     },
   });

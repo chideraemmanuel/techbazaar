@@ -33,7 +33,44 @@ const useIncrementCartItem = () => {
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore
-        (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {}
+        (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {
+          if (!previous_cart_data) return previous_cart_data;
+
+          const updatedPages = previous_cart_data.pages.map((page) => {
+            return {
+              ...page,
+              data: page.data.map((item) => {
+                if (item._id === cartItem._id) {
+                  // Increment the quantity of the matched cart item
+                  return {
+                    ...item,
+                    quantity: item.quantity + 1,
+                  };
+                }
+                return item; // Leave other items unchanged
+              }),
+            };
+          });
+
+          return {
+            ...previous_cart_data,
+            pages: updatedPages,
+          };
+        }
+      );
+
+      queryClient.setQueryData(
+        'get cart summary',
+        // @ts-ignore
+        (previous_cart_summary_data: ICartSummary | undefined) => {
+          if (!previous_cart_summary_data) return previous_cart_summary_data;
+
+          return {
+            total_items: previous_cart_summary_data.total_items + 1,
+            total_amount:
+              previous_cart_summary_data.total_amount + cartItem.product.price,
+          };
+        }
       );
 
       return {
@@ -58,9 +95,12 @@ const useIncrementCartItem = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async () => {
+    onSettled: async (data, error, product) => {
       await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart item by product ID');
+      await queryClient.invalidateQueries([
+        'get cart item by product ID',
+        product._id,
+      ]);
       await queryClient.invalidateQueries('get cart summary');
     },
   });
