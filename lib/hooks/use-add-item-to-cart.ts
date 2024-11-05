@@ -41,12 +41,6 @@ const useAddItemToCart = () => {
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
 
-      console.log({
-        previous_cart_data,
-        previous_cart_item_data,
-        previous_cart_summary_data,
-      });
-
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore
@@ -93,7 +87,16 @@ const useAddItemToCart = () => {
       );
 
       // TODO: make this work..?
-      queryClient.setQueryData('get cart item by product ID', '');
+      queryClient.setQueryData(
+        ['get cart item by product ID', product._id],
+        // @ts-ignore
+        (previous_cart_item_data: ICart) => {
+          return {
+            product,
+            quantity: 1,
+          };
+        }
+      );
 
       queryClient.setQueryData(
         'get cart summary',

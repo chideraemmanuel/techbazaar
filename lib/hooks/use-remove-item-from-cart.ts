@@ -33,12 +33,6 @@ const useRemoveItemFromCart = () => {
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
 
-      console.log({
-        previous_cart_data,
-        previous_cart_item_data,
-        previous_cart_summary_data,
-      });
-
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore
@@ -52,8 +46,6 @@ const useRemoveItemFromCart = () => {
               return index !== previous_cart_data.pages.length - 1;
             }
           );
-
-          console.log('new_cart_data_pages', new_cart_data_pages);
 
           return {
             ...previous_cart_data,
@@ -112,7 +104,10 @@ const useRemoveItemFromCart = () => {
       );
 
       // TODO: make this work..?
-      queryClient.setQueryData('get cart item by product ID', '');
+      queryClient.setQueryData(
+        ['get cart item by product ID', cartItem.product._id],
+        ''
+      );
 
       queryClient.setQueryData(
         'get cart summary',
@@ -135,7 +130,7 @@ const useRemoveItemFromCart = () => {
         previous_cart_summary_data,
       };
     },
-    onError: (error: AxiosError<APIErrorResponse>, cartItemId, context) => {
+    onError: (error: AxiosError<APIErrorResponse>, cartItem, context) => {
       toast.error(
         error?.response?.data?.error ||
           error?.message ||
