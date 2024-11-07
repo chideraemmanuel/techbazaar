@@ -117,6 +117,56 @@ export const BRANDS_SORT_ITEMS = [
   },
 ];
 
+export const ORDERS_SORT_ITEMS = [
+  {
+    name: 'date created',
+    value: 'date_created',
+  },
+  {
+    name: 'date updated',
+    value: 'date_updated',
+  },
+];
+
+export const ORDER_STATUSES_SORT_ITEMS = [
+  {
+    name: 'pending',
+    value: 'pending',
+  },
+  {
+    name: 'processing',
+    value: 'processing',
+  },
+  {
+    name: 'in transit',
+    value: 'in-transit',
+  },
+  {
+    name: 'dispatched',
+    value: 'dispatched',
+  },
+  {
+    name: 'partially shipped',
+    value: 'partially-shipped',
+  },
+  {
+    name: 'out for delivery',
+    value: 'out-for-delivery',
+  },
+  {
+    name: 'shipped',
+    value: 'shipped',
+  },
+  {
+    name: 'delivered',
+    value: 'delivered',
+  },
+  {
+    name: 'cancelled',
+    value: 'cancelled',
+  },
+];
+
 export const COUNTRIES = [
   'Afghanistan',
   'Albania',

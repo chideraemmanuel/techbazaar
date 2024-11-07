@@ -14,17 +14,21 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import SelectInput from '@/components/select-input';
+import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
+import { IOrder } from '@/types/cart';
 
 type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
->;
+> & {
+  order: IOrder;
+};
 
 type EditOrderStatusDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
 const EditOrderStatusDialog = React.forwardRef<
   EditOrderStatusDialogTriggerRef,
   EditOrderStatusDialogTriggerProps
->(({ className, ...props }, ref) => {
+>(({ className, order, ...props }, ref) => {
   return (
     <>
       <AlertDialog>
@@ -49,7 +53,9 @@ const EditOrderStatusDialog = React.forwardRef<
           <div>
             <SelectInput
               placeholder="Select status"
-              selectInputItems={[]}
+              selectInputItemProps={{ className: 'capitalize' }}
+              selectInputItems={ORDER_STATUSES_SORT_ITEMS}
+              defaultValue={order.status}
               onItemSelect={(value) => {}}
             />
           </div>

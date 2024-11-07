@@ -14,23 +14,49 @@ import {
 } from '@/components/ui/table';
 import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
 import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-dashboard-orders-filter';
+import { getCurrentUser } from '@/lib/data/user';
+import { getAllOrders } from '@/lib/data/order';
+import { ISearchParams } from '@/types';
+import formatDate from '@/lib/format-date';
+import { ORDERS_SORT_ITEMS } from '@/constants';
 
-interface Props {}
+interface Props {
+  searchParams: Promise<ISearchParams>;
+}
 
-const AdminDashboardOrdersPage: FC<Props> = () => {
+const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
+  const searchParamsObject = await searchParams;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect('/auth/login?return_to=/admin/dashboard/orders');
+  }
+
+  if (user && !user.email_verified) {
+    redirect('/auth/verify-email?return_to=/admin/dashboard/orders');
+  }
+
+  if (user.role !== 'admin') {
+    return <p>Sorry, you are not authorized to view this page</p>;
+  }
+
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title="Orders" total={10} />
+        <AdminDashboardResourceHeader
+          title="Orders"
+          subtitle="All orders"
+          fetchFunction={getAllOrders}
+        />
 
         <div className="flex-1 p-5 space-y-7">
-          <OrdersTable />
+          <OrdersTable searchParams={searchParamsObject} />
         </div>
       </div>
     </>
@@ -49,15 +75,10 @@ const headers = [
   'actions',
 ];
 
-const OrdersTable: FC = () => {
-  const user = DUMMY_USERS[0];
-
-  if (!user) notFound();
-
-  const dateFormatter = new Intl.DateTimeFormat('en-us', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  });
+const OrdersTable: FC<{ searchParams: ISearchParams }> = async ({
+  searchParams,
+}) => {
+  const { data: orders, pagination } = await getAllOrders(searchParams);
 
   return (
     <>
@@ -66,7 +87,7 @@ const OrdersTable: FC = () => {
           <div className="space-x-2">
             <AdminDashboardOrdersFilter />
 
-            <AdminDashboardResourceSort sort_items={[]} />
+            <AdminDashboardResourceSort sort_items={ORDERS_SORT_ITEMS} />
           </div>
         </div>
 
@@ -88,27 +109,32 @@ const OrdersTable: FC = () => {
           </TableHeader>
 
           <TableBody>
-            {DUMMY_ORDERS && DUMMY_ORDERS.length > 0 ? (
-              DUMMY_ORDERS.map((order, index) => (
+            {orders && orders.length > 0 ? (
+              orders.map((order, index) => (
                 <TableRow
                   key={order._id}
                   className="font-medium text-xs bg-background hover:bg-background"
                 >
                   <TableCell>{index + 1}</TableCell>
 
-                  <TableCell title={`${user.first_name} ${user.last_name}`}>
+                  <TableCell
+                    title={`${order.user.first_name} ${order.user.last_name}`}
+                  >
                     <span className="inline-block w-[170px] sm:w-[200px] truncate">
-                      {user.first_name} {user.last_name}
+                      {order.user.first_name} {order.user.last_name}
                     </span>
                   </TableCell>
 
                   <TableCell>{order.items.length}</TableCell>
 
-                  <TableCell>{order.total_price}</TableCell>
+                  <TableCell>₦{order.total_price.toFixed(2)}</TableCell>
 
                   <TableCell>
                     <span className="inline-block w-[150px] sm:w-[180px] truncate">
-                      {dateFormatter.format(order.createdAt)}
+                      {formatDate(new Date(order.createdAt), 'en-us', {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      })}
                     </span>
                   </TableCell>
 
@@ -120,12 +146,12 @@ const OrdersTable: FC = () => {
 
                   <TableCell className="flex items-center space-x-1">
                     <Button variant={'outline'} size={'sm'} asChild>
-                      <Link href={`/admin/dashboard/orders/1`}>
+                      <Link href={`/admin/dashboard/orders/${order._id}`}>
                         View Details
                       </Link>
                     </Button>
 
-                    <EditOrderStatusDialog />
+                    <EditOrderStatusDialog order={order} />
                   </TableCell>
                 </TableRow>
               ))
@@ -145,7 +171,10 @@ const OrdersTable: FC = () => {
         <div className="bg-background/50 border-t p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-7">
           <DataTableItemsPerPage />
 
-          <DataTablePagination totalPages={50} totalPagesToDisplay={3} />
+          <DataTablePagination
+            totalPages={pagination.total_pages}
+            totalPagesToDisplay={3}
+          />
         </div>
       </div>
     </>

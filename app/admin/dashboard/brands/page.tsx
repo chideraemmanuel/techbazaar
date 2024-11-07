@@ -48,24 +48,11 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <div className="sticky top-16 md:top-20 z-[1] p-5 border-b bg-background">
-          <div>
-            <span className="text-xs font-semibold text-muted-foreground">
-              Breadcrumbs here!
-            </span>
-
-            <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
-              Brands
-            </h1>
-
-            <div className="text-foreground/90 text-base font-medium">
-              All brands{' '}
-              <Suspense>
-                <TotalResource />
-              </Suspense>
-            </div>
-          </div>
-        </div>
+        <AdminDashboardResourceHeader
+          title="Brands"
+          subtitle="All brands"
+          fetchFunction={getAllBrands}
+        />
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>
@@ -78,18 +65,6 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
 };
 
 export default AdminDashboardBrandsPage;
-
-const TotalResource: FC = async () => {
-  const { data: brands, pagination } = await getAllBrands();
-
-  return (
-    <>
-      <span className="text-muted-foreground">
-        ({pagination.total_records})
-      </span>
-    </>
-  );
-};
 
 const headers = ['#', 'brand', 'deleted', 'actions'];
 

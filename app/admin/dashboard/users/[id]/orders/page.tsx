@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
 import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-dashboard-orders-filter';
+import formatDate from '@/lib/format-date';
 
 interface Props {
   params: Promise<{
@@ -35,10 +36,7 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({ params }) => {
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader
-          title={`${user.first_name}'s Orders`}
-          total={10}
-        />
+        <AdminDashboardResourceHeader title={`${user.first_name}'s Orders`} />
 
         <div className="flex-1 p-5 space-y-7">
           <OrdersTable />
@@ -64,11 +62,6 @@ const OrdersTable: FC = () => {
   const user = DUMMY_USERS[0];
 
   if (!user) notFound();
-
-  const dateFormatter = new Intl.DateTimeFormat('en-us', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  });
 
   return (
     <>
@@ -119,7 +112,10 @@ const OrdersTable: FC = () => {
 
                   <TableCell>
                     <span className="inline-block w-[150px] sm:w-[180px] truncate">
-                      {dateFormatter.format(order.createdAt)}
+                      {formatDate(new Date(order.createdAt), 'en-us', {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      })}
                     </span>
                   </TableCell>
 

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
+import formatDate from '@/lib/format-date';
 
 interface Props {
   params: Promise<{
@@ -22,11 +23,6 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
   if (!order) notFound();
   if (!user) notFound();
-
-  const dateFormatter = new Intl.DateTimeFormat('en-us', {
-    dateStyle: 'long',
-    // timeStyle: 'medium',
-  });
 
   return (
     <>
@@ -116,7 +112,9 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
               <BillingDetail
                 label="Order date"
-                value={`${dateFormatter.format(order.createdAt)}`}
+                value={`${formatDate(new Date(order.createdAt), 'en-us', {
+                  dateStyle: 'long',
+                })}`}
               />
             </div>
 

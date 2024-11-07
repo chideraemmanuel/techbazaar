@@ -1,12 +1,13 @@
 import { ProductTypes } from './product';
+import { UserTypes } from './user';
 
 export interface ICart {
   _id: string;
   user: string;
   product: ProductTypes;
   quantity: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   __v: number;
 }
 
@@ -31,8 +32,8 @@ export interface IBillingInformation {
     mobile_number: string;
   };
   address: IBillingAddress;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   __v: number;
 }
 
@@ -49,7 +50,7 @@ export type OrderStatus =
 
 export interface IOrder {
   _id: string;
-  user: string;
+  user: UserTypes;
   items: Pick<ICart, 'product' | 'quantity'>[];
   billing_information: Omit<
     IBillingInformation,
@@ -57,7 +58,7 @@ export interface IOrder {
   >;
   status: OrderStatus;
   total_price: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   __v: number;
 }

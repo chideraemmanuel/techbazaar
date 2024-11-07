@@ -9,6 +9,9 @@ interface IUser {
   email_verified: boolean;
   role: UserRole;
   disabled: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
 }
 
 export interface IGoogleUser extends IUser {

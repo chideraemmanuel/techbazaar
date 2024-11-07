@@ -2,8 +2,8 @@ interface IBrand {
   _id: string;
   name: string;
   logo: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   __v: number;
 }
 
@@ -40,8 +40,8 @@ interface IProduct {
   slug: string;
   is_featured: boolean;
   is_archived: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   __v: number;
 }
 

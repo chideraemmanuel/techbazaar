@@ -12,6 +12,7 @@ import { CopyIcon, UserX } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
+import formatDate from '@/lib/format-date';
 
 interface Props {
   params: Promise<{
@@ -24,11 +25,6 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
   const user = DUMMY_USERS[0];
 
   if (!user) notFound();
-
-  const dateFormatter = new Intl.DateTimeFormat('en-us', {
-    dateStyle: 'long',
-    // timeStyle: 'medium',
-  });
 
   return (
     <>
@@ -80,7 +76,9 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
               <UserDetail label="Disabled" value={`${user.disabled}`} />
               <UserDetail
                 label="Joined"
-                value={`${dateFormatter.format(user.createdAt)}`}
+                value={`${formatDate(new Date(user.createdAt), 'en-us', {
+                  dateStyle: 'long',
+                })}`}
               />
             </div>
 
