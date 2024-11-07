@@ -59,7 +59,11 @@ const CartItem: FC<Props> = ({ cart_item }) => {
             <span>{quantity}</span>
 
             <IncrementCartItemButton asChild cartItem={cart_item}>
-              <Button variant={'secondary'} className="h-7 sm:h-9 w-7 sm:w-9 ">
+              <Button
+                variant={'secondary'}
+                className="h-7 sm:h-9 w-7 sm:w-9 "
+                disabled={quantity === product.stock}
+              >
                 <Plus />
               </Button>
             </IncrementCartItemButton>

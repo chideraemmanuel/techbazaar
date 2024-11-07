@@ -19,18 +19,20 @@ const useRemoveItemFromCart = () => {
     mutationFn: removeItemFromCart,
     onMutate: async (cartItem) => {
       await queryClient.cancelQueries('get current user cart');
-      await queryClient.cancelQueries('get cart item by product ID');
+      await queryClient.cancelQueries([
+        'get cart item by product ID',
+        cartItem.product._id,
+      ]);
       await queryClient.cancelQueries('get cart summary');
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
-      console.log('previous_cart_data', previous_cart_data);
-
-      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
-        'get cart item by product ID'
-      );
+      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>([
+        'get cart item by product ID',
+        cartItem.product._id,
+      ]);
 
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
@@ -46,6 +48,13 @@ const useRemoveItemFromCart = () => {
           if (!previous_cart_data) return previous_cart_data;
 
           const updatedPages = previous_cart_data.pages.map((page) => {
+            // Determine if the item exists in the current page
+            const itemIndex = page.data.findIndex(
+              (item) => item._id === cartItem._id
+            );
+
+            if (itemIndex === -1) return page; // Item not found, return the page unchanged
+
             // Filter out the cart item being removed
             const newData = page.data.filter(
               (item) => item._id !== cartItem._id

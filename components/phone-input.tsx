@@ -36,11 +36,12 @@ type PhoneInputProps = Omit<
     label?: string;
     labelProps?: React.ComponentPropsWithoutRef<typeof Label>;
     onChange?: (value: RPNInput.Value) => void;
+    error?: string;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, label, labelProps, id, ...props }, ref) => {
+    ({ className, onChange, error, label, labelProps, id, ...props }, ref) => {
       return (
         <>
           <div>
@@ -57,7 +58,11 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
             <RPNInput.default
               defaultCountry="NG"
               ref={ref}
-              className={cn('flex', className)}
+              className={cn(
+                'flex border border-transparent shadow-sm rounded-md ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ',
+                error && 'border-destructive',
+                className
+              )}
               flagComponent={FlagComponent}
               countrySelectComponent={CountrySelect}
               inputComponent={InputComponent}
@@ -77,6 +82,8 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
               }}
               {...props}
             />
+
+            <span className="text-xs text-destructive">{error}</span>
           </div>
         </>
       );
@@ -87,8 +94,10 @@ PhoneInput.displayName = 'PhoneInput';
 const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => (
     <Input
-      // className={cn('rounded-e-lg rounded-s-none', className)}
-      className={cn('rounded-e-lg rounded-s-none shadow-sm', className)}
+      className={cn(
+        'rounded-e-lg rounded-s-none focus-visible:ring-0',
+        className
+      )}
       {...props}
       ref={ref}
     />

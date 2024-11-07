@@ -27,16 +27,20 @@ const useAddItemToCart = () => {
     mutationFn: addItemToCart,
     onMutate: async (product) => {
       await queryClient.cancelQueries('get current user cart');
-      await queryClient.cancelQueries('get cart item by product ID');
+      await queryClient.cancelQueries([
+        'get cart item by product ID',
+        product._id,
+      ]);
       await queryClient.cancelQueries('get cart summary');
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
-      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
-        'get cart item by product ID'
-      );
+      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>([
+        'get cart item by product ID',
+        product._id,
+      ]);
 
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
@@ -53,12 +57,11 @@ const useAddItemToCart = () => {
 
           const updatedPages = previous_cart_data.pages.map((page, index) => {
             if (index === 0) {
-              // Assuming you want to add to the first page
               return {
                 ...page,
                 data: [
                   {
-                    _id: product._id, // Use unique ID from the new product
+                    _id: product._id,
                     user: product._id,
                     product,
                     quantity: 1,
@@ -70,7 +73,7 @@ const useAddItemToCart = () => {
                 ],
                 pagination: {
                   ...page.pagination,
-                  total_records: page.pagination.total_records + 1, // Update total count
+                  total_records: page.pagination.total_records + 1,
                 },
               };
             }
@@ -89,8 +92,12 @@ const useAddItemToCart = () => {
         // @ts-ignore
         (previous_cart_item_data: ICart) => {
           return {
+            _id: product._id,
+            user: product._id,
             product,
             quantity: 1,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           };
         }
       );

@@ -119,7 +119,7 @@ const CartSummary: FC<{}> = () => {
               </span>
 
               <span className="text-sm sm:text-base font-medium">
-                ₦{data.total_amount}
+                ₦{data.total_amount.toFixed(2)}
               </span>
             </li>
 
@@ -139,7 +139,7 @@ const CartSummary: FC<{}> = () => {
               </span>
 
               <span className="text-lg sm:text-xl font-medium">
-                ₦{data.total_amount}
+                ₦{data.total_amount.toFixed(2)}
               </span>
             </li>
           </ul>

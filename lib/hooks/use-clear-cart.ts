@@ -28,8 +28,6 @@ const useClearCart = () => {
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
 
-      console.log('previous_cart_data', previous_cart_data);
-
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore

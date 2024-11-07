@@ -1,13 +1,15 @@
 'use client';
 
 import React, { FC } from 'react';
-import FormInput from './form-input';
-import { useForm } from 'react-hook-form';
-import { NAME_REGEX } from '@/constants';
-import ComboBoxInput from './combobox-input';
-import { PhoneInput } from './phone-input';
+import FormInput from '@/components/form-input';
+import { useForm, UseFormReturn } from 'react-hook-form';
+import { COUNTRIES, NAME_REGEX } from '@/constants';
+import ComboBoxInput from '@/components/combobox-input';
+import { PhoneInput } from '@/components/phone-input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
-interface BillingInformationForm {
+export interface BillingInformationFormTypes {
   receipent: {
     first_name: string;
     last_name: string;
@@ -19,21 +21,32 @@ interface BillingInformationForm {
     state: string;
     country: string;
   };
+  save_billing_information?: boolean;
 }
 
-interface Props {}
+interface Props {
+  form: UseFormReturn<BillingInformationFormTypes, any, undefined>;
+  isPlacingOrder: boolean;
+}
 
-const BillingInformationForm: FC<Props> = () => {
-  const [comboboxOpen, setComboboxOpen] = React.useState(false);
-  const form = useForm<BillingInformationForm>();
+const BillingInformationForm: FC<Props> = ({ form, isPlacingOrder }) => {
+  const [countryComboboxOpen, setCountryComboboxOpen] = React.useState(false);
+  const [stateComboboxOpen, setStateComboboxOpen] = React.useState(false);
+  const [cityComboboxOpen, setCityComboboxOpen] = React.useState(false);
 
   const {
     register,
     formState: { errors },
-    handleSubmit,
     clearErrors,
     setValue,
   } = form;
+
+  const formatted_countries = COUNTRIES.map((country) => {
+    return {
+      name: country,
+      value: country,
+    };
+  });
 
   return (
     <>
@@ -59,7 +72,7 @@ const BillingInformationForm: FC<Props> = () => {
             },
           })}
           error={errors?.receipent?.first_name?.message}
-          // disabled={isPlacingOrder}
+          disabled={isPlacingOrder}
         />
 
         <FormInput
@@ -83,10 +96,25 @@ const BillingInformationForm: FC<Props> = () => {
             },
           })}
           error={errors?.receipent?.last_name?.message}
-          // disabled={isPlacingOrder}
+          disabled={isPlacingOrder}
         />
 
-        <PhoneInput label="Mobile number" placeholder="+444 000 0000-0000" />
+        <PhoneInput
+          label="Mobile number"
+          placeholder="+444 000 0000-0000"
+          {...register('receipent.mobile_number', {
+            required: {
+              value: true,
+              message: 'Please enter a mobile number',
+            },
+          })}
+          onChange={(value) => {
+            clearErrors('receipent.mobile_number');
+            setValue('receipent.mobile_number', value);
+          }}
+          error={errors.receipent?.mobile_number?.message}
+          disabled={isPlacingOrder}
+        />
 
         <FormInput
           label="Address"
@@ -105,8 +133,8 @@ const BillingInformationForm: FC<Props> = () => {
               );
             },
           })}
-          error={errors?.receipent?.first_name?.message}
-          // disabled={isPlacingOrder}
+          error={errors?.address?.street?.message}
+          disabled={isPlacingOrder}
         />
 
         <ComboBoxInput
@@ -122,19 +150,62 @@ const BillingInformationForm: FC<Props> = () => {
             className: 'capitalize',
           }}
           comboboxItemProps={{ className: 'capitalize' }}
-          comboboxOpen={comboboxOpen}
-          setComboboxOpen={setComboboxOpen}
+          comboboxOpen={countryComboboxOpen}
+          setComboboxOpen={setCountryComboboxOpen}
           error={errors.address?.country?.message}
-          comboboxItems={[]}
+          comboboxItems={formatted_countries}
           onItemSelect={(value) => {
             clearErrors('address');
             setValue('address.country', value);
           }}
           //  defaultValue={}
-          //  disabled={isPlacingOrder}
+          disabled={isPlacingOrder}
         />
 
-        <ComboBoxInput
+        <FormInput
+          label="State"
+          id="state"
+          placeholder="Enter state"
+          {...register('address.state', {
+            required: {
+              value: true,
+              message: 'Please enter a state',
+            },
+            validate: (fieldValue) => {
+              return (
+                (fieldValue.length >= 2 && fieldValue.length <= 20) ||
+                'Invalid state'
+                // TODO: validate state properly
+              );
+            },
+          })}
+          error={errors?.address?.state?.message}
+          disabled={isPlacingOrder}
+        />
+
+        <FormInput
+          label="City"
+          id="city"
+          placeholder="Enter city"
+          {...register('address.city', {
+            required: {
+              value: true,
+              message: 'Please enter a city',
+            },
+            validate: (fieldValue) => {
+              return (
+                (fieldValue.length >= 2 && fieldValue.length <= 30) ||
+                'Invalid city'
+                // TODO: validate city properly
+              );
+            },
+          })}
+          error={errors?.address?.city?.message}
+          disabled={isPlacingOrder}
+        />
+
+        {/* TODO: implement select fields for state and city  */}
+        {/* <ComboBoxInput
           label="State"
           placeholder="Select state"
           comboboxTriggerProps={{
@@ -147,8 +218,8 @@ const BillingInformationForm: FC<Props> = () => {
             className: 'capitalize',
           }}
           comboboxItemProps={{ className: 'capitalize' }}
-          comboboxOpen={comboboxOpen}
-          setComboboxOpen={setComboboxOpen}
+          comboboxOpen={stateComboboxOpen}
+          setComboboxOpen={setStateComboboxOpen}
           error={errors.address?.state?.message}
           comboboxItems={[]}
           onItemSelect={(value) => {
@@ -172,8 +243,8 @@ const BillingInformationForm: FC<Props> = () => {
             className: 'capitalize',
           }}
           comboboxItemProps={{ className: 'capitalize' }}
-          comboboxOpen={comboboxOpen}
-          setComboboxOpen={setComboboxOpen}
+          comboboxOpen={cityComboboxOpen}
+          setComboboxOpen={setCityComboboxOpen}
           error={errors.address?.city?.message}
           comboboxItems={[]}
           onItemSelect={(value) => {
@@ -182,7 +253,19 @@ const BillingInformationForm: FC<Props> = () => {
           }}
           //  defaultValue={}
           //  disabled={isPlacingOrder}
+        /> */}
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="save_billing_information"
+          onCheckedChange={(checked) =>
+            setValue('save_billing_information', checked as boolean)
+          }
         />
+        <Label htmlFor="save_billing_information" className="cursor-pointer">
+          Save billing information
+        </Label>
       </div>
     </>
   );

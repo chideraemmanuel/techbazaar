@@ -28,8 +28,6 @@ const useIncrementCartItem = () => {
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
 
-      console.log('previous_cart_data', previous_cart_data);
-
       queryClient.setQueryData(
         'get current user cart',
         // @ts-ignore
@@ -97,10 +95,6 @@ const useIncrementCartItem = () => {
     },
     onSettled: async (data, error, product) => {
       await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries([
-        'get cart item by product ID',
-        product._id,
-      ]);
       await queryClient.invalidateQueries('get cart summary');
     },
   });

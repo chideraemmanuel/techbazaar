@@ -1,3 +1,4 @@
+import 'server-only';
 import { cookies } from 'next/headers';
 import { getCurrentUser } from './user';
 import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';

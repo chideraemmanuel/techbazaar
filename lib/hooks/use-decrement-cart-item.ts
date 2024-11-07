@@ -19,20 +19,23 @@ const useDecrementCartItem = () => {
     mutationFn: decrementCartItem,
     onMutate: async (cartItem) => {
       await queryClient.cancelQueries('get current user cart');
+      await queryClient.cancelQueries([
+        'get cart item by product ID',
+        cartItem.product._id,
+      ]);
       await queryClient.cancelQueries('get cart summary');
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
       >('get current user cart');
 
-      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>(
-        'get cart item by product ID'
-      );
+      const previous_cart_item_data = queryClient.getQueryData<'' | ICart>([
+        'get cart item by product ID',
+        cartItem.product._id,
+      ]);
 
       const previous_cart_summary_data =
         queryClient.getQueryData<ICartSummary>('get cart summary');
-
-      console.log('previous_cart_data', previous_cart_data);
 
       queryClient.setQueryData(
         'get current user cart',

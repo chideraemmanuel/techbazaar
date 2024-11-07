@@ -1,3 +1,4 @@
+import 'server-only';
 import { UserTypes } from '@/types/user';
 import { cookies } from 'next/headers';
 
