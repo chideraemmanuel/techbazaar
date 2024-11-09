@@ -15,7 +15,8 @@ import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import SelectInput from '@/components/select-input';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
-import { IOrder } from '@/types/cart';
+import { IOrder, OrderStatus } from '@/types/cart';
+import useUpdateOrderStatus from '@/lib/hooks/use-update-order-status';
 
 type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -29,9 +30,42 @@ const EditOrderStatusDialog = React.forwardRef<
   EditOrderStatusDialogTriggerRef,
   EditOrderStatusDialogTriggerProps
 >(({ className, order, ...props }, ref) => {
+  const [orderStatus, setOrderStatus] = React.useState(order.status);
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const {
+    mutate: updateOrderStatus,
+    isLoading: isUpdatingOrderStatus,
+    isSuccess: orderStatusUpdateSuccess,
+  } = useUpdateOrderStatus();
+
+  React.useEffect(() => {
+    if (orderStatusUpdateSuccess) {
+      setDialogOpen(false);
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+    };
+
+    if (isUpdatingOrderStatus) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.pointerEvents = 'none';
+
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [orderStatusUpdateSuccess, isUpdatingOrderStatus]);
+
   return (
     <>
-      <AlertDialog>
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogTrigger asChild ref={ref}>
           <Button
             size={'icon'}
@@ -56,15 +90,25 @@ const EditOrderStatusDialog = React.forwardRef<
               selectInputItemProps={{ className: 'capitalize' }}
               selectInputItems={ORDER_STATUSES_SORT_ITEMS}
               defaultValue={order.status}
-              onItemSelect={(value) => {}}
+              onItemSelect={(value) => setOrderStatus(value as OrderStatus)}
+              disabled={isUpdatingOrderStatus}
             />
           </div>
 
           <AlertDialogFooter className="mt-3 sm:mt-5">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isUpdatingOrderStatus}>
+              Cancel
+            </AlertDialogCancel>
 
-            <Button>
-              <Loader2 className="h-4 w-4 animate-spin" />
+            <Button
+              disabled={isUpdatingOrderStatus || orderStatus === order.status}
+              onClick={() =>
+                updateOrderStatus({ orderId: order._id, status: orderStatus })
+              }
+            >
+              {isUpdatingOrderStatus && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
               Update
             </Button>
           </AlertDialogFooter>
