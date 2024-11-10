@@ -141,10 +141,10 @@ export const ORDER_STATUSES_SORT_ITEMS = [
     name: 'in transit',
     value: 'in-transit',
   },
-  {
-    name: 'dispatched',
-    value: 'dispatched',
-  },
+  // {
+  //   name: 'dispatched',
+  //   value: 'dispatched',
+  // },
   {
     name: 'partially shipped',
     value: 'partially-shipped',

@@ -2,27 +2,40 @@ import CopyToClipboard from '@/components/copy-to-clipboard';
 import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { CopyIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 import formatDate from '@/lib/format-date';
+import { getCurrentUser } from '@/lib/data/user';
+import { getOrderById } from '@/lib/data/order';
 
 interface Props {
   params: Promise<{
-    id: string;
+    orderId: string;
   }>;
 }
 
 const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
-  const { id } = await params;
-  const order = DUMMY_ORDERS[0];
-  const user = DUMMY_USERS[0];
+  const { orderId } = await params;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(`/auth/login?return_to=/admin/dashboard/orders/${orderId}`);
+  }
+
+  if (user && !user.email_verified) {
+    redirect(`/auth/verify-email?return_to=/admin/dashboard/orders/${orderId}`);
+  }
+
+  if (user.role !== 'admin') {
+    return <p>Sorry, you are not authorized to view this page</p>;
+  }
+
+  const order = await getOrderById(orderId);
 
   if (!order) notFound();
-  if (!user) notFound();
 
   return (
     <>
@@ -51,7 +64,7 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
                 <span className="inline-block ml-2 text-muted-foreground">
                   #{user._id}
                 </span>
-                <CopyToClipboard text={user._id} className="ml-2">
+                <CopyToClipboard text={user._id} className="ml-2" toast={true}>
                   <CopyIcon className="w-4 h-4" />
                 </CopyToClipboard>
               </p>
@@ -102,7 +115,7 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
               <BillingDetail
                 label="Total price"
-                value={order.total_price.toFixed(2)}
+                value={`₦${order.total_price.toFixed(2)}`}
               />
 
               <BillingDetail
@@ -146,10 +159,12 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
               </span>
 
               <div className="flex justify-start items-center gap-5">
-                <EditOrderStatusDialog />
+                <EditOrderStatusDialog order={order} />
 
                 <Button>
-                  <Link href={`/admin/dashboard/users/1`}>View user</Link>
+                  <Link href={`/admin/dashboard/users/${user._id}`}>
+                    View user
+                  </Link>
                 </Button>
               </div>
             </div>

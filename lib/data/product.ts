@@ -79,6 +79,8 @@ export const getProductByIdOrSlug = async (idOrSlug: string) => {
   );
 
   if (!response.ok) {
+    if (response.status === 404) return null;
+
     const error_response: APIErrorResponse = await response.json();
     throw new Error(error_response.error || 'Something went wrong');
   }
