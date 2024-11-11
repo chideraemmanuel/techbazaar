@@ -40,9 +40,7 @@ const UserCartPage: FC<Props> = async ({ searchParams }) => {
           </h1>
         </div>
 
-        <Suspense>
-          <CartContent searchParams={searchParamsObject} />
-        </Suspense>
+        <CartContent searchParams={searchParamsObject} />
       </div>
     </>
   );

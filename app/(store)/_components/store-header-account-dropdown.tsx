@@ -49,7 +49,7 @@ const ActiveUserDropdown: FC<{ user: UserTypes }> = ({ user }) => {
           <CurrentUser user={user} />
 
           <DropdownMenuItem asChild>
-            <Link href={`#`}>
+            <Link href={`/user/wishlist`}>
               <RiHeartLine className="h-4 w-4" />
               <span>Wishlist</span>
             </Link>

@@ -1,11 +1,18 @@
 import {
   ChartArea,
   ChartColumn,
+  Gamepad,
+  Headphones,
+  Laptop,
   LineChart,
   ShoppingBagIcon,
   ShoppingCart,
+  Smartphone,
+  Speaker,
+  Tablet,
   Users,
   Users2,
+  Watch,
 } from 'lucide-react';
 
 export const NAME_REGEX = /^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/;
@@ -56,43 +63,43 @@ export const PRODUCT_CATEGORIES = [
   {
     name: 'smartphones',
     value: 'smartphones',
-    icon: LineChart,
+    icon: Smartphone,
     image: '',
   },
   {
     name: 'tablets',
     value: 'tablets',
-    icon: LineChart,
+    icon: Tablet,
     image: '',
   },
   {
     name: 'laptops',
     value: 'laptops',
-    icon: LineChart,
+    icon: Laptop,
     image: '',
   },
   {
     name: 'headphones',
     value: 'headphones',
-    icon: LineChart,
+    icon: Headphones,
     image: '',
   },
   {
     name: 'speakers',
     value: 'speakers',
-    icon: LineChart,
+    icon: Speaker,
     image: '',
   },
   {
     name: 'smartwatches',
     value: 'smartwatches',
-    icon: LineChart,
+    icon: Watch,
     image: '',
   },
   {
     name: 'gaming consoles',
     value: 'gaming-consoles',
-    icon: LineChart,
+    icon: Gamepad,
     image: '',
   },
 ];

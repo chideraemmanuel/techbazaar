@@ -127,11 +127,11 @@ const useRemoveItemFromCart = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async (data, error, product) => {
+    onSettled: async (data, error, cartItem) => {
       await queryClient.invalidateQueries('get current user cart');
       await queryClient.invalidateQueries([
         'get cart item by product ID',
-        product._id,
+        cartItem.product._id,
       ]);
       await queryClient.invalidateQueries('get cart summary');
     },
