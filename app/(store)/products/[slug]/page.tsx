@@ -17,6 +17,7 @@ import {
 } from '@/lib/data/product';
 import AddToCartButton from '../../user/cart/_components/add-to-cart-button';
 import CartAction from './_components/cart-action';
+import WishlistAction from './_components/wishlist-action';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -77,9 +78,7 @@ const ProductDetailsPage: FC<Props> = async ({ params }) => {
             <div className="flex items-center space-x-2 md:w-[min(500px,_100%)]">
               <CartAction product={product} />
 
-              <Button variant={'secondary'}>
-                <Heart />
-              </Button>
+              <WishlistAction product={product} />
             </div>
           </div>
         </section>

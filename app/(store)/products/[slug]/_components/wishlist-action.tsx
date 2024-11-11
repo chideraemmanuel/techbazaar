@@ -1,13 +1,16 @@
 'use client';
 
+import AddToWishlistButton from '@/components/add-to-wishlist-button';
+import RemoveFromWishlistButton from '@/components/remove-from-wishlist-button';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import useAddItemToWishlist from '@/lib/hooks/use-add-item-to-wishlist';
 import useWishlistItem from '@/lib/hooks/use-wishlist-item';
 import { IAvailableProduct } from '@/types/product';
+import { RiHeartFill } from '@remixicon/react';
 import { Heart } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
-import AddToWishlistButton from './add-to-wishlist-button';
-import RemoveFromWishlistButton from './remove-from-wishlist-button';
-import useAddItemToWishlist from '@/lib/hooks/use-add-item-to-wishlist';
 
 interface Props {
   product: IAvailableProduct;
@@ -34,56 +37,46 @@ const WishlistAction: FC<Props> = ({ product }) => {
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
     // if (error?.response?.status > 400 && error?.response?.status < 500) {
     return (
-      <button
-        className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-background bg-foreground/30 hover:bg-primary/80 hover:text-white transition-colors"
+      <Button
+        variant={'secondary'}
         title="Add to wishlist"
         onClick={() =>
           router.push(`/auth/login?return_to=${pathname}?id=${product._id}`)
         }
       >
-        <Heart className="w-4 h-4" />
+        <Heart />
         <span className="sr-only">Add to wishlist</span>
-      </button>
+      </Button>
     );
   }
 
   if (error) throw new Error();
 
   if (isLoading) {
-    return (
-      <button className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-background bg-foreground/30 hover:bg-primary/80 hover:text-white transition-colors">
-        <Heart className="w-4 h-4" />
-      </button>
-    );
+    return <Skeleton className="h-10 w-12 rounded-md" />;
   }
 
   return (
     <>
-      {/* <button className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-muted-foreground bg-background hover:bg-primary/80 hover:text-white transition-colors">
-          <Heart className="w-4 h-4" />
-        </button> */}
-
       {!isLoading && data === '' && (
         <AddToWishlistButton asChild product={product}>
-          <button
-            className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-background bg-foreground/30 hover:bg-primary/80 hover:text-white transition-colors"
-            title="Add to wishlist"
-          >
-            <Heart className="w-4 h-4" />
+          <Button variant={'secondary'} title="Add to wishlist">
+            <Heart />
             <span className="sr-only">Add to wishlist</span>
-          </button>
+          </Button>
         </AddToWishlistButton>
       )}
 
       {!isLoading && data && (
         <RemoveFromWishlistButton asChild wishlistItem={data}>
-          <button
-            className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 bg-primary/80 text-white transition-colors"
+          <Button
+            variant={'secondary'}
+            className="text-primary"
             title="Remove from wishlist"
           >
-            <Heart className="w-4 h-4" />
+            <RiHeartFill />
             <span className="sr-only">Remove from wishlist</span>
-          </button>
+          </Button>
         </RemoveFromWishlistButton>
       )}
     </>
