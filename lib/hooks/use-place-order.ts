@@ -42,7 +42,7 @@ const usePlaceOrder = () => {
   return useMutation({
     mutationKey: ['place order'],
     mutationFn: placeOrder,
-    onSuccess: async (data) => {
+    onSuccess: async (response) => {
       toast.success('Order placed successfully');
 
       const previous_cart_data = queryClient.getQueryData<
@@ -65,7 +65,7 @@ const usePlaceOrder = () => {
         }
       }
 
-      router.replace('/user/orders');
+      router.replace(`/user/orders/${response.data?._id}`);
     },
     onError: (error: AxiosError<APIErrorResponse>) => {
       toast.error(

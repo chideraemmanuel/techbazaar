@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { IOrder } from '@/types/cart';
 import Link from 'next/link';
 import { FC } from 'react';
+import CancelOrderDialog from './cancel-order-dialog';
 
 interface Props {
   order: IOrder;
@@ -51,9 +52,18 @@ const OrderCard: FC<Props> = ({ order }) => {
             View details
           </Link>
 
-          <Button variant={'destructive'} size={'sm'}>
-            Cancel order
-          </Button>
+          <CancelOrderDialog
+            order={order}
+            disabled={
+              order.status === 'in-transit' ||
+              // order.status === 'dispatched' ||
+              order.status === 'partially-shipped' ||
+              order.status === 'shipped' ||
+              order.status === 'out-for-delivery' ||
+              order.status === 'delivered' ||
+              order.status === 'cancelled'
+            }
+          />
         </div>
       </div>
     </>

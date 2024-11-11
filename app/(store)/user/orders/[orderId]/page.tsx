@@ -6,6 +6,7 @@ import formatDate from '@/lib/format-date';
 import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
+import CancelOrderDialog from '../_components/cancel-order-dialog';
 
 interface Props {
   params: Promise<{
@@ -117,6 +118,29 @@ const OrderDetailsPage: FC<Props> = async ({ params }) => {
               label="Mobile number"
               value={order.billing_information.receipent.mobile_number}
             />
+          </div>
+
+          <Separator />
+
+          <div className="pt-4">
+            <span className="inline-block pb-3 text-muted-foreground">
+              Actions:
+            </span>
+
+            <div className="flex justify-start items-center gap-5">
+              <CancelOrderDialog
+                order={order}
+                disabled={
+                  order.status === 'in-transit' ||
+                  // order.status === 'dispatched' ||
+                  order.status === 'partially-shipped' ||
+                  order.status === 'shipped' ||
+                  order.status === 'out-for-delivery' ||
+                  order.status === 'delivered' ||
+                  order.status === 'cancelled'
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
