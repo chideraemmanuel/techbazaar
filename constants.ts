@@ -56,30 +56,57 @@ export const PRODUCT_CATEGORIES = [
   {
     name: 'smartphones',
     value: 'smartphones',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'tablets',
     value: 'tablets',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'laptops',
     value: 'laptops',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'headphones',
     value: 'headphones',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'speakers',
     value: 'speakers',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'smartwatches',
     value: 'smartwatches',
+    icon: LineChart,
+    image: '',
   },
   {
     name: 'gaming consoles',
     value: 'gaming-consoles',
+    icon: LineChart,
+    image: '',
+  },
+];
+
+export const STORE_SIDEBAR_LINKS = [
+  {
+    title: 'categories',
+    items: PRODUCT_CATEGORIES.map((category) => {
+      return {
+        title: category.name,
+        href: `/categories/${category.value}`,
+        icon: category.icon,
+      };
+    }),
   },
 ];
 

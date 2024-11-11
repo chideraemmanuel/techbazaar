@@ -3,6 +3,7 @@
 import FormInput from '@/components/form-input';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { Button } from '@/components/ui/button';
+import { PRODUCT_CATEGORIES } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
 
@@ -11,17 +12,19 @@ interface Props {
   sheetClose?: any;
 }
 
-const CategoryPageSideFilter: FC<Props> = ({
+const ProductsPageSideFilter: FC<Props> = ({
   brands,
   sheetClose: SheetClose,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const categoryParam = searchParams.get('category');
   const brandParam = searchParams.get('brand');
   const minPriceParam = searchParams.get('min_price');
   const maxPriceParam = searchParams.get('max_price');
 
+  const [category, setCategory] = React.useState(categoryParam);
   const [brand, setBrand] = React.useState(brandParam);
   const [minPrice, setMinPrice] = React.useState(minPriceParam);
   const [maxPrice, setMaxPrice] = React.useState(maxPriceParam);
@@ -29,9 +32,14 @@ const CategoryPageSideFilter: FC<Props> = ({
   const applyFilter = () => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
+    newSearchParams.delete('category');
     newSearchParams.delete('brand');
     newSearchParams.delete('min_price');
     newSearchParams.delete('max_price');
+
+    if (category) {
+      newSearchParams.set('category', category);
+    }
 
     if (brand) {
       newSearchParams.set('brand', brand);
@@ -49,12 +57,14 @@ const CategoryPageSideFilter: FC<Props> = ({
   };
 
   const resetFilter = () => {
+    setCategory(null);
     setBrand(null);
     setMinPrice(null);
     setMaxPrice(null);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
+    newSearchParams.delete('category');
     newSearchParams.delete('brand');
     newSearchParams.delete('min_price');
     newSearchParams.delete('max_price');
@@ -71,6 +81,16 @@ const CategoryPageSideFilter: FC<Props> = ({
           </span>
 
           <div className="space-y-5">
+            <SelectInput
+              label="Category"
+              placeholder="Select category"
+              selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
+              selectInputItemProps={{ className: 'capitalize' }}
+              selectInputItems={PRODUCT_CATEGORIES}
+              defaultValue={category || undefined}
+              onItemSelect={(value) => setCategory(value)}
+            />
+
             <SelectInput
               label="Brand"
               placeholder="Select brand"
@@ -141,4 +161,4 @@ const CategoryPageSideFilter: FC<Props> = ({
   );
 };
 
-export default CategoryPageSideFilter;
+export default ProductsPageSideFilter;

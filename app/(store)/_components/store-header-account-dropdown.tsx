@@ -10,7 +10,12 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import CurrentUser from '@/components/current-user';
 import Link from 'next/link';
-import { RiLogoutCircleLine, RiUserLine } from '@remixicon/react';
+import {
+  RiHeartLine,
+  RiLogoutCircleLine,
+  RiShoppingBagLine,
+  RiUserLine,
+} from '@remixicon/react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ChartColumn, User } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -45,8 +50,22 @@ const ActiveUserDropdown: FC<{ user: UserTypes }> = ({ user }) => {
 
           <DropdownMenuItem asChild>
             <Link href={`#`}>
+              <RiHeartLine className="h-4 w-4" />
+              <span>Wishlist</span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={`#`}>
               <RiUserLine className="h-4 w-4" />
               <span>Manage profile</span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={`/user/orders`}>
+              <RiShoppingBagLine className="h-4 w-4" />
+              <span>My orders</span>
             </Link>
           </DropdownMenuItem>
 

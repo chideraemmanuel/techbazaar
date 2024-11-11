@@ -11,16 +11,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { RiMenuLine } from '@remixicon/react';
 import Logo from '@/components/logo';
-import { ADMIN_DASHBAORD_SIDEBAR_LINKS } from '@/constants';
-import SidebarLink from '../../../../components/sidebar-link';
+import { STORE_SIDEBAR_LINKS } from '@/constants';
 import { Separator } from '@/components/ui/separator';
+import SidebarLink from '@/components/sidebar-link';
 
 interface Props {}
 
-const AdminDashboardMobileNavigation: FC<Props> = () => {
+const StoreSidebar: FC<Props> = () => {
   return (
     <>
-      <div className="block xl:hidden">
+      <div>
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -32,14 +32,14 @@ const AdminDashboardMobileNavigation: FC<Props> = () => {
             </Button>
           </SheetTrigger>
 
-          <SheetContent side={'left'} className="block xl:hidden">
+          <SheetContent side={'left'}>
             <SheetHeader className="text-start items-start">
               <Logo />
             </SheetHeader>
 
             <div className="py-4">
               <nav>
-                {ADMIN_DASHBAORD_SIDEBAR_LINKS.map((sidebar_link, index) => (
+                {STORE_SIDEBAR_LINKS.map((sidebar_link, index) => (
                   <div className="py-4" key={index}>
                     <span className="inline-block px-4 pb-2 font-medium text-muted-foreground text-xs leading-[140%] tracking-[-0.8%] uppercase">
                       {sidebar_link.title}
@@ -67,4 +67,4 @@ const AdminDashboardMobileNavigation: FC<Props> = () => {
   );
 };
 
-export default AdminDashboardMobileNavigation;
+export default StoreSidebar;

@@ -10,6 +10,7 @@ import StoreHeaderSearch from './store-header-search';
 import StoreHeaderAccountDropdown from './store-header-account-dropdown';
 import Link from 'next/link';
 import StoreHeaderCartLink from './store-header-cart-link';
+import StoreSidebar from './store-sidebar';
 
 interface Props {}
 
@@ -19,13 +20,8 @@ const StoreHeader: FC<Props> = () => {
       <header className="border-b shadow-sm sticky top-0 z-10 h-16 md:h-20 bg-background">
         <div className="container flex justify-between items-center space-x-10 h-full">
           <div className="flex items-center space-x-2">
-            <Button
-              variant={'ghost'}
-              size={'icon'}
-              className="h-8 sm:h-10 w-8 sm:w-10"
-            >
-              <RiMenuLine className="sm:!w-5 sm:!h-5" />
-            </Button>
+            <StoreSidebar />
+
             <Logo />
           </div>
 

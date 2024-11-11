@@ -4,7 +4,7 @@ import { FC } from 'react';
 import Logo from '@/components/logo';
 import { ADMIN_DASHBAORD_SIDEBAR_LINKS } from '@/constants';
 import { Separator } from '@/components/ui/separator';
-import AdminDashboardSidebarLink from './admin-dashboard-sidebar-link';
+import SidebarLink from '../../../../components/sidebar-link';
 
 interface Props {}
 
@@ -27,7 +27,7 @@ const AdminDashboardSidebar: FC<Props> = () => {
                 <ul className="flex flex-col gap-1">
                   {sidebar_link.items.map((link_item, index) => (
                     <li key={index}>
-                      <AdminDashboardSidebarLink {...link_item} />
+                      <SidebarLink {...link_item} />
                     </li>
                   ))}
                 </ul>

@@ -22,7 +22,7 @@ type Props = ComponentPropsWithoutRef<typeof Link> & {
 
 type Ref = ElementRef<typeof Link>;
 
-const AdminDashboardSidebarLink = React.forwardRef<Ref, Props>(
+const SidebarLink = React.forwardRef<Ref, Props>(
   ({ title, href, icon: Icon, className, ...props }, ref) => {
     const pathname = usePathname();
 
@@ -51,4 +51,4 @@ const AdminDashboardSidebarLink = React.forwardRef<Ref, Props>(
   }
 );
 
-export default AdminDashboardSidebarLink;
+export default SidebarLink;
