@@ -1,16 +1,10 @@
 import { FC, Suspense } from 'react';
 import Logo from '@/components/logo';
-import { Button } from '@/components/ui/button';
-import { RiMenuLine } from '@remixicon/react';
-import FormInput from '@/components/form-input';
-import { Search, ShoppingCart, User } from 'lucide-react';
-import ResourceSearch from '@/components/resource-search';
-import ThemeSwitcher from '@/components/theme-switcher';
 import StoreHeaderSearch from './store-header-search';
 import StoreHeaderAccountDropdown from './store-header-account-dropdown';
-import Link from 'next/link';
 import StoreHeaderCartLink from './store-header-cart-link';
 import StoreSidebar from './store-sidebar';
+import ThemeSwitcher from '@/components/theme-switcher';
 
 interface Props {}
 
@@ -28,7 +22,7 @@ const StoreHeader: FC<Props> = () => {
           <div className="flex items-center space-x-2">
             <StoreHeaderSearch />
 
-            {/* <ThemeSwitcher /> */}
+            <ThemeSwitcher />
 
             <StoreHeaderCartLink />
 

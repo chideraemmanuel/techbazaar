@@ -22,6 +22,7 @@ interface Props {
 
 const ProductsPage: FC<Props> = async ({ searchParams }) => {
   const searchParamsObject = await searchParams;
+  const { search_query } = searchParamsObject;
 
   return (
     <>
@@ -37,7 +38,7 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
         <div className="container md:pr-0 py-5 flex flex-col">
           <div className="pb-4 md:pb-5">
             <h1 className="inline-block font-bold text-xl sm:text-2xl md:text-3xl">
-              All products
+              {search_query ? `Results for ${search_query}` : 'All products'}
             </h1>
           </div>
 
