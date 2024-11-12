@@ -83,7 +83,7 @@ const EditUserRoleDialog = React.forwardRef<
             </AlertDialogCancel>
 
             <Button
-              disabled={isUpdatingUserStatus}
+              disabled={isUpdatingUserStatus || role === user.role}
               onClick={() =>
                 updateUserStatus({ userId: user._id, updates: { role } })
               }

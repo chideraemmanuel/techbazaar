@@ -14,32 +14,60 @@ import {
 } from '@/components/ui/table';
 import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';
 import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-dashboard-orders-filter';
 import formatDate from '@/lib/format-date';
+import { getCurrentUser, getUserById } from '@/lib/data/user';
+import { ISearchParams } from '@/types';
+import { ORDERS_SORT_ITEMS } from '@/constants';
+import { getUserOrders } from '@/lib/data/order';
 
 interface Props {
   params: Promise<{
     id: string;
   }>;
+  searchParams: Promise<ISearchParams>;
 }
 
-const AdminDashboardUserOrdersPage: FC<Props> = async ({ params }) => {
+const AdminDashboardUserOrdersPage: FC<Props> = async ({
+  params,
+  searchParams,
+}) => {
   const { id: userId } = await params;
-  const user = DUMMY_USERS[0];
+  const searchParamsObject = await searchParams;
+  const user = await getCurrentUser();
 
-  if (!user) notFound();
+  if (!user) {
+    redirect(`/auth/login?return_to=/admin/dashboard/users/${userId}/orders`);
+  }
+
+  if (user && !user.email_verified) {
+    redirect(
+      `/auth/verify-email?return_to=/admin/dashboard/users/${userId}/orders`
+    );
+  }
+
+  if (user.role !== 'admin') {
+    return <p>Sorry, you are not authorized to view this page</p>;
+  }
+
+  const userExists = await getUserById(userId);
+
+  if (!userExists) notFound();
+
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
         <AdminDashboardResourceHeader title={`${user.first_name}'s Orders`} />
 
         <div className="flex-1 p-5 space-y-7">
-          <OrdersTable />
+          <Suspense>
+            <OrdersTable userId={userId} searchParams={searchParamsObject} />
+          </Suspense>
         </div>
       </div>
     </>
@@ -58,10 +86,14 @@ const headers = [
   'actions',
 ];
 
-const OrdersTable: FC = () => {
-  const user = DUMMY_USERS[0];
-
-  if (!user) notFound();
+const OrdersTable: FC<{
+  userId: string;
+  searchParams: ISearchParams;
+}> = async ({ userId, searchParams }) => {
+  const { data: orders, pagination } = await getUserOrders(
+    userId,
+    searchParams
+  );
 
   return (
     <>
@@ -70,7 +102,7 @@ const OrdersTable: FC = () => {
           <div className="space-x-2">
             <AdminDashboardOrdersFilter />
 
-            <AdminDashboardResourceSort sort_items={[]} />
+            <AdminDashboardResourceSort sort_items={ORDERS_SORT_ITEMS} />
           </div>
         </div>
 
@@ -92,17 +124,19 @@ const OrdersTable: FC = () => {
           </TableHeader>
 
           <TableBody>
-            {DUMMY_ORDERS && DUMMY_ORDERS.length > 0 ? (
-              DUMMY_ORDERS.map((order, index) => (
+            {orders && orders.length > 0 ? (
+              orders.map((order, index) => (
                 <TableRow
                   key={order._id}
                   className="font-medium text-xs bg-background hover:bg-background"
                 >
                   <TableCell>{index + 1}</TableCell>
 
-                  <TableCell title={`${user.first_name} ${user.last_name}`}>
+                  <TableCell
+                    title={`${order.user.first_name} ${order.user.last_name}`}
+                  >
                     <span className="inline-block w-[170px] sm:w-[200px] truncate">
-                      {user.first_name} {user.last_name}
+                      {order.user.first_name} {order.user.last_name}
                     </span>
                   </TableCell>
 
@@ -132,7 +166,7 @@ const OrdersTable: FC = () => {
                       </Link>
                     </Button>
 
-                    <EditOrderStatusDialog />
+                    <EditOrderStatusDialog order={order} />
                   </TableCell>
                 </TableRow>
               ))
@@ -152,7 +186,10 @@ const OrdersTable: FC = () => {
         <div className="bg-background/50 border-t p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-7">
           <DataTableItemsPerPage />
 
-          <DataTablePagination totalPages={50} totalPagesToDisplay={3} />
+          <DataTablePagination
+            totalPages={pagination.total_pages}
+            totalPagesToDisplay={3}
+          />
         </div>
       </div>
     </>

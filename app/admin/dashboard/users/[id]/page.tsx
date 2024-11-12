@@ -80,14 +80,18 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
               </span>
 
               <div className="flex justify-start items-center gap-5">
-                <EditUserRoleDialog />
+                <EditUserRoleDialog user={user} />
 
-                {user.disabled ? <EnableUserDialog /> : <DisableUserDialog />}
+                {user.disabled ? (
+                  <EnableUserDialog user={user} />
+                ) : (
+                  <DisableUserDialog user={user} />
+                )}
 
                 <DeleteUserDialog />
 
                 <Button>
-                  <Link href={`/admin/dashboard/users/1/orders`}>
+                  <Link href={`/admin/dashboard/users/${user._id}/orders`}>
                     View Orders
                   </Link>
                 </Button>

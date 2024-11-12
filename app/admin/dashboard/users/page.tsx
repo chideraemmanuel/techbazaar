@@ -181,12 +181,12 @@ const UsersTable: FC<{ searchParams: ISearchParams }> = async ({
                       </Link>
                     </Button>
 
-                    <EditUserRoleDialog />
+                    <EditUserRoleDialog user={user} />
 
                     {user.disabled ? (
-                      <EnableUserDialog />
+                      <EnableUserDialog user={user} />
                     ) : (
-                      <DisableUserDialog />
+                      <DisableUserDialog user={user} />
                     )}
 
                     <DeleteUserDialog />

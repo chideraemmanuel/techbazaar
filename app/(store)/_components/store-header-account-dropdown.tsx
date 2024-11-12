@@ -56,7 +56,7 @@ const ActiveUserDropdown: FC<{ user: UserTypes }> = ({ user }) => {
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`#`}>
+            <Link href={`/user/profile/settings`}>
               <RiUserLine className="h-4 w-4" />
               <span>Manage profile</span>
             </Link>

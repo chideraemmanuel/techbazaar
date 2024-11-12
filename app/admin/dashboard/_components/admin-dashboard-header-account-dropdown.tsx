@@ -66,7 +66,7 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = async ({}) => {
             <CurrentUser user={user} />
 
             <DropdownMenuItem asChild>
-              <Link href={`#`} className="">
+              <Link href={`/user/profile/settings`} className="">
                 <RiUserLine className="h-4 w-4" />
                 <span>Manage profile</span>
               </Link>
