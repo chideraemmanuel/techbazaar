@@ -116,7 +116,9 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
         <PopoverTrigger asChild>
           <Button size={'sm'} variant={'outline'}>
             <RiFilter3Line />
-            <span className="md:inline-block hidden">Filter</span>
+            <span className="md:inline-block md:not-sr-only sr-only">
+              Filter
+            </span>
           </Button>
         </PopoverTrigger>
 

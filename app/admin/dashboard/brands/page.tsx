@@ -91,9 +91,7 @@ const BrandsTable: FC<{ searchParams: ISearchParams }> = async ({
 
             <AdminDashboardResourceSort sort_items={BRANDS_SORT_ITEMS} />
 
-            <Suspense>
-              <NewBrandDialog />
-            </Suspense>
+            <NewBrandDialog />
           </div>
         </div>
 

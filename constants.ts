@@ -162,6 +162,25 @@ export const ORDERS_SORT_ITEMS = [
   },
 ];
 
+export const USERS_SORT_ITEMS = [
+  {
+    name: 'first name',
+    value: 'first_name',
+  },
+  {
+    name: 'last name',
+    value: 'last_name',
+  },
+  {
+    name: 'email',
+    value: 'email',
+  },
+  {
+    name: 'date joined',
+    value: 'date_created',
+  },
+];
+
 export const ORDER_STATUSES_SORT_ITEMS = [
   {
     name: 'pending',

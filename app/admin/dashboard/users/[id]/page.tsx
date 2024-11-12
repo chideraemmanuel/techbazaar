@@ -13,6 +13,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 import formatDate from '@/lib/format-date';
+import { getUserById } from '@/lib/data/user';
+import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
 
 interface Props {
   params: Promise<{
@@ -22,28 +24,14 @@ interface Props {
 
 const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
   const { id } = await params;
-  const user = DUMMY_USERS[0];
+  const user = await getUserById(id);
 
   if (!user) notFound();
 
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <div className="sticky top-16 md:top-20 z-[1] p-5 border-b bg-background">
-          <div>
-            <span className="text-xs font-semibold text-muted-foreground">
-              Breadcrumbs here!
-            </span>
-
-            <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
-              User details
-            </h1>
-
-            {/* <span className="text-foreground/90 text-base font-medium">
-              {user.first_name}'s details
-            </span> */}
-          </div>
-        </div>
+        <AdminDashboardResourceHeader title="User details" />
 
         <div className="flex-1 p-5 space-y-7">
           <div className="bg-background rounded-2xl px-5 py-4">
@@ -66,6 +54,8 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
             <Separator />
 
             <div className="pt-4 pb-6 flex flex-col gap-3">
+              <UserDetail label="First Name" value={user.first_name} />
+              <UserDetail label="Last Name" value={user.last_name} />
               <UserDetail label="Email Address" value={user.email} />
               <UserDetail
                 label="Email Verified"

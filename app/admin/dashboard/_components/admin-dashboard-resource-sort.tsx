@@ -73,7 +73,7 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
         <PopoverTrigger asChild>
           <Button size={'sm'} variant={'outline'}>
             <RiSortDesc />
-            <span className="md:inline-block hidden">Sort</span>
+            <span className="md:inline-block md:not-sr-only sr-only">Sort</span>
           </Button>
         </PopoverTrigger>
 

@@ -21,7 +21,7 @@ const AdminDashboardResourceHeader: FC<Props> = ({
           </span>
 
           <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
-            Orders
+            {title}
           </h1>
 
           {subtitle && (

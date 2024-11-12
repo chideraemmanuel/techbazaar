@@ -21,18 +21,23 @@ const WishlistAction: FC<Props> = ({ product }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const productID = searchParams.get('id');
+  const wishlistProductID = searchParams.get('wishlist_product_id');
 
   const { mutate: addItemToWishlist } = useAddItemToWishlist();
 
+  const { data, isLoading, error } = useWishlistItem(product._id);
+
   React.useEffect(() => {
-    if (productID && productID === product._id) {
+    if (
+      !isLoading &&
+      data === '' &&
+      wishlistProductID &&
+      wishlistProductID === product._id
+    ) {
       addItemToWishlist(product);
       router.replace(pathname);
     }
-  }, []);
-
-  const { data, isLoading, error } = useWishlistItem(product._id);
+  }, [data, isLoading]);
 
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
     // if (error?.response?.status > 400 && error?.response?.status < 500) {
@@ -41,7 +46,9 @@ const WishlistAction: FC<Props> = ({ product }) => {
         variant={'secondary'}
         title="Add to wishlist"
         onClick={() =>
-          router.push(`/auth/login?return_to=${pathname}?id=${product._id}`)
+          router.push(
+            `/auth/login?return_to=${pathname}?wishlist_product_id=${product._id}`
+          )
         }
       >
         <Heart />

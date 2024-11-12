@@ -17,7 +17,7 @@ import {
 import { DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Search } from 'lucide-react';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import DeleteUserDialog from '@/app/admin/dashboard/users/_components/delete-user-dialog';
 import EditUserRoleDialog from '@/app/admin/dashboard/users/_components/edit-user-role-dialog';
 import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
@@ -26,17 +26,44 @@ import {
   DisableUserDialog,
   EnableUserDialog,
 } from '@/app/admin/dashboard/users/_components/enable-disable-user-dialogs';
+import { ISearchParams } from '@/types';
+import { getAllUsers, getCurrentUser } from '@/lib/data/user';
+import { redirect } from 'next/navigation';
+import { USERS_SORT_ITEMS } from '@/constants';
 
-interface Props {}
+interface Props {
+  searchParams: Promise<ISearchParams>;
+}
 
-const AdminDashboardUsersPage: FC<Props> = () => {
+const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
+  const searchParamsObject = await searchParams;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect('/auth/login?return_to=/admin/dashboard/users');
+  }
+
+  if (user && !user.email_verified) {
+    redirect('/auth/verify-email?return_to=/admin/dashboard/users');
+  }
+
+  if (user.role !== 'admin') {
+    return <p>Sorry, you are not authorized to view this page</p>;
+  }
+
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title="Users" total={10} />
+        <AdminDashboardResourceHeader
+          title="Users"
+          subtitle="All users"
+          fetchFunction={getAllUsers}
+        />
 
         <div className="flex-1 p-5 space-y-7">
-          <UsersTable />
+          <Suspense>
+            <UsersTable searchParams={searchParamsObject} />
+          </Suspense>
         </div>
       </div>
     </>
@@ -56,7 +83,11 @@ const headers = [
   'actions',
 ];
 
-const UsersTable: FC = () => {
+const UsersTable: FC<{ searchParams: ISearchParams }> = async ({
+  searchParams,
+}) => {
+  const { data: users, pagination } = await getAllUsers(searchParams);
+
   return (
     <>
       <div className="rounded-2xl shadow border border-border overflow-hidden">
@@ -73,7 +104,7 @@ const UsersTable: FC = () => {
           <div className="space-x-2">
             <AdminDashboardUsersFilter />
 
-            <AdminDashboardResourceSort sort_items={[]} />
+            <AdminDashboardResourceSort sort_items={USERS_SORT_ITEMS} />
           </div>
         </div>
 
@@ -95,8 +126,8 @@ const UsersTable: FC = () => {
           </TableHeader>
 
           <TableBody>
-            {DUMMY_USERS && DUMMY_USERS.length > 0 ? (
-              DUMMY_USERS.map((user, index) => (
+            {users && users.length > 0 ? (
+              users.map((user, index) => (
                 <TableRow
                   key={user._id}
                   className="font-medium text-xs bg-background hover:bg-background"
@@ -145,7 +176,7 @@ const UsersTable: FC = () => {
 
                   <TableCell className="flex items-center space-x-1">
                     <Button variant={'outline'} size={'sm'} asChild>
-                      <Link href={`/admin/dashboard/users/1`}>
+                      <Link href={`/admin/dashboard/users/${user._id}`}>
                         View Details
                       </Link>
                     </Button>

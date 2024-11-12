@@ -25,18 +25,23 @@ const CartAction: FC<Props> = ({ product }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const productID = searchParams.get('id');
+  const cartProductID = searchParams.get('cart_product_id');
 
   const { mutate: addItemToCart } = useAddItemToCart();
 
+  const { data, isLoading, error } = useCartItem(product._id);
+
   React.useEffect(() => {
-    if (productID && productID === product._id) {
+    if (
+      !isLoading &&
+      data === '' &&
+      cartProductID &&
+      cartProductID === product._id
+    ) {
       addItemToCart(product);
       router.replace(pathname);
     }
-  }, []);
-
-  const { data, isLoading, error } = useCartItem(product._id);
+  }, [data, isLoading]);
 
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
     // if (error?.response?.status > 400 && error?.response?.status < 500) {
@@ -44,7 +49,9 @@ const CartAction: FC<Props> = ({ product }) => {
       <Button
         className="flex-1"
         onClick={() =>
-          router.push(`/auth/login?return_to=${pathname}?id=${product._id}`)
+          router.push(
+            `/auth/login?return_to=${pathname}?cart_product_id=${product._id}`
+          )
         }
       >
         <ShoppingBag /> Add to cart

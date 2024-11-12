@@ -56,7 +56,9 @@ const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
         />
 
         <div className="flex-1 p-5 space-y-7">
-          <OrdersTable searchParams={searchParamsObject} />
+          <Suspense>
+            <OrdersTable searchParams={searchParamsObject} />
+          </Suspense>
         </div>
       </div>
     </>
