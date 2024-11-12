@@ -19,6 +19,8 @@ import { ISearchParams } from '@/types';
 import { PRODUCT_CATEGORIES } from '@/constants';
 import { notFound } from 'next/navigation';
 import { ProductCategory } from '@/types/product';
+import Image from 'next/image';
+import StoreFooter from '../../_components/store-footer';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -39,7 +41,29 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
   return (
     <>
       {/* hero */}
-      <section className="h-[50vh] bg-secondary"></section>
+      <section className="h-[40vh] md:h-[50vh] bg-secondary">
+        <div className="container h-full flex items-center gap-5">
+          <div className="flex-[3] space-y-5">
+            <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
+              {categoryExists.hero_header}
+            </h1>
+
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
+              {categoryExists.hero_paragraph}
+            </p>
+          </div>
+
+          <div className="flex-[2] h-full py-7 hidden md:block">
+            <Image
+              src={categoryExists.hero_image}
+              alt={categoryExists.name}
+              width={295}
+              height={379}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="pt-7 container grid md:grid-cols-[250px,_1fr]">
         <aside className="sticky top-[calc(80px+8px)] border border-border h-[calc(100vh-80px-16px)] hidden md:block rounded-lg overflow-hidden">
@@ -138,6 +162,8 @@ const ProductsGrid: FC<{
             </span>
           </div>
         )}
+
+        {/* <StoreFooter /> */}
       </div>
     </>
   );

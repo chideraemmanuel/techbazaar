@@ -14,6 +14,7 @@ import {
   Users2,
   Watch,
 } from 'lucide-react';
+import image from '@/assets/images/hero-image.png';
 
 export const NAME_REGEX = /^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/;
 
@@ -65,42 +66,70 @@ export const PRODUCT_CATEGORIES = [
     value: 'smartphones',
     icon: Smartphone,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'tablets',
     value: 'tablets',
     icon: Tablet,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'laptops',
     value: 'laptops',
     icon: Laptop,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'headphones',
     value: 'headphones',
     icon: Headphones,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'speakers',
     value: 'speakers',
     icon: Speaker,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'smartwatches',
     value: 'smartwatches',
     icon: Watch,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
   {
     name: 'gaming consoles',
     value: 'gaming-consoles',
     icon: Gamepad,
     image: '',
+    hero_image: image.src,
+    hero_header: 'Lorem ipsum, dolor sit amet consectetur adipisicing.',
+    hero_paragraph:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem laboriosam optio quasi perspiciatis minus rerum nam obcaecati aliquam sint deserunt eveniet facilis omnis explicabo modi maiores, voluptatem, tempore sed.',
   },
 ];
 

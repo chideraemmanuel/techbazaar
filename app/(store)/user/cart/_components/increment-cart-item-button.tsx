@@ -1,6 +1,6 @@
 'use client';
 
-import useIncrementCartItem from '@/lib/hooks/use-increment-cart-item';
+import useIncrementCartItem from '@/lib/hooks/cart/use-increment-cart-item';
 import { ICart } from '@/types/cart';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';

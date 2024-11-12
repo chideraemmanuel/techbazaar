@@ -5,7 +5,7 @@ import FullScreenSpinner from '@/components/full-screen-spinner';
 import { Button } from '@/components/ui/button';
 import { PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
-import useUpdateProfile from '@/lib/hooks/use-update-profile';
+import useUpdateProfile from '@/lib/hooks/user/use-update-profile';
 import { Loader2 } from 'lucide-react';
 import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

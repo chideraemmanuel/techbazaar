@@ -1,6 +1,6 @@
 'use client';
 
-import useRemoveItemFromCart from '@/lib/hooks/use-remove-item-from-cart';
+import useRemoveItemFromCart from '@/lib/hooks/cart/use-remove-item-from-cart';
 import { ICart } from '@/types/cart';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';

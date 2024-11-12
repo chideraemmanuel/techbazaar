@@ -1,6 +1,6 @@
 import { APIPaginatedResponse, ISearchParams } from '@/types';
 import { useInfiniteQuery, useQuery } from 'react-query';
-import createSearchParams from '../create-search-params';
+import createSearchParams from '../../create-search-params';
 import axios from '@/config/axios';
 import { ICart } from '@/types/cart';
 

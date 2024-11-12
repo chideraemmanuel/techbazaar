@@ -1,6 +1,6 @@
 'use client';
 
-import useAddItemToWishlist from '@/lib/hooks/use-add-item-to-wishlist';
+import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';

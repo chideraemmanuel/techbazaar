@@ -7,7 +7,7 @@ import FormInput from './form-input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FormBreak from './form-break';
-import useRegisterUser from '@/lib/hooks/use-register-user';
+import useRegisterUser from '@/lib/hooks/auth/use-register-user';
 
 interface Props {}
 

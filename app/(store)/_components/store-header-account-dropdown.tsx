@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -20,6 +21,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { ChartColumn, User } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import LogoutUserButton from '@/components/logout-user-button';
+import ThemeSwitcherDropdownItem from '@/components/theme-switcher-dropdown-item';
 
 interface Props {}
 
@@ -82,6 +84,10 @@ const ActiveUserDropdown: FC<{ user: UserTypes }> = ({ user }) => {
               <span>Logout</span>
             </LogoutUserButton>
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <ThemeSwitcherDropdownItem />
         </DropdownMenuContent>
       </DropdownMenu>
     </>
@@ -124,6 +130,10 @@ const InactiveUserDropdown: FC = () => {
               Sign in
             </Link>
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <ThemeSwitcherDropdownItem />
         </DropdownMenuContent>
       </DropdownMenu>
     </>

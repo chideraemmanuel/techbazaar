@@ -14,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader2, Trash2, UserCheck, UserX } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import useUpdateUserStatus from '@/lib/hooks/use-update-user-status';
+import useUpdateUserStatus from '@/lib/hooks/user/use-update-user-status';
 import { UserTypes } from '@/types/user';
 
 type EnableUserDialogTriggerProps = ComponentPropsWithoutRef<

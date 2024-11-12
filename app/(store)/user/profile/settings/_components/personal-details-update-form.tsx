@@ -3,7 +3,7 @@
 import FormInput from '@/components/form-input';
 import FullScreenSpinner from '@/components/full-screen-spinner';
 import { Button } from '@/components/ui/button';
-import useUpdateProfile from '@/lib/hooks/use-update-profile';
+import useUpdateProfile from '@/lib/hooks/user/use-update-profile';
 import { UserTypes } from '@/types/user';
 import { Loader2 } from 'lucide-react';
 import React, { FC } from 'react';

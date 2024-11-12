@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import useCancelOrder from '@/lib/hooks/use-cancel-order';
+import useCancelOrder from '@/lib/hooks/order/use-cancel-order';
 import { IOrder } from '@/types/cart';
 import { Loader2 } from 'lucide-react';
 import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';

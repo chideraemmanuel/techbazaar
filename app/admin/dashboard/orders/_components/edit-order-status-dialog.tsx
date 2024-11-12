@@ -16,7 +16,7 @@ import { cn } from '@/lib/cn';
 import SelectInput from '@/components/select-input';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
 import { IOrder, OrderStatus } from '@/types/cart';
-import useUpdateOrderStatus from '@/lib/hooks/use-update-order-status';
+import useUpdateOrderStatus from '@/lib/hooks/order/use-update-order-status';
 
 type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger

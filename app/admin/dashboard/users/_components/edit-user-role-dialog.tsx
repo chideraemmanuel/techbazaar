@@ -16,7 +16,7 @@ import { cn } from '@/lib/cn';
 import SelectInput from '@/components/select-input';
 import { UserRole, UserTypes } from '@/types/user';
 import { USER_ROLES_SORT_ITEMS } from '@/constants';
-import useUpdateUserStatus from '@/lib/hooks/use-update-user-status';
+import useUpdateUserStatus from '@/lib/hooks/user/use-update-user-status';
 
 type EditUserRoleDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger

@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { IBrandData } from './use-add-brand';
+import { IBrandData } from './brand/use-add-brand';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';

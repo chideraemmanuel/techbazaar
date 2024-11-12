@@ -6,6 +6,7 @@ import { ISearchParams } from '@/types';
 import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 import ProductsGridContainer from '../../_components/products-grid-container';
+import StoreFooter from '../../_components/store-footer';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -39,6 +40,10 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
         {/* <Suspense> */}
         <WishlistContent searchParams={searchParamsObject} />
         {/* </Suspense> */}
+      </div>
+
+      <div className="container">
+        <StoreFooter />
       </div>
     </>
   );

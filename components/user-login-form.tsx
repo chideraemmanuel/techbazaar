@@ -7,7 +7,7 @@ import { EMAIL_REGEX } from '@/constants';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FormBreak from './form-break';
-import useLoginUser from '@/lib/hooks/use-login-user';
+import useLoginUser from '@/lib/hooks/auth/use-login-user';
 
 interface Props {}
 

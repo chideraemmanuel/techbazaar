@@ -15,6 +15,7 @@ import ProductCard from '@/components/product-card';
 import DataTablePagination from '@/components/data-table-pagination';
 import { getAvailableBrands } from '@/lib/data/brand';
 import ProductsPageSideFilter from './_components/products-page-side-filter';
+import StoreFooter from '../_components/store-footer';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -124,6 +125,8 @@ const ProductsGrid: FC<{
             </span>
           </div>
         )}
+
+        {/* <StoreFooter /> */}
       </div>
     </>
   );

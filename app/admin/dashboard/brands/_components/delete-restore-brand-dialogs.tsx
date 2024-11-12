@@ -15,9 +15,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import useDeleteBrand from '@/lib/hooks/use-delete-brand';
+import useDeleteBrand from '@/lib/hooks/brand/use-delete-brand';
 import { BrandTypes } from '@/types/product';
-import useRestoreBrand from '@/lib/hooks/use-restore-brand';
+import useRestoreBrand from '@/lib/hooks/brand/use-restore-brand';
 
 type DeleteBrandDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger

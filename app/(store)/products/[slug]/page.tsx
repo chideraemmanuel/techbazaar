@@ -18,6 +18,7 @@ import {
 import AddToCartButton from '../../user/cart/_components/add-to-cart-button';
 import CartAction from './_components/cart-action';
 import WishlistAction from './_components/wishlist-action';
+import StoreFooter from '../../_components/store-footer';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -83,13 +84,15 @@ const ProductDetailsPage: FC<Props> = async ({ params }) => {
           </div>
         </section>
 
-        <section>
+        <section className="pb-7">
           <h2 className="font-bold text-xl mb-4">Related products</h2>
 
           <Suspense>
             <RelatedProducts slug={slug} />
           </Suspense>
         </section>
+
+        <StoreFooter />
       </div>
     </>
   );

@@ -16,7 +16,7 @@ import ImageInput from '@/components/image-input';
 import { cn } from '@/lib/cn';
 import { BrandTypes } from '@/types/product';
 import useEditBrand from '@/lib/hooks/use-edit-brand';
-import { IBrandData } from '@/lib/hooks/use-add-brand';
+import { IBrandData } from '@/lib/hooks/brand/use-add-brand';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type EditBrandDialogTriggerProps = ComponentPropsWithoutRef<

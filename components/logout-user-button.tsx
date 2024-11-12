@@ -1,6 +1,6 @@
 'use client';
 
-import useLogoutUser from '@/lib/hooks/use-logout-user';
+import useLogoutUser from '@/lib/hooks/auth/use-logout-user';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
 import FullScreenSpinner from './full-screen-spinner';

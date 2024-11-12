@@ -19,11 +19,7 @@ const AdminDashboardHeader: FC<Props> = async () => {
             <Logo />
           </div>
 
-          <div className="xl:ml-auto flex flex-row lg:flex-row-reverse items-center gap-2 md:gap-3">
-            <ThemeSwitcher />
-
-            <AdminDashboardHeaderUserDropdown />
-          </div>
+          <AdminDashboardHeaderUserDropdown />
         </div>
       </header>
     </>

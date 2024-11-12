@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import useSearchProducts from '@/lib/hooks/use-search-products';
+import useSearchProducts from '@/lib/hooks/product/use-search-products';
 
 interface Props {}
 

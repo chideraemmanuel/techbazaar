@@ -5,8 +5,8 @@ import OTPInput from './ui/otp-input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FullScreenSpinner from './full-screen-spinner';
-import useVerifyEmail from '@/lib/hooks/use-verify-email';
-import useResendVerificationOTP from '@/lib/hooks/use-resend-verification-OTP';
+import useVerifyEmail from '@/lib/hooks/auth/use-verify-email';
+import useResendVerificationOTP from '@/lib/hooks/auth/use-resend-verification-OTP';
 
 interface Props {
   email: string;

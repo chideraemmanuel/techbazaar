@@ -1,13 +1,13 @@
 'use client';
 
-import useWishlistItem from '@/lib/hooks/use-wishlist-item';
+import useWishlistItem from '@/lib/hooks/wishlist/use-wishlist-item';
 import { IAvailableProduct } from '@/types/product';
 import { Heart } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
 import AddToWishlistButton from './add-to-wishlist-button';
 import RemoveFromWishlistButton from './remove-from-wishlist-button';
-import useAddItemToWishlist from '@/lib/hooks/use-add-item-to-wishlist';
+import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 
 interface Props {
   product: IAvailableProduct;

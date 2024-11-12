@@ -6,18 +6,18 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { DUMMY_PRODUCTS } from '@/dummy';
-import useCurrentUserCart from '@/lib/hooks/use-current-user-cart';
+import useCurrentUserCart from '@/lib/hooks/cart/use-current-user-cart';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { FC } from 'react';
 import OrderItem from './order-item';
-import useCartSummary from '@/lib/hooks/use-cart-summary';
+import useCartSummary from '@/lib/hooks/cart/use-cart-summary';
 import BillingInformationForm, {
   BillingInformationFormTypes,
 } from '@/app/(store)/user/cart/_components/billing-information-form';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IBillingInformation } from '@/types/cart';
-import usePlaceOrder from '@/lib/hooks/use-place-order';
+import usePlaceOrder from '@/lib/hooks/order/use-place-order';
 
 interface Props {
   saved_billing_information: IBillingInformation | null;

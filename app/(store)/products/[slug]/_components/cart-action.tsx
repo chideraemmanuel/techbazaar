@@ -5,8 +5,8 @@ import RemoveFromCartButton from '@/app/(store)/user/cart/_components/remove-fro
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import axios from '@/config/axios';
-import useAddItemToCart from '@/lib/hooks/use-add-item-to-cart';
-import useCartItem from '@/lib/hooks/use-cart-item';
+import useAddItemToCart from '@/lib/hooks/cart/use-add-item-to-cart';
+import useCartItem from '@/lib/hooks/cart/use-cart-item';
 import { APIErrorResponse } from '@/types';
 import { ICart } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';

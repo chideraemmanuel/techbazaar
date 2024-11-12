@@ -1,6 +1,6 @@
 'use client';
 
-import useRemoveItemFromWishlist from '@/lib/hooks/use-remove-item-from-wishlist';
+import useRemoveItemFromWishlist from '@/lib/hooks/wishlist/use-remove-item-from-wishlist';
 import { ICart } from '@/types/cart';
 import { WishlistTypes } from '@/types/wishlist';
 import { Slot } from '@radix-ui/react-slot';

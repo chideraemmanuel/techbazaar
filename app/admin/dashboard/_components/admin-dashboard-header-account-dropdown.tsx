@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -17,6 +18,7 @@ import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/data/user';
 import LogoutUserButton from '@/components/logout-user-button';
 import { headers } from 'next/headers';
+import ThemeSwitcherDropdownItem from '@/components/theme-switcher-dropdown-item';
 
 interface Props {}
 
@@ -78,6 +80,10 @@ const AdminDashboardHeaderUserDropdown: FC<Props> = async ({}) => {
                 <span>Logout</span>
               </LogoutUserButton>
             </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <ThemeSwitcherDropdownItem />
           </DropdownMenuContent>
         </>
       </DropdownMenu>

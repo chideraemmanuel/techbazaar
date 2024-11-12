@@ -3,8 +3,8 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import useCartSummary from '@/lib/hooks/use-cart-summary';
-import useCurrentUserCart from '@/lib/hooks/use-current-user-cart';
+import useCartSummary from '@/lib/hooks/cart/use-cart-summary';
+import useCurrentUserCart from '@/lib/hooks/cart/use-current-user-cart';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';

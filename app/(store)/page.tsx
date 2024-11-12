@@ -16,6 +16,7 @@ import heroImage from '@/assets/images/hero-image.png';
 import phone from '@/assets/images/phone.png';
 import ProductsGridContainer from './_components/products-grid-container';
 import { DUMMY_PRODUCTS } from '@/dummy';
+import StoreFooter from './_components/store-footer';
 
 interface Props {}
 
@@ -117,7 +118,7 @@ const Home: FC<Props> = () => {
                 {Array.from({ length: 10 }).map((item, index) => (
                   <CarouselItem
                     key={index}
-                    className="basis-[80%] [@media_(min-width:_375px)]:basis-[60%] [@media_(min-width:_520px)]:basis-[30%] sm:!basis-[30%] md:!basis-[23%] lg:!basis-[19%]"
+                    className="basis-[80%] [@media_(min-width:_375px)]:basis-[60%] [@media_(min-width:_440px)]:basis-[40%] [@media_(min-width:_520px)]:basis-[30%] sm:!basis-[30%] md:!basis-[23%] lg:!basis-[15%]"
                   >
                     <ProductCard product={product} />
                   </CarouselItem>
@@ -126,6 +127,10 @@ const Home: FC<Props> = () => {
             </Carousel>
           </div>
         </section>
+      </div>
+
+      <div className="container">
+        <StoreFooter />
       </div>
     </>
   );
