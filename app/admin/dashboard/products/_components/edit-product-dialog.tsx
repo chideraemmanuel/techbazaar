@@ -25,10 +25,10 @@ import {
   ProductCategory,
   ProductTypes,
 } from '@/types/product';
-import useEditProduct from '@/lib/hooks/use-edit-product';
-import { IProductData } from '@/lib/hooks/use-add-product';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ComboBoxInput, { ComboboxItem } from '@/components/combobox-input';
+import { IProductData } from '@/lib/hooks/product/use-add-product';
+import useEditProduct from '@/lib/hooks/product/use-edit-product';
 
 type EditProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger

@@ -12,7 +12,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader2, Plus } from 'lucide-react';
 import { getAvailableBrands } from '@/lib/data/brand';
-import useAddProduct, { IProductData } from '@/lib/hooks/use-add-product';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '@/components/form-input';
@@ -24,6 +23,9 @@ import MoneyInput from '@/components/money-input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import ComboBoxInput from '@/components/combobox-input';
+import useAddProduct, {
+  IProductData,
+} from '@/lib/hooks/product/use-add-product';
 
 type NewProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger

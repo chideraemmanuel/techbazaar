@@ -32,6 +32,15 @@ import NewProduct from './_components/new-product';
 import EditProduct from './_components/edit-product';
 import { ISearchParams } from '@/types';
 import { getAvailableBrands } from '@/lib/data/brand';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import Link from 'next/link';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -56,6 +65,21 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
           title="Products"
           subtitle="All products"
           fetchFunction={getAllProducts}
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Products</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
         />
 
         <div className="flex-1 p-5 space-y-7">

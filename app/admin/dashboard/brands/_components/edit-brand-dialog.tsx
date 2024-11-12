@@ -15,9 +15,9 @@ import FormInput from '@/components/form-input';
 import ImageInput from '@/components/image-input';
 import { cn } from '@/lib/cn';
 import { BrandTypes } from '@/types/product';
-import useEditBrand from '@/lib/hooks/use-edit-brand';
 import { IBrandData } from '@/lib/hooks/brand/use-add-brand';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import useEditBrand from '@/lib/hooks/brand/use-edit-brand';
 
 type EditBrandDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger

@@ -30,6 +30,14 @@ import { ISearchParams } from '@/types';
 import { getAllUsers, getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { USERS_SORT_ITEMS } from '@/constants';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -58,6 +66,21 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
           title="Users"
           subtitle="All users"
           fetchFunction={getAllUsers}
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Users</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
         />
 
         <div className="flex-1 p-5 space-y-7">

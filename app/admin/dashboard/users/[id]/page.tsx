@@ -15,6 +15,14 @@ import { FC } from 'react';
 import formatDate from '@/lib/format-date';
 import { getUserById } from '@/lib/data/user';
 import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 interface Props {
   params: Promise<{
@@ -31,7 +39,32 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title="User details" />
+        <AdminDashboardResourceHeader
+          title="User details"
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard/users">Users</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>
+                    {user.first_name} {user.last_name}
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
+        />
 
         <div className="flex-1 p-5 space-y-7">
           <div className="bg-background rounded-2xl px-5 py-4">

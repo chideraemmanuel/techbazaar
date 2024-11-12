@@ -25,6 +25,14 @@ import { getAllOrders } from '@/lib/data/order';
 import { ISearchParams } from '@/types';
 import formatDate from '@/lib/format-date';
 import { ORDERS_SORT_ITEMS } from '@/constants';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -53,6 +61,21 @@ const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
           title="Orders"
           subtitle="All orders"
           fetchFunction={getAllOrders}
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Orders</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
         />
 
         <div className="flex-1 p-5 space-y-7">

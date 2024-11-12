@@ -25,6 +25,15 @@ import { getCurrentUser, getUserById } from '@/lib/data/user';
 import { ISearchParams } from '@/types';
 import { ORDERS_SORT_ITEMS } from '@/constants';
 import { getUserOrders } from '@/lib/data/order';
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 interface Props {
   params: Promise<{
@@ -62,7 +71,34 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <AdminDashboardResourceHeader title={`${user.first_name}'s Orders`} />
+        <AdminDashboardResourceHeader
+          title={`${user.first_name}'s Orders`}
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard/users">Users</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+
+                <BreadcrumbEllipsis className="h-4 w-4" />
+
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{user.first_name}'s Orders</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
+        />
 
         <div className="flex-1 p-5 space-y-7">
           <Suspense>

@@ -5,20 +5,20 @@ interface Props {
   title: string;
   subtitle?: string;
   fetchFunction?: () => Promise<APIPaginatedResponse<any>>;
+  breadcrumbs?: React.ReactNode;
 }
 
 const AdminDashboardResourceHeader: FC<Props> = ({
   title,
   subtitle,
   fetchFunction,
+  breadcrumbs,
 }) => {
   return (
     <>
       <div className="sticky top-16 md:top-20 z-[1] p-5 border-b bg-background">
         <div>
-          <span className="text-xs font-semibold text-muted-foreground">
-            Breadcrumbs here!
-          </span>
+          {breadcrumbs}
 
           <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
             {title}

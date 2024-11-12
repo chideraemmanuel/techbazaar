@@ -10,6 +10,15 @@ import { FC } from 'react';
 import formatDate from '@/lib/format-date';
 import { getCurrentUser } from '@/lib/data/user';
 import { getOrderById } from '@/lib/data/order';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
 
 interface Props {
   params: Promise<{
@@ -40,17 +49,30 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
   return (
     <>
       <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
-        <div className="sticky top-16 md:top-20 z-[1] p-5 border-b bg-background">
-          <div>
-            <span className="text-xs font-semibold text-muted-foreground">
-              Breadcrumbs here!
-            </span>
-
-            <h1 className="pb-3 pt-2 text-foreground font-bold text-2xl">
-              Order details
-            </h1>
-          </div>
-        </div>
+        <AdminDashboardResourceHeader
+          title="Order details"
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard/orders">Orders</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Order #{orderId}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
+        />
 
         <div className="flex-1 p-5 space-y-7">
           <div className="bg-background rounded-2xl px-5 py-4">

@@ -28,6 +28,15 @@ import { getAllBrands } from '@/lib/data/brand';
 import EditBrandDialog from './_components/edit-brand-dialog';
 import { BRANDS_SORT_ITEMS } from '@/constants';
 import { ISearchParams } from '@/types';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import Link from 'next/link';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -52,6 +61,21 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
           title="Brands"
           subtitle="All brands"
           fetchFunction={getAllBrands}
+          breadcrumbs={
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Brands</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
         />
 
         <div className="flex-1 p-5 space-y-7">
