@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 import CancelOrderDialog from '../_components/cancel-order-dialog';
+import { headers } from 'next/headers';
 
 interface Props {
   params: Promise<{
@@ -16,14 +17,19 @@ interface Props {
 
 const OrderDetailsPage: FC<Props> = async ({ params }) => {
   const { orderId } = await params;
+
+  const headerList = await headers();
+  const pathname =
+    headerList.get('x-current-path') || `/user/orders/${orderId}`;
+
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect(`/auth/login?return_to=/user/orders/${orderId}`);
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect(`/auth/verify-email?return_to=/user/orders/${orderId}`);
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   const order = await getCurrentUserOrderById(orderId);

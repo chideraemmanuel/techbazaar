@@ -50,7 +50,9 @@ const CartAction: FC<Props> = ({ product }) => {
         className="flex-1"
         onClick={() =>
           router.push(
-            `/auth/login?return_to=${pathname}?cart_product_id=${product._id}`
+            `/auth/login?return_to=${encodeURIComponent(
+              pathname
+            )}?cart_product_id=${product._id}`
           )
         }
       >

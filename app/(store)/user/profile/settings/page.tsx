@@ -3,18 +3,22 @@ import { redirect } from 'next/navigation';
 import { FC } from 'react';
 import PersonalDetailsUpdateForm from './_components/personal-details-update-form';
 import PasswordUpdateForm from './_components/password-update-form';
+import { headers } from 'next/headers';
 
 interface Props {}
 
 const ProfileSettingsPage: FC<Props> = async () => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/user/profile/settings';
+
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/user/profile/settings');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/user/profile/settings');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   return (

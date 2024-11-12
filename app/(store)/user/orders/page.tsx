@@ -20,20 +20,24 @@ import { cn } from '@/lib/cn';
 import DataTablePagination from '@/components/data-table-pagination';
 import OrderCard from './_components/order-card';
 import { getCurrentUserOrders } from '@/lib/data/order';
+import { headers } from 'next/headers';
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
 
 const UserOrdersPage: FC<Props> = async ({ searchParams }) => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/user/orders';
+
   const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/user/orders');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/user/orders');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   return (

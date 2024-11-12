@@ -25,7 +25,9 @@ const useLoginUser = () => {
     onSuccess: (data) => {
       toast.success('Login successful');
 
-      return_to ? router.replace(return_to) : router.refresh();
+      return_to
+        ? router.replace(decodeURIComponent(return_to))
+        : router.refresh();
     },
     onError: (error: AxiosError<APIErrorResponse>) => {
       toast.error(

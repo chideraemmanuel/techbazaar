@@ -19,6 +19,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
+import { headers } from 'next/headers';
 
 interface Props {
   params: Promise<{
@@ -28,14 +29,19 @@ interface Props {
 
 const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
   const { orderId } = await params;
+
+  const headerList = await headers();
+  const pathname =
+    headerList.get('x-current-path') || `/admin/dashboard/orders/${orderId}`;
+
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect(`/auth/login?return_to=/admin/dashboard/orders/${orderId}`);
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect(`/auth/verify-email?return_to=/admin/dashboard/orders/${orderId}`);
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user.role !== 'admin') {

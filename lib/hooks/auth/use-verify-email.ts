@@ -26,7 +26,7 @@ const useVerifyEmail = () => {
       toast.success('Email verified successfully');
 
       // router.replace('/');
-      //  return_to ? router.replace(return_to) : router.refresh();
+      //  return_to ? router.replace(decodeURIComponent(return_to)) : router.refresh();
       router.refresh();
     },
     onError: (error: AxiosError<APIErrorResponse>) => {

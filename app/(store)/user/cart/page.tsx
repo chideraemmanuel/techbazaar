@@ -10,21 +10,25 @@ import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 import CartContent from './_components/cart-content';
 import { ISearchParams } from '@/types';
+import { headers } from 'next/headers';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
 
 const UserCartPage: FC<Props> = async ({ searchParams }) => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/user/cart';
+
   const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/user/cart');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/user/cart');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   return (

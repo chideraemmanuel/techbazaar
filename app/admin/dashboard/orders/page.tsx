@@ -33,21 +33,26 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { headers } from 'next/headers';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
 
 const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
+  const headerList = await headers();
+  const pathname =
+    headerList.get('x-current-path') || '/admin/dashboard/orders';
+
   const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/admin/dashboard/orders');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/admin/dashboard/orders');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user.role !== 'admin') {
@@ -90,7 +95,7 @@ const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
 
 export default AdminDashboardOrdersPage;
 
-const headers = [
+const tableHeaders = [
   '#',
   'user',
   'items',
@@ -119,7 +124,7 @@ const OrdersTable: FC<{ searchParams: ISearchParams }> = async ({
         <Table>
           <TableHeader>
             <TableRow className="font-medium text-xs bg-background/50 hover:bg-background/50">
-              {headers.map((header, index) => (
+              {tableHeaders.map((header, index) => (
                 <TableHead
                   className={cn(
                     'capitalize min-w-[150px]',
@@ -183,7 +188,7 @@ const OrdersTable: FC<{ searchParams: ISearchParams }> = async ({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={headers.length}
+                  colSpan={tableHeaders.length}
                   className="h-24 text-center bg-background hover:bg-background"
                 >
                   No orders to display

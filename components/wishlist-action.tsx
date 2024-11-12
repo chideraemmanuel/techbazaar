@@ -44,7 +44,9 @@ const WishlistAction: FC<Props> = ({ product }) => {
         title="Add to wishlist"
         onClick={() =>
           router.push(
-            `/auth/login?return_to=${pathname}?wishlist_product_id=${product._id}`
+            `/auth/login?return_to=${encodeURIComponent(
+              pathname
+            )}?wishlist_product_id=${product._id}`
           )
         }
       >

@@ -1,20 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCurrentUser } from '@/lib/data/user';
 import { DollarSign } from 'lucide-react';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 interface Props {}
 
 const AdminDashboardOverviewPage: FC<Props> = async () => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/admin/dashboard';
+
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/admin/dashboard');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/admin/dashboard');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
   return (
     <>

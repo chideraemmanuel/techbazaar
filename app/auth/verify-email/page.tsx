@@ -22,7 +22,7 @@ const EmailVerificationPage: FC<Props> = async ({ searchParams }) => {
         ? return_to
         : '/';
 
-    redirect(path);
+    redirect(decodeURIComponent(path));
   }
 
   return (

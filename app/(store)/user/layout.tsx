@@ -14,11 +14,11 @@ const UserLayout: FC<Props> = async ({ children }) => {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect(`/auth/login?return_to=${pathname}`);
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect(`/auth/verify-email?return_to=${pathname}`);
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   return <>{children}</>;

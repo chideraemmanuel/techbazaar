@@ -17,21 +17,25 @@ import {
   getCurrentUserBillingInformation,
   getCurrentUserCart,
 } from '@/lib/data/cart';
+import { headers } from 'next/headers';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
 
 const UserCartCheckoutPage: FC<Props> = async ({ searchParams }) => {
+  const headerList = await headers();
+  const pathname = headerList.get('x-current-path') || '/user/cart/checkout';
+
   const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/auth/login?return_to=/user/cart/checkout');
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
   }
 
   if (user && !user.email_verified) {
-    redirect('/auth/verify-email?return_to=/user/cart/checkout');
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
   }
 
   const cart_promise = getCurrentUserCart();
