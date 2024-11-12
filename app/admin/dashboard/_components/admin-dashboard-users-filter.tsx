@@ -13,6 +13,7 @@ import FormInput from '@/components/form-input';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { USER_ROLES_SORT_ITEMS } from '@/constants';
 
 interface Props {}
 
@@ -118,16 +119,7 @@ const AdminDashboardUsersFilter: FC<Props> = () => {
                 placeholder="Select role"
                 selectInputTriggerProps={{ className: '!p-2 h-[auto]' }}
                 selectInputItemProps={{ className: 'capitalize' }}
-                selectInputItems={[
-                  {
-                    name: 'admin',
-                    value: 'admin',
-                  },
-                  {
-                    name: 'user',
-                    value: 'user',
-                  },
-                ]}
+                selectInputItems={USER_ROLES_SORT_ITEMS}
                 defaultValue={role || undefined}
                 onItemSelect={(value) => setRole(value)}
               />

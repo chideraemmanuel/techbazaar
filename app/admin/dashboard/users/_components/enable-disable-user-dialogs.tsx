@@ -14,20 +14,38 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader2, Trash2, UserCheck, UserX } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import useUpdateUserStatus from '@/lib/hooks/use-update-user-status';
+import { UserTypes } from '@/types/user';
 
 type EnableUserDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
->;
+> & {
+  user: UserTypes;
+};
 
 type EnableUserDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
 export const EnableUserDialog = React.forwardRef<
   EnableUserDialogTriggerRef,
   EnableUserDialogTriggerProps
->(({ className, ...props }, ref) => {
+>(({ user, className, ...props }, ref) => {
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const {
+    mutate: updateUserStatus,
+    isLoading: isUpdatingUserStatus,
+    isSuccess: userStatusUpdateSuccess,
+  } = useUpdateUserStatus();
+
+  React.useEffect(() => {
+    if (userStatusUpdateSuccess) {
+      setDialogOpen(false);
+    }
+  }, [userStatusUpdateSuccess]);
+
   return (
     <>
-      <AlertDialog>
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogTrigger asChild ref={ref}>
           <Button
             size={'icon'}
@@ -50,11 +68,23 @@ export const EnableUserDialog = React.forwardRef<
           </AlertDialogHeader>
 
           <AlertDialogFooter className="mt-3 sm:mt-5">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isUpdatingUserStatus}>
+              Cancel
+            </AlertDialogCancel>
 
-            <Button>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Enable user
+            <Button
+              disabled={isUpdatingUserStatus}
+              onClick={() =>
+                updateUserStatus({
+                  userId: user._id,
+                  updates: { disabled: false },
+                })
+              }
+            >
+              {isUpdatingUserStatus && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
+              Update
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -65,17 +95,33 @@ export const EnableUserDialog = React.forwardRef<
 
 type DisableUserDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
->;
+> & {
+  user: UserTypes;
+};
 
 type DisableUserDialogTriggerRef = ElementRef<typeof AlertDialogTrigger>;
 
 export const DisableUserDialog = React.forwardRef<
   DisableUserDialogTriggerRef,
   DisableUserDialogTriggerProps
->(({ className, ...props }, ref) => {
+>(({ user, className, ...props }, ref) => {
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const {
+    mutate: updateUserStatus,
+    isLoading: isUpdatingUserStatus,
+    isSuccess: userStatusUpdateSuccess,
+  } = useUpdateUserStatus();
+
+  React.useEffect(() => {
+    if (userStatusUpdateSuccess) {
+      setDialogOpen(false);
+    }
+  }, [userStatusUpdateSuccess]);
+
   return (
     <>
-      <AlertDialog>
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <AlertDialogTrigger asChild ref={ref}>
           <Button
             size={'icon'}
@@ -101,11 +147,23 @@ export const DisableUserDialog = React.forwardRef<
           </AlertDialogHeader>
 
           <AlertDialogFooter className="mt-3 sm:mt-5">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isUpdatingUserStatus}>
+              Cancel
+            </AlertDialogCancel>
 
-            <Button variant={'destructive'}>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Disable user
+            <Button
+              disabled={isUpdatingUserStatus}
+              onClick={() =>
+                updateUserStatus({
+                  userId: user._id,
+                  updates: { disabled: true },
+                })
+              }
+            >
+              {isUpdatingUserStatus && (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              )}
+              Update
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

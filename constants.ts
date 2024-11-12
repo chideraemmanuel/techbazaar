@@ -181,6 +181,17 @@ export const USERS_SORT_ITEMS = [
   },
 ];
 
+export const USER_ROLES_SORT_ITEMS = [
+  {
+    name: 'admin',
+    value: 'admin',
+  },
+  {
+    name: 'user',
+    value: 'user',
+  },
+];
+
 export const ORDER_STATUSES_SORT_ITEMS = [
   {
     name: 'pending',

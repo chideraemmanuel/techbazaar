@@ -44,24 +44,7 @@ const EditOrderStatusDialog = React.forwardRef<
     if (orderStatusUpdateSuccess) {
       setDialogOpen(false);
     }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      event.preventDefault();
-    };
-
-    if (isUpdatingOrderStatus) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.pointerEvents = 'none';
-
-      window.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.pointerEvents = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [orderStatusUpdateSuccess, isUpdatingOrderStatus]);
+  }, [orderStatusUpdateSuccess]);
 
   return (
     <>
