@@ -1,4 +1,4 @@
-import UserRegistrationForm from '@/components/user-registration-form';
+import UserRegistrationForm from '@/app/auth/_components/user-registration-form';
 import axios from '@/config/axios';
 import { getCurrentUser } from '@/lib/data/user';
 import { cookies } from 'next/headers';

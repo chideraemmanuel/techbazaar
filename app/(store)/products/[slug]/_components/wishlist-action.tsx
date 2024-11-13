@@ -1,7 +1,7 @@
 'use client';
 
-import AddToWishlistButton from '@/components/add-to-wishlist-button';
-import RemoveFromWishlistButton from '@/components/remove-from-wishlist-button';
+import AddToWishlistButton from '@/app/(store)/user/wishlist/_components/add-to-wishlist-button';
+import RemoveFromWishlistButton from '@/app/(store)/user/wishlist/_components/remove-from-wishlist-button';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';

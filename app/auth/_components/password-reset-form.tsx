@@ -1,32 +1,34 @@
 'use client';
 
 import FormInput from '@/components/form-input';
-import FullScreenSpinner from '@/components/full-screen-spinner';
 import { Button } from '@/components/ui/button';
+import OTPInput from '@/components/ui/otp-input';
 import { PASSWORD_REQUIREMENTS, PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
-import useUpdateProfile from '@/lib/hooks/user/use-update-profile';
+import useCompletePasswordReset from '@/lib/hooks/auth/use-complete-password-reset';
 import validatePasswordRequirement from '@/lib/validate-password-requirement';
 import { PasswordRequirement } from '@/types';
 import { Loader2 } from 'lucide-react';
 import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-interface IForm {
+interface PasswordResetFormTypes {
   password: string;
   confirm_password: string;
 }
 
-interface Props {}
+interface Props {
+  email: string;
+  encryptedOTP: string;
+}
 
-const PasswordUpdateForm: FC<Props> = () => {
+const PasswordResetForm: FC<Props> = ({ email, encryptedOTP }) => {
   const {
-    mutate: updateProfile,
-    isLoading: isUpdatingProfile,
-    isSuccess: updateSuccessful,
-  } = useUpdateProfile();
+    mutate: completePasswordReset,
+    isLoading: isCompletingPasswordReset,
+  } = useCompletePasswordReset();
 
-  const form = useForm<IForm>();
+  const form = useForm<PasswordResetFormTypes>();
 
   const {
     register,
@@ -34,31 +36,27 @@ const PasswordUpdateForm: FC<Props> = () => {
     handleSubmit,
     getValues,
     watch,
-    reset,
   } = form;
 
   const watched = watch();
 
-  const onSubmit: SubmitHandler<IForm> = async (data, e) => {
-    updateProfile({ password: data.password });
-  };
+  const onSubmit: SubmitHandler<PasswordResetFormTypes> = (data, e) => {
+    const decryptedOTP = encryptedOTP;
 
-  React.useEffect(() => {
-    if (updateSuccessful) {
-      reset();
-    }
-  }, [updateSuccessful]);
+    completePasswordReset({
+      email,
+      OTP: decryptedOTP,
+      new_password: data.password,
+    });
+  };
 
   return (
     <>
-      {isUpdatingProfile && <FullScreenSpinner />}
-
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="pb-9 flex flex-col gap-5">
+        <div className="pb-12 space-y-5">
           <FormInput
-            label="New password"
-            id="password"
             type="password"
+            label="New password"
             placeholder="Enter your password"
             {...register('password', {
               required: {
@@ -74,9 +72,8 @@ const PasswordUpdateForm: FC<Props> = () => {
           />
 
           <FormInput
-            label="Repeat new password"
-            id="confirm_password"
             type="password"
+            label="Repeat new password"
             placeholder="Enter your password"
             {...register('confirm_password', {
               required: {
@@ -113,8 +110,10 @@ const PasswordUpdateForm: FC<Props> = () => {
           </div>
         </div>
 
-        <Button disabled={isUpdatingProfile}>
-          {isUpdatingProfile && <Loader2 className="h-4 w-4 animate-spin" />}
+        <Button className="w-full" disabled={isCompletingPasswordReset}>
+          {isCompletingPasswordReset && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
           Create new password
         </Button>
       </form>
@@ -122,4 +121,4 @@ const PasswordUpdateForm: FC<Props> = () => {
   );
 };
 
-export default PasswordUpdateForm;
+export default PasswordResetForm;

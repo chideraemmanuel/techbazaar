@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../../../components/ui/button';
 import { FcGoogle } from 'react-icons/fc';
 import { useQuery } from 'react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

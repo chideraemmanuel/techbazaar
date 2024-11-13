@@ -1,4 +1,4 @@
-import UserLoginForm from '@/components/user-login-form';
+import UserLoginForm from '@/app/auth/_components/user-login-form';
 import { getCurrentUser } from '@/lib/data/user';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';

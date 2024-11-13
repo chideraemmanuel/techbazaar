@@ -21,3 +21,5 @@ export interface APIErrorResponse {
 export interface ISearchParams {
   [key: string]: string | string[] | undefined;
 }
+
+export type PasswordRequirement = 'Min. 8 characters' | 'Number' | 'Symbol';

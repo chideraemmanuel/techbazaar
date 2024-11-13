@@ -23,6 +23,8 @@ export const PASSWORD_VALIDATION = {
   hint: 'Password must be 8-16 characters long, and contain at least one numeric digit, and special character',
 };
 
+export const PASSWORD_REQUIREMENTS = ['Min. 8 characters', 'Number', 'Symbol'];
+
 export const EMAIL_REGEX =
   /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
 

@@ -5,8 +5,8 @@ import { IAvailableProduct } from '@/types/product';
 import { Heart } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
-import AddToWishlistButton from './add-to-wishlist-button';
-import RemoveFromWishlistButton from './remove-from-wishlist-button';
+import AddToWishlistButton from '../app/(store)/user/wishlist/_components/add-to-wishlist-button';
+import RemoveFromWishlistButton from '../app/(store)/user/wishlist/_components/remove-from-wishlist-button';
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 
 interface Props {

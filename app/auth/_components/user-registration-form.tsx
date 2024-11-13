@@ -1,14 +1,16 @@
 'use client';
 
 import { EMAIL_REGEX, NAME_REGEX, PASSWORD_VALIDATION } from '@/constants';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import FormInput from './form-input';
-import { Button } from './ui/button';
+import FormInput from '../../../components/form-input';
+import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
-import FormBreak from './form-break';
+import FormBreak from '../../../components/form-break';
 import useRegisterUser from '@/lib/hooks/auth/use-register-user';
 import GoogleSignInButton from './google-sign-in-button';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface Props {}
 
@@ -34,9 +36,30 @@ const UserRegistrationForm: FC<Props> = () => {
   } = form;
 
   const onSubmit: SubmitHandler<RegistrationFormTypes> = (data, e) => {
-    console.log('registration form data', data);
     registerUser(data);
   };
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const error = useSearchParams().get('error');
+
+  React.useEffect(() => {
+    if (error) {
+      if (error === 'authentication_failed') {
+        toast.error('Authentication failed');
+      }
+
+      if (error === 'account_exists') {
+        toast.error('Email is already in use. Login with password instead.');
+      }
+
+      if (error === 'unauthorized_access') {
+        toast.error('Unable to login');
+      }
+
+      router.replace(pathname);
+    }
+  }, []);
 
   return (
     <>

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { FC } from 'react';
-import OTPInput from './ui/otp-input';
-import { Button } from './ui/button';
+import OTPInput from '../../../components/ui/otp-input';
+import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
-import FullScreenSpinner from './full-screen-spinner';
+import FullScreenSpinner from '../../../components/full-screen-spinner';
 import useVerifyEmail from '@/lib/hooks/auth/use-verify-email';
 import useResendVerificationOTP from '@/lib/hooks/auth/use-resend-verification-OTP';
 

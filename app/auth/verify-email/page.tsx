@@ -1,13 +1,14 @@
-import AuthPageBackButton from '@/components/auth-page-back-button';
-import EmailVerificationForm from '@/components/email-verification-form';
+import AuthPageBackButton from '@/app/auth/_components/auth-page-back-button';
+import EmailVerificationForm from '@/app/auth/_components/email-verification-form';
 import LogoutUserButton from '@/components/logout-user-button';
 import { getCurrentUser } from '@/lib/data/user';
+import { ISearchParams } from '@/types';
 import { RiArrowLeftLine } from '@remixicon/react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 interface Props {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<ISearchParams>;
 }
 
 const EmailVerificationPage: FC<Props> = async ({ searchParams }) => {
@@ -39,7 +40,7 @@ const EmailVerificationPage: FC<Props> = async ({ searchParams }) => {
 
           <p className="text-muted-foreground text-lg">
             A 6-digit confirmation code was sent to your email address,{' '}
-            <span className="text-foreground font-bold">{user.email}</span>. .
+            <span className="text-foreground font-bold">{user.email}</span>.
             Please enter below.
           </p>
         </div>

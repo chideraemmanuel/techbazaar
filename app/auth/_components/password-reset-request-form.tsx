@@ -3,16 +3,16 @@
 import { EMAIL_REGEX } from '@/constants';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button } from './ui/button';
+import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
-import FormInput from './form-input';
+import FormInput from '../../../components/form-input';
+import useRequestPasswordReset from '@/lib/hooks/auth/use-request-password-reset';
 
 interface Props {}
 
 const PasswordResetRequestForm: FC<Props> = () => {
-  //   const { requestPasswordReset, isRequestingPasswordReset } =
-  //     usePasswordReset();
-  const isRequestingPasswordReset = false;
+  const { mutate: requestPasswordReset, isLoading: isRequestingPasswordReset } =
+    useRequestPasswordReset();
 
   const form = useForm<{ email: string }>();
 
@@ -23,8 +23,7 @@ const PasswordResetRequestForm: FC<Props> = () => {
   } = form;
 
   const onSubmit: SubmitHandler<{ email: string }> = (data, e) => {
-    console.log('request password reset form data', data);
-    // requestPasswordReset({ email: data.email });
+    requestPasswordReset(data.email);
   };
 
   return (
