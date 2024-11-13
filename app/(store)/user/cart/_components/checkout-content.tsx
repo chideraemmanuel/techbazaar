@@ -18,6 +18,7 @@ import BillingInformationForm, {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IBillingInformation } from '@/types/cart';
 import usePlaceOrder from '@/lib/hooks/order/use-place-order';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   saved_billing_information: IBillingInformation | null;
@@ -222,9 +223,10 @@ const OrderSummary: FC<{
                 Subtotal ({cart_summary.total_items} items)
               </span>
 
-              <span className="text-foreground/70 text-sm sm:text-base font-medium">
-                ₦{cart_summary.total_amount.toFixed(2)}
-              </span>
+              <RegionalPriceFormat
+                price={cart_summary.total_amount}
+                className="text-foreground/70 text-sm sm:text-base font-medium"
+              />
             </li>
 
             <li className="flex items-center justify-between">
@@ -244,9 +246,10 @@ const OrderSummary: FC<{
                 Total
               </span>
 
-              <span className="text-base sm:text-lg font-medium">
-                ₦{cart_summary.total_amount.toFixed(2)}
-              </span>
+              <RegionalPriceFormat
+                price={cart_summary.total_amount}
+                className="text-base sm:text-lg font-medium"
+              />
             </li>
           </ul>
         )}

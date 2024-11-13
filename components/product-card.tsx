@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Heart, ShoppingCart } from 'lucide-react';
 import { IAvailableProduct } from '@/types/product';
 import WishlistAction from './wishlist-action';
+import RegionalPriceFormat from './regional-price-format';
 
 interface Props {
   product: IAvailableProduct;
@@ -39,9 +40,11 @@ const ProductCard: FC<Props> = ({ product }) => {
             >
               {product.name}
             </span>
-            <span className="block font-normal text-base w-[calc(100%-40px)] truncate">
-              ₦{product.price.toFixed(2)}
-            </span>
+
+            <RegionalPriceFormat
+              price={product.price}
+              className="block font-normal text-base w-[calc(100%-40px)] truncate"
+            />
           </div>
         </Link>
 

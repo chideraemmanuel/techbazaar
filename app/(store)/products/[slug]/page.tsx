@@ -28,6 +28,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -88,9 +89,10 @@ const ProductDetailsPage: FC<Props> = async ({ params }) => {
                   {product.name}
                 </span>
 
-                <span className="block font-semibold text-xl md:text-2xl w-full truncate">
-                  ₦{product.price.toFixed(2)}
-                </span>
+                <RegionalPriceFormat
+                  price={product.price}
+                  className="block font-semibold text-xl md:text-2xl w-full truncate"
+                />
               </div>
 
               <p

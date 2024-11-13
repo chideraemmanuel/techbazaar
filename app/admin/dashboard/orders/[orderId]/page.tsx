@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
 import { headers } from 'next/headers';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   params: Promise<{
@@ -129,9 +130,11 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
                   </div>
 
                   <div className="space-y-1 sm:text-end">
-                    <span className="block font-semibold text-lg">
-                      ₦{product.price.toFixed(2)}
-                    </span>
+                    <RegionalPriceFormat
+                      price={product.price}
+                      className="block font-semibold text-lg"
+                    />
+
                     <span className="block text-muted-foreground text-sm">
                       Quantity: {quantity}
                     </span>
@@ -149,7 +152,12 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
               <BillingDetail
                 label="Total price"
-                value={`₦${order.total_price.toFixed(2)}`}
+                value={
+                  <RegionalPriceFormat
+                    price={order.total_price}
+                    className="text-foreground font-medium text-sm"
+                  />
+                }
               />
 
               <BillingDetail
@@ -211,7 +219,7 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
 export default AdminDashboardOrderDetailsPage;
 
-const BillingDetail: FC<{ label: string; value: string }> = ({
+const BillingDetail: FC<{ label: string; value: string | React.ReactNode }> = ({
   label,
   value,
 }) => {
@@ -220,7 +228,11 @@ const BillingDetail: FC<{ label: string; value: string }> = ({
       <div className="flex gap-2">
         <span className="text-muted-foreground text-sm">{label}:</span>
 
-        <span className="text-foreground font-medium text-sm">{value}</span>
+        {typeof value === 'string' ? (
+          <span className="text-foreground font-medium text-sm">{value}</span>
+        ) : (
+          value
+        )}
       </div>
     </>
   );

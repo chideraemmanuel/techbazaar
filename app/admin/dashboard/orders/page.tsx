@@ -34,6 +34,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { headers } from 'next/headers';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -163,7 +164,9 @@ const OrdersTable: FC<{ searchParams: ISearchParams }> = async ({
 
                   <TableCell>{order.items.length}</TableCell>
 
-                  <TableCell>₦{order.total_price.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <RegionalPriceFormat price={order.total_price} />
+                  </TableCell>
 
                   <TableCell>
                     <span className="inline-block w-[150px] sm:w-[180px] truncate">

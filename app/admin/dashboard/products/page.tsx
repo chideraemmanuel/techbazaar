@@ -42,6 +42,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -211,7 +212,9 @@ const ProductsTable: FC<{ searchParams: ISearchParams }> = async ({
                     </BooleanBadge>
                   </TableCell>
 
-                  <TableCell>{product.price}</TableCell>
+                  <TableCell>
+                    <RegionalPriceFormat price={product.price} />
+                  </TableCell>
 
                   <TableCell>{product.stock}</TableCell>
 

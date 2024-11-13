@@ -9,6 +9,7 @@ import { ICart } from '@/types/cart';
 import RemoveFromCartButton from './remove-from-cart-button';
 import IncrementCartItemButton from './increment-cart-item-button';
 import DecrementCartItemButton from './decrement-cart-item-button';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   cart_item: ICart;
@@ -40,9 +41,10 @@ const CartItem: FC<Props> = ({ cart_item }) => {
               {product.name}
             </span>
 
-            <span className="block text-sm sm:text-base font-medium">
-              ₦{product.price}
-            </span>
+            <RegionalPriceFormat
+              price={product.price}
+              className="block text-sm sm:text-base font-medium"
+            />
           </div>
         </div>
 

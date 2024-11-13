@@ -1,3 +1,4 @@
+import RegionalPriceFormat from '@/components/regional-price-format';
 import { ICart } from '@/types/cart';
 import Image from 'next/image';
 import { FC } from 'react';
@@ -29,9 +30,11 @@ const OrderItem: FC<Props> = ({ order_item }) => {
               ({quantity} pcs)
             </span>
           </span>
-          <span className="block text-muted-foreground text-xs sm:text-sm">
-            ₦{product.price.toFixed(2)}
-          </span>
+
+          <RegionalPriceFormat
+            price={product.price}
+            className="block text-muted-foreground text-xs sm:text-sm"
+          />
         </div>
       </div>
     </>

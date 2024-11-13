@@ -8,6 +8,7 @@ import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 import CancelOrderDialog from '../_components/cancel-order-dialog';
 import { headers } from 'next/headers';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   params: Promise<{
@@ -73,9 +74,11 @@ const OrderDetailsPage: FC<Props> = async ({ params }) => {
                 </div>
 
                 <div className="space-y-1 sm:text-end">
-                  <span className="block font-semibold text-lg">
-                    ₦{product.price.toFixed(2)}
-                  </span>
+                  <RegionalPriceFormat
+                    price={product.price}
+                    className="block font-semibold text-lg"
+                  />
+
                   <span className="block text-muted-foreground text-sm">
                     Quantity: {quantity}
                   </span>
@@ -93,7 +96,12 @@ const OrderDetailsPage: FC<Props> = async ({ params }) => {
 
             <BillingDetail
               label="Total price"
-              value={`₦${order.total_price.toFixed(2)}`}
+              value={
+                <RegionalPriceFormat
+                  price={order.total_price}
+                  className="text-foreground font-medium text-sm"
+                />
+              }
             />
 
             <BillingDetail label="Status" value={order.status.toUpperCase()} />
@@ -156,7 +164,7 @@ const OrderDetailsPage: FC<Props> = async ({ params }) => {
 
 export default OrderDetailsPage;
 
-const BillingDetail: FC<{ label: string; value: string }> = ({
+const BillingDetail: FC<{ label: string; value: string | React.ReactNode }> = ({
   label,
   value,
 }) => {
@@ -165,7 +173,11 @@ const BillingDetail: FC<{ label: string; value: string }> = ({
       <div className="flex gap-2">
         <span className="text-muted-foreground text-sm">{label}:</span>
 
-        <span className="text-foreground font-medium text-sm">{value}</span>
+        {typeof value === 'string' ? (
+          <span className="text-foreground font-medium text-sm">{value}</span>
+        ) : (
+          value
+        )}
       </div>
     </>
   );

@@ -1,38 +1,33 @@
-// =============================================================================
-// Using Intl.NumberFormat
-// =============================================================================
-const formatCurrency = (amount: number, currency = 'USD') => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-  }).format(amount);
+import { CURRENCIES } from '@/constants';
+
+const formatCurrency = (
+  amount: number,
+  toCurrency: string = 'NGN',
+  locale: string = 'en-US'
+) => {
+  //! This method does not work for all currency codes
+  //   return new Intl.NumberFormat(locale, {
+  //     style: 'currency',
+  //     currency: currency,
+  //   }).format(amount);
+
+  let formattedAmount = amount.toFixed(2);
+
+  // Split the amount into integer and decimal parts
+  let [integer, decimal] = formattedAmount.split('.');
+
+  // Add commas to the integer part
+  integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  //   get currency symbol
+  const symbol =
+    CURRENCIES.find((currency) => currency.code === toCurrency)?.symbol || '';
+
+  // TODO: format for different locales
+  return `${symbol}${integer}.${decimal}`;
 };
 
-// Example usage:
-const price = 1234.56;
-console.log(formatCurrency(price)); // "$1,234.56"
-
-// =============================================================================
-//  Manual Currency Masking
-// =============================================================================
-// const formatCurrency = (amount, currency = 'USD') => {
-//   let formattedAmount = amount.toFixed(2); // Always 2 decimals
-
-//   // Split the amount into integer and decimal parts
-//   let [integer, decimal] = formattedAmount.split('.');
-
-//   // Add commas to the integer part
-//   integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-//   // For USD, prepend the dollar symbol
-//   const symbol = currency === 'USD' ? '$' : '';
-
-//   return `${symbol}${integer}.${decimal}`;
-// };
-
-// // Example usage:
-// const price = 1234.56;
-// console.log(formatCurrency(price)); // "$1,234.56"
+export default formatCurrency;
 
 // =============================================================================
 // Currency Masking with Input Fields

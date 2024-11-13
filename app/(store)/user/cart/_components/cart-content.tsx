@@ -12,6 +12,7 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { FC } from 'react';
 import ClearCartButton from './clear-cart-button';
+import RegionalPriceFormat from '@/components/regional-price-format';
 
 interface Props {
   searchParams: ISearchParams;
@@ -118,9 +119,10 @@ const CartSummary: FC<{}> = () => {
                 Subtotal ({data.total_items} items)
               </span>
 
-              <span className="text-sm sm:text-base font-medium">
-                ₦{data.total_amount.toFixed(2)}
-              </span>
+              <RegionalPriceFormat
+                price={data.total_amount}
+                className="text-sm sm:text-base font-medium"
+              />
             </li>
 
             <li className="flex items-center justify-between">
@@ -138,9 +140,10 @@ const CartSummary: FC<{}> = () => {
                 Total
               </span>
 
-              <span className="text-lg sm:text-xl font-medium">
-                ₦{data.total_amount.toFixed(2)}
-              </span>
+              <RegionalPriceFormat
+                price={data.total_amount}
+                className="text-lg sm:text-xl font-medium"
+              />
             </li>
           </ul>
         )}
