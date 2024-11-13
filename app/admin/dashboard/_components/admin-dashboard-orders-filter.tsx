@@ -12,6 +12,8 @@ import SelectInput from '@/components/select-input';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { OrderStatus } from '@/types/cart';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
+import DateInput from '@/components/date-input';
+import formatDate from '@/lib/format-date';
 
 interface Props {}
 
@@ -22,18 +24,32 @@ const AdminDashboardOrdersFilter: FC<Props> = () => {
   const searchParams = useSearchParams();
 
   const statusParam = searchParams.get('status');
+  const startDateParam = searchParams.get('start_date');
+  const endDateParam = searchParams.get('end_date');
 
   const [status, setStatus] = React.useState<OrderStatus | null>(
     statusParam as OrderStatus | null
   );
+  const [startDate, setStartDate] = React.useState(startDateParam);
+  const [endDate, setEndDate] = React.useState(endDateParam);
 
   const applyFilter = () => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
     newSearchParams.delete('status');
+    newSearchParams.delete('start_date');
+    newSearchParams.delete('end_date');
 
     if (status) {
       newSearchParams.set('status', status);
+    }
+
+    if (startDate) {
+      newSearchParams.set('start_date', startDate);
+    }
+
+    if (endDate) {
+      newSearchParams.set('end_date', endDate);
     }
 
     router.replace(`?${newSearchParams}`, { scroll: false });
@@ -43,10 +59,14 @@ const AdminDashboardOrdersFilter: FC<Props> = () => {
 
   const resetFilter = () => {
     setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
     newSearchParams.delete('status');
+    newSearchParams.delete('start_date');
+    newSearchParams.delete('end_date');
 
     router.replace(`?${newSearchParams}`, { scroll: false });
 
@@ -77,8 +97,42 @@ const AdminDashboardOrdersFilter: FC<Props> = () => {
             </FilterSection>
 
             <FilterSection label="Date range">
-              <div>
-                <span>Date Picker</span>
+              <div className="space-y-2">
+                <DateInput
+                  label="From"
+                  labelProps={{ className: 'text-xs text-muted-foreground' }}
+                  dateInputTriggerProps={{ className: '!p-2 h-[auto] w-full' }}
+                  defaultValue={startDate ? new Date(startDate) : undefined}
+                  onSelect={(selectedDate) => {
+                    if (selectedDate) {
+                      setStartDate(
+                        formatDate(selectedDate, 'en-us', {
+                          dateStyle: 'short',
+                        })
+                      );
+                    } else {
+                      setStartDate(null);
+                    }
+                  }}
+                />
+
+                <DateInput
+                  label="To"
+                  labelProps={{ className: 'text-xs text-muted-foreground' }}
+                  dateInputTriggerProps={{ className: '!p-2 h-[auto] w-full' }}
+                  defaultValue={endDate ? new Date(endDate) : undefined}
+                  onSelect={(selectedDate) => {
+                    if (selectedDate) {
+                      setEndDate(
+                        formatDate(selectedDate, 'en-us', {
+                          dateStyle: 'short',
+                        })
+                      );
+                    } else {
+                      setEndDate(null);
+                    }
+                  }}
+                />
               </div>
             </FilterSection>
           </div>

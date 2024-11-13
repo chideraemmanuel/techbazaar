@@ -1,9 +1,12 @@
 'use client';
 
+import DateInput from '@/components/date-input';
 import FormInput from '@/components/form-input';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { Button } from '@/components/ui/button';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
+import formatDate from '@/lib/format-date';
+import { OrderStatus } from '@/types/cart';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
 
@@ -19,7 +22,9 @@ const OrdersPageSideFilter: FC<Props> = ({ sheetClose: SheetClose }) => {
   const startDateParam = searchParams.get('start_date');
   const endDateParam = searchParams.get('end_date');
 
-  const [status, setStatus] = React.useState(statusParam);
+  const [status, setStatus] = React.useState<OrderStatus | null>(
+    statusParam as OrderStatus | null
+  );
   const [startDate, setStartDate] = React.useState(startDateParam);
   const [endDate, setEndDate] = React.useState(endDateParam);
 
@@ -75,14 +80,48 @@ const OrdersPageSideFilter: FC<Props> = ({ sheetClose: SheetClose }) => {
               selectInputItemProps={{ className: 'capitalize' }}
               selectInputItems={ORDER_STATUSES_SORT_ITEMS}
               defaultValue={status || undefined}
-              onItemSelect={(value) => setStatus(value)}
+              onItemSelect={(value) => setStatus(value as OrderStatus)}
             />
 
             <div>
               <span>Date range</span>
-              <div className="flex gap-2">
-                <span>From</span>
-                <span>To</span>
+
+              <div className="space-y-2">
+                <DateInput
+                  label="From"
+                  labelProps={{ className: 'text-xs text-muted-foreground' }}
+                  dateInputTriggerProps={{ className: '!p-2 h-[auto] w-full' }}
+                  defaultValue={startDate ? new Date(startDate) : undefined}
+                  onSelect={(selectedDate) => {
+                    if (selectedDate) {
+                      setStartDate(
+                        formatDate(selectedDate, 'en-us', {
+                          dateStyle: 'short',
+                        })
+                      );
+                    } else {
+                      setStartDate(null);
+                    }
+                  }}
+                />
+
+                <DateInput
+                  label="To"
+                  labelProps={{ className: 'text-xs text-muted-foreground' }}
+                  dateInputTriggerProps={{ className: '!p-2 h-[auto] w-full' }}
+                  defaultValue={endDate ? new Date(endDate) : undefined}
+                  onSelect={(selectedDate) => {
+                    if (selectedDate) {
+                      setEndDate(
+                        formatDate(selectedDate, 'en-us', {
+                          dateStyle: 'short',
+                        })
+                      );
+                    } else {
+                      setEndDate(null);
+                    }
+                  }}
+                />
               </div>
             </div>
           </div>

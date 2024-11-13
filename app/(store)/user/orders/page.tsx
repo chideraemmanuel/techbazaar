@@ -70,7 +70,7 @@ const UserOrdersPage: FC<Props> = async ({ searchParams }) => {
               </SheetTrigger>
 
               <SheetContent side={'bottom'} className="md:hidden p-0">
-                <ScrollArea className="h-[50vh] p-6">
+                <ScrollArea className="h-[55vh] p-6">
                   <OrdersPageSideFilter sheetClose={SheetClose} />
                 </ScrollArea>
               </SheetContent>

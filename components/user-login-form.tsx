@@ -8,6 +8,7 @@ import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import FormBreak from './form-break';
 import useLoginUser from '@/lib/hooks/auth/use-login-user';
+import GoogleSignInButton from './google-sign-in-button';
 
 interface Props {}
 
@@ -82,7 +83,7 @@ const UserLoginForm: FC<Props> = () => {
 
           <FormBreak />
 
-          {/* <GoogleSignInButton disabled={isLoggingUserIn} /> */}
+          <GoogleSignInButton disabled={isLoggingUserIn} />
         </div>
       </form>
     </>

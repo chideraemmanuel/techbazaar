@@ -17,6 +17,8 @@ import phone from '@/assets/images/phone.png';
 import ProductsGridContainer from './_components/products-grid-container';
 import { DUMMY_PRODUCTS } from '@/dummy';
 import StoreFooter from './_components/store-footer';
+import { Calendar } from '@/components/ui/calendar';
+import DatePicker from '@/components/ui/date-picker';
 
 interface Props {}
 
@@ -28,14 +30,13 @@ const Home: FC<Props> = () => {
         <div className="container h-full flex items-center gap-5">
           <div className="flex-[3] space-y-5">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
-              Lorem ipsum, dolor sit amet consectetur adipisicing.
+              Your Go-To Spot for the Best Gadgets
             </h1>
 
             <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
-              dolorem laboriosam optio quasi perspiciatis minus rerum nam
-              obcaecati aliquam sint deserunt eveniet facilis omnis explicabo
-              modi maiores, voluptatem, tempore sed.
+              Find the latest tech made easy. From smart devices to everyday
+              essentials, we bring you gadgets that fit right into your
+              lifestyle – all in one place, all at the right price.
             </p>
 
             <Button size={'lg'}>Shop now</Button>

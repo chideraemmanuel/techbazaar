@@ -66,7 +66,13 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
   }
 
   if (user.role !== 'admin') {
-    return <p>Sorry, you are not authorized to view this page</p>;
+    return (
+      <div className="container min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] flex items-center justify-center">
+        <p className="text-muted-foreground text-lg">
+          Sorry, you are not authorized to view this page
+        </p>
+      </div>
+    );
   }
 
   const userExists = await getUserById(userId);
