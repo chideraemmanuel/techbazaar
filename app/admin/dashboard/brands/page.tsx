@@ -19,14 +19,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { cn } from '@/lib/cn';
-import { Search } from 'lucide-react';
+import { Loader2, Search } from 'lucide-react';
 import Image from 'next/image';
 import { FC, Suspense } from 'react';
 import { getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { getAllBrands } from '@/lib/data/brand';
 import EditBrandDialog from './_components/edit-brand-dialog';
-import { BRANDS_SORT_ITEMS } from '@/constants';
+import { BODY_HEIGHT_WITH_HEADER, BRANDS_SORT_ITEMS } from '@/constants';
 import { ISearchParams } from '@/types';
 import {
   Breadcrumb,
@@ -61,7 +61,9 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title="Brands"
           subtitle="All brands"
@@ -84,7 +86,13 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
         />
 
         <div className="flex-1 p-5 space-y-7">
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-[70vh] flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <BrandsTable searchParams={searchParamsObject} />
           </Suspense>
         </div>

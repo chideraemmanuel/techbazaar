@@ -8,6 +8,9 @@ import { FC, Suspense } from 'react';
 import ProductsGridContainer from '../../_components/products-grid-container';
 import StoreFooter from '../../_components/store-footer';
 import { headers } from 'next/headers';
+import { cn } from '@/lib/cn';
+import { BODY_HEIGHT_WITH_HEADER } from '@/constants';
+import { Loader2 } from 'lucide-react';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -30,7 +33,9 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
 
   return (
     <>
-      <div className="container py-5 flex flex-col min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'container py-5 flex flex-col')}
+      >
         <div className="pb-4 md:pb-5">
           <span className="block pb-1 md:pb-2 text-muted-foreground font-medium text-sm sm:text-base">
             Hello, {user.first_name}
@@ -41,9 +46,15 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
           </h1>
         </div>
 
-        {/* <Suspense> */}
-        <WishlistContent searchParams={searchParamsObject} />
-        {/* </Suspense> */}
+        <Suspense
+          fallback={
+            <div className="flex-1 flex items-center justify-center">
+              <Loader2 className="h-7 w-7 animate-spin" />
+            </div>
+          }
+        >
+          <WishlistContent searchParams={searchParamsObject} />
+        </Suspense>
       </div>
 
       <div className="container">

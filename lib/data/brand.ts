@@ -4,6 +4,7 @@ import { getCurrentUser } from './user';
 import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';
 import { BrandTypes, IAvailableBrand } from '@/types/product';
 import createSearchParams from '../create-search-params';
+import { delay } from '../delay';
 
 export const getAllBrands = async (searchParams: ISearchParams = {}) => {
   const session_id = (await cookies()).get('session_id')?.value;
@@ -36,8 +37,6 @@ export const getAllBrands = async (searchParams: ISearchParams = {}) => {
   const success_response: APIPaginatedResponse<BrandTypes> =
     await response.json();
 
-  console.log('[BRANDS_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -52,8 +51,6 @@ export const getAvailableBrands = async () => {
   }
 
   const brands: IAvailableBrand[] = await response.json();
-
-  console.log('[BRANDS]', brands);
 
   return brands;
 };

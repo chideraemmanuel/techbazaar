@@ -1,15 +1,5 @@
-import BillingInformationForm from '@/app/(store)/user/cart/_components/billing-information-form';
-import FormInput from '@/components/form-input';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { Switch } from '@/components/ui/switch';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import { getCurrentUser } from '@/lib/data/user';
 import { ISearchParams } from '@/types';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 import CheckoutContent from '../_components/checkout-content';
@@ -19,15 +9,12 @@ import {
 } from '@/lib/data/cart';
 import { headers } from 'next/headers';
 
-interface Props {
-  searchParams: Promise<ISearchParams>;
-}
+interface Props {}
 
-const UserCartCheckoutPage: FC<Props> = async ({ searchParams }) => {
+const UserCartCheckoutPage: FC<Props> = async () => {
   const headerList = await headers();
   const pathname = headerList.get('x-current-path') || '/user/cart/checkout';
 
-  const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {

@@ -4,13 +4,13 @@ import { ISearchParams } from '@/types';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 import AuthPageBackButton from '../../_components/auth-page-back-button';
-import VerifyPasswordResetForm from '../../_components/verify-password-request-form';
+import PasswordResetVerificationForm from '../../_components/password-reset-verification-form';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
 
-const VerifyPasswordResetPage: FC<Props> = async ({ searchParams }) => {
+const PasswordResetVerificationPage: FC<Props> = async ({ searchParams }) => {
   const email_param = (await searchParams).email;
 
   const email =
@@ -43,10 +43,10 @@ const VerifyPasswordResetPage: FC<Props> = async ({ searchParams }) => {
           </p>
         </div>
 
-        <VerifyPasswordResetForm email={decodeURIComponent(email)} />
+        <PasswordResetVerificationForm email={decodeURIComponent(email)} />
       </div>
     </>
   );
 };
 
-export default VerifyPasswordResetPage;
+export default PasswordResetVerificationPage;

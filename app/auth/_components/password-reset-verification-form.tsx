@@ -10,7 +10,7 @@ interface Props {
   email: string;
 }
 
-const VerifyPasswordResetForm: FC<Props> = ({ email }) => {
+const PasswordResetVerificationForm: FC<Props> = ({ email }) => {
   const [OTP, setOTP] = React.useState('');
 
   const router = useRouter();
@@ -48,4 +48,4 @@ const VerifyPasswordResetForm: FC<Props> = ({ email }) => {
   );
 };
 
-export default VerifyPasswordResetForm;
+export default PasswordResetVerificationForm;

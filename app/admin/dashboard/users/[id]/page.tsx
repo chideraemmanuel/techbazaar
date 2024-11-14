@@ -7,13 +7,12 @@ import {
 } from '@/app/admin/dashboard/users/_components/enable-disable-user-dialogs';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { DUMMY_USERS } from '@/dummy';
-import { CopyIcon, UserX } from 'lucide-react';
+import { CopyIcon } from 'lucide-react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 import formatDate from '@/lib/format-date';
-import { getUserById } from '@/lib/data/user';
+import { getCurrentUser, getUserById } from '@/lib/data/user';
 import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
 import {
   Breadcrumb,
@@ -23,6 +22,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { cn } from '@/lib/cn';
+import { BODY_HEIGHT_WITH_HEADER } from '@/constants';
+import { headers } from 'next/headers';
 
 interface Props {
   params: Promise<{
@@ -32,13 +34,45 @@ interface Props {
 
 const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
   const { id } = await params;
+
+  const headerList = await headers();
+  const pathname =
+    headerList.get('x-current-path') || `/admin/dashboard/users?${id}`;
+
+  const current_user = await getCurrentUser();
+
+  if (!current_user) {
+    redirect(`/auth/login?return_to=${encodeURIComponent(pathname)}`);
+  }
+
+  if (current_user && !current_user.email_verified) {
+    redirect(`/auth/verify-email?return_to=${encodeURIComponent(pathname)}`);
+  }
+
+  if (current_user.role !== 'admin') {
+    return (
+      <div
+        className={cn(
+          BODY_HEIGHT_WITH_HEADER,
+          'container flex items-center justify-center'
+        )}
+      >
+        <p className="text-muted-foreground text-lg">
+          Sorry, you are not authorized to view this page
+        </p>
+      </div>
+    );
+  }
+
   const user = await getUserById(id);
 
   if (!user) notFound();
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title="User details"
           breadcrumbs={

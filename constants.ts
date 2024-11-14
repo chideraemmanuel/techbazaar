@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import image from '@/assets/images/hero-image.png';
 
+export const BODY_HEIGHT_WITH_HEADER =
+  'min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]';
+
 export const NAME_REGEX = /^[a-zA-ZÀ-ÖØ-öø-ÿ' -]+$/;
 
 export const PASSWORD_VALIDATION = {

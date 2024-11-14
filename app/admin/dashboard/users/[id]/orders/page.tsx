@@ -23,7 +23,7 @@ import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-
 import formatDate from '@/lib/format-date';
 import { getCurrentUser, getUserById } from '@/lib/data/user';
 import { ISearchParams } from '@/types';
-import { ORDERS_SORT_ITEMS } from '@/constants';
+import { BODY_HEIGHT_WITH_HEADER, ORDERS_SORT_ITEMS } from '@/constants';
 import { getUserOrders } from '@/lib/data/order';
 import {
   Breadcrumb,
@@ -35,6 +35,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { headers } from 'next/headers';
+import { Loader2 } from 'lucide-react';
 
 interface Props {
   params: Promise<{
@@ -67,7 +68,12 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
 
   if (user.role !== 'admin') {
     return (
-      <div className="container min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] flex items-center justify-center">
+      <div
+        className={cn(
+          BODY_HEIGHT_WITH_HEADER,
+          'container flex items-center justify-center'
+        )}
+      >
         <p className="text-muted-foreground text-lg">
           Sorry, you are not authorized to view this page
         </p>
@@ -81,7 +87,9 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title={`${user.first_name}'s Orders`}
           breadcrumbs={
@@ -112,7 +120,13 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
         />
 
         <div className="flex-1 p-5 space-y-7">
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-[70vh] flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <OrdersTable userId={userId} searchParams={searchParamsObject} />
           </Suspense>
         </div>

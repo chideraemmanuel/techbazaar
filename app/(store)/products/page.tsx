@@ -15,7 +15,8 @@ import ProductCard from '@/components/product-card';
 import DataTablePagination from '@/components/data-table-pagination';
 import { getAvailableBrands } from '@/lib/data/brand';
 import ProductsPageSideFilter from './_components/products-page-side-filter';
-import StoreFooter from '../_components/store-footer';
+import { Loader2 } from 'lucide-react';
+import SideFilterLoading from '../_components/side-filter-loading';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -30,7 +31,7 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
       <section className="pt-2 container grid md:grid-cols-[250px,_1fr]">
         <aside className="sticky top-[calc(80px+8px)] border border-border h-[calc(100vh-80px-16px)] hidden md:block rounded-lg overflow-hidden">
           <ScrollArea className="h-full py-3 px-2">
-            <Suspense>
+            <Suspense fallback={<SideFilterLoading />}>
               <Filter />
             </Suspense>
           </ScrollArea>
@@ -54,7 +55,7 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
 
               <SheetContent side={'bottom'} className="md:hidden p-0">
                 <ScrollArea className="h-[50vh] p-6">
-                  <Suspense>
+                  <Suspense fallback={<SideFilterLoading />}>
                     <Filter sheetClose={SheetClose} />
                   </Suspense>
                 </ScrollArea>
@@ -62,7 +63,13 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
             </Sheet>
           </div>
 
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-full flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <ProductsGrid searchParams={searchParamsObject} />
           </Suspense>
         </div>
@@ -125,8 +132,6 @@ const ProductsGrid: FC<{
             </span>
           </div>
         )}
-
-        {/* <StoreFooter /> */}
       </div>
     </>
   );

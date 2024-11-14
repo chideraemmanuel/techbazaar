@@ -1,26 +1,15 @@
-import CartItem from '@/app/(store)/user/cart/_components/cart-item';
-import DataTablePagination from '@/components/data-table-pagination';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import { getCurrentUser } from '@/lib/data/user';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { FC, Suspense } from 'react';
+import { FC } from 'react';
 import CartContent from './_components/cart-content';
-import { ISearchParams } from '@/types';
 import { headers } from 'next/headers';
 
-interface Props {
-  searchParams: Promise<ISearchParams>;
-}
+interface Props {}
 
-const UserCartPage: FC<Props> = async ({ searchParams }) => {
+const UserCartPage: FC<Props> = async () => {
   const headerList = await headers();
   const pathname = headerList.get('x-current-path') || '/user/cart';
 
-  const searchParamsObject = await searchParams;
   const user = await getCurrentUser();
 
   if (!user) {
@@ -44,7 +33,7 @@ const UserCartPage: FC<Props> = async ({ searchParams }) => {
           </h1>
         </div>
 
-        <CartContent searchParams={searchParamsObject} />
+        <CartContent />
       </div>
     </>
   );

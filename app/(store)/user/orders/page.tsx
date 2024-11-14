@@ -21,6 +21,7 @@ import DataTablePagination from '@/components/data-table-pagination';
 import OrderCard from './_components/order-card';
 import { getCurrentUserOrders } from '@/lib/data/order';
 import { headers } from 'next/headers';
+import { Loader2 } from 'lucide-react';
 interface Props {
   searchParams: Promise<ISearchParams>;
 }
@@ -77,7 +78,13 @@ const UserOrdersPage: FC<Props> = async ({ searchParams }) => {
             </Sheet>
           </div>
 
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-full flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <OrdersList searchParams={searchParamsObject} />
           </Suspense>
         </div>

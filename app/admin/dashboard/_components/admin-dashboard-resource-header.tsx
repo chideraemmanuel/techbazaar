@@ -1,3 +1,5 @@
+import { Skeleton } from '@/components/ui/skeleton';
+import { delay } from '@/lib/delay';
 import { APIPaginatedResponse } from '@/types';
 import { FC, Suspense } from 'react';
 
@@ -25,10 +27,12 @@ const AdminDashboardResourceHeader: FC<Props> = ({
           </h1>
 
           {subtitle && (
-            <div className="text-foreground/90 text-base font-medium">
+            <div className="text-foreground/90 text-base font-medium flex items-center">
               {subtitle}
               {fetchFunction && (
-                <Suspense>
+                <Suspense
+                  fallback={<Skeleton className="inline-block h-5 w-5 ml-1" />}
+                >
                   <TotalResource fetchFunction={fetchFunction} />
                 </Suspense>
               )}

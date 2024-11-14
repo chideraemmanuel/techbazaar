@@ -21,6 +21,9 @@ import {
 import AdminDashboardResourceHeader from '../../_components/admin-dashboard-resource-header';
 import { headers } from 'next/headers';
 import RegionalPriceFormat from '@/components/regional-price-format';
+import { cn } from '@/lib/cn';
+import { BODY_HEIGHT_WITH_HEADER } from '@/constants';
+import { delay } from '@/lib/delay';
 
 interface Props {
   params: Promise<{
@@ -47,7 +50,12 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
   if (user.role !== 'admin') {
     return (
-      <div className="container min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] flex items-center justify-center">
+      <div
+        className={cn(
+          BODY_HEIGHT_WITH_HEADER,
+          'container flex items-center justify-center'
+        )}
+      >
         <p className="text-muted-foreground text-lg">
           Sorry, you are not authorized to view this page
         </p>
@@ -61,7 +69,9 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title="Order details"
           breadcrumbs={

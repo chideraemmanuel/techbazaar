@@ -19,10 +19,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PRODUCT_CATEGORIES, PRODUCTS_SORT_ITEMS } from '@/constants';
+import {
+  BODY_HEIGHT_WITH_HEADER,
+  PRODUCT_CATEGORIES,
+  PRODUCTS_SORT_ITEMS,
+} from '@/constants';
 import { DUMMY_PRODUCTS } from '@/dummy';
 import { cn } from '@/lib/cn';
-import { Search } from 'lucide-react';
+import { Loader2, Search } from 'lucide-react';
 import Image from 'next/image';
 import { FC, Suspense } from 'react';
 import { getCurrentUser } from '@/lib/data/user';
@@ -43,6 +47,7 @@ import {
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import RegionalPriceFormat from '@/components/regional-price-format';
+import { delay } from '@/lib/delay';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -54,6 +59,7 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
     headerList.get('x-current-path') || '/admin/dashboard/products';
 
   const searchParamsObject = await searchParams;
+
   const user = await getCurrentUser();
 
   if (!user) {
@@ -66,7 +72,9 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title="Products"
           subtitle="All products"
@@ -89,7 +97,13 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
         />
 
         <div className="flex-1 p-5 space-y-7">
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-[70vh] flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <ProductsTable searchParams={searchParamsObject} />
           </Suspense>
         </div>

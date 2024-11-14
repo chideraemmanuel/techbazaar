@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 interface Props {}
 
-const RequestPasswordResetPage: FC<Props> = async () => {
+const PasswordResetRequestPage: FC<Props> = async () => {
   const user = await getCurrentUser();
 
   if (user) {
@@ -39,4 +39,4 @@ const RequestPasswordResetPage: FC<Props> = async () => {
   );
 };
 
-export default RequestPasswordResetPage;
+export default PasswordResetRequestPage;

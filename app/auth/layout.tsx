@@ -19,7 +19,7 @@ const AuthLayout: FC<Props> = async ({ children }) => {
       <Suspense>
         <div className="bg-background">
           <div className="container mx-auto relative flex items-center justify-center min-h-screen">
-            <div className="absolute top-8 left-4 md:left-8">
+            <div className="absolute z-10 top-8 left-4 md:left-8">
               <Logo />
             </div>
 

@@ -13,14 +13,14 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 import ClearCartButton from './clear-cart-button';
 import RegionalPriceFormat from '@/components/regional-price-format';
+import { useRouter } from 'next/navigation';
 
-interface Props {
-  searchParams: ISearchParams;
-}
+interface Props {}
 
-const CartContent: FC<Props> = ({ searchParams }) => {
+const CartContent: FC<Props> = () => {
   const {
     data,
+    isLoading,
     isFetching,
     isFetchingNextPage,
     hasNextPage,
@@ -45,49 +45,64 @@ const CartContent: FC<Props> = ({ searchParams }) => {
               )}
             </h2>
 
-            <ClearCartButton asChild>
-              <Button
-                variant={'destructive'}
-                className="h-7 sm:h-9 rounded-md px-3"
-              >
-                Clear cart
-              </Button>
-            </ClearCartButton>
+            {!isLoading && data && data.pages[0].data.length > 0 && (
+              <ClearCartButton asChild>
+                <Button
+                  variant={'destructive'}
+                  className="h-7 sm:h-9 rounded-md px-3"
+                >
+                  Clear cart
+                </Button>
+              </ClearCartButton>
+            )}
           </div>
 
-          {data && data.pages[0].data.length > 0 ? (
-            <>
-              <div className="space-y-3">
-                {data.pages.map((group, index) => (
-                  <React.Fragment key={index}>
-                    {group.data.map((cart_item) => (
-                      <CartItem key={cart_item._id} cart_item={cart_item} />
-                    ))}
-                  </React.Fragment>
-                ))}
-              </div>
+          {isLoading && !data && (
+            <div className="flex items-center justify-center h-[50vh]">
+              <Loader2 className="w-7 h-7 animate-spin" />
+            </div>
+          )}
 
-              {hasNextPage && (
-                <div className="flex justify-center">
-                  <Button onClick={() => fetchNextPage()} disabled={isFetching}>
-                    {isFetching && <Loader2 className="h-4 w-4 animate-spin" />}{' '}
-                    Load more
-                  </Button>
+          {!isLoading &&
+            data &&
+            (data.pages[0].data.length > 0 ? (
+              <>
+                <div className="space-y-3">
+                  {data.pages.map((group, index) => (
+                    <React.Fragment key={index}>
+                      {group.data.map((cart_item) => (
+                        <CartItem key={cart_item._id} cart_item={cart_item} />
+                      ))}
+                    </React.Fragment>
+                  ))}
                 </div>
-              )}
 
-              {/* <DataTablePagination
+                {hasNextPage && (
+                  <div className="flex justify-center">
+                    <Button
+                      onClick={() => fetchNextPage()}
+                      disabled={isFetching}
+                    >
+                      {isFetching && (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      )}{' '}
+                      Load more
+                    </Button>
+                  </div>
+                )}
+
+                {/* <DataTablePagination
                 totalPages={data.pagination.total_pages}
                 totalPagesToDisplay={3}
               /> */}
-            </>
-          ) : (
-            <div className="flex items-center justify-center h-[50vh]">
-              <span className="text-muted-foreground text-sm sm:text-base">
-                You have no item in your cart.
-              </span>
-            </div>
-          )}
+              </>
+            ) : (
+              <div className="flex items-center justify-center h-[50vh]">
+                <span className="text-muted-foreground text-sm sm:text-base">
+                  You have no item in your cart.
+                </span>
+              </div>
+            ))}
         </div>
 
         <CartSummary />
@@ -100,6 +115,8 @@ export default CartContent;
 
 const CartSummary: FC<{}> = () => {
   const { data, isLoading } = useCartSummary();
+
+  const router = useRouter();
 
   return (
     <>
@@ -151,8 +168,12 @@ const CartSummary: FC<{}> = () => {
         <Separator />
 
         <div>
-          <Button asChild className="w-full">
-            <Link href={'/user/cart/checkout'}>Checkout</Link>
+          <Button
+            className="w-full"
+            disabled={isLoading || (data && data.total_items === 0)}
+            onClick={() => router.push('/user/cart/checkout')}
+          >
+            Checkout
           </Button>
         </div>
       </div>

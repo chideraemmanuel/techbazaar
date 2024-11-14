@@ -2,7 +2,7 @@ import DataTablePagination from '@/components/data-table-pagination';
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { RiFilter3Line, RiSortDesc } from '@remixicon/react';
+import { RiFilter3Line } from '@remixicon/react';
 import { FC, Suspense } from 'react';
 import CategoryPageSideFilter from './_components/category-page-side-filter';
 import { getAvailableBrands } from '@/lib/data/brand';
@@ -13,14 +13,14 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import ProductsGridContainer from '../../_components/products-grid-container';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import { getAvailableProducts } from '@/lib/data/product';
 import { ISearchParams } from '@/types';
 import { PRODUCT_CATEGORIES } from '@/constants';
 import { notFound } from 'next/navigation';
 import { ProductCategory } from '@/types/product';
 import Image from 'next/image';
-import StoreFooter from '../../_components/store-footer';
+import { Loader2 } from 'lucide-react';
+import SideFilterLoading from '../../_components/side-filter-loading';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
@@ -68,7 +68,7 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
       <section className="pt-7 container grid md:grid-cols-[250px,_1fr]">
         <aside className="sticky top-[calc(80px+8px)] border border-border h-[calc(100vh-80px-16px)] hidden md:block rounded-lg overflow-hidden">
           <ScrollArea className="h-full py-3 px-2">
-            <Suspense>
+            <Suspense fallback={<SideFilterLoading />}>
               <Filter />
             </Suspense>
           </ScrollArea>
@@ -86,7 +86,7 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
 
               <SheetContent side={'bottom'} className="md:hidden p-0">
                 <ScrollArea className="h-[70vh] p-6">
-                  <Suspense>
+                  <Suspense fallback={<SideFilterLoading />}>
                     <Filter sheetClose={SheetClose} />
                   </Suspense>
                 </ScrollArea>
@@ -94,7 +94,13 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
             </Sheet>
           </div>
 
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-full flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <ProductsGrid
               searchParams={searchParamsObject}
               category={category as ProductCategory}
@@ -162,8 +168,6 @@ const ProductsGrid: FC<{
             </span>
           </div>
         )}
-
-        {/* <StoreFooter /> */}
       </div>
     </>
   );

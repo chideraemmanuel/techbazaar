@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/table';
 import { DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
-import { Search } from 'lucide-react';
+import { Loader2, Search } from 'lucide-react';
 import { FC, Suspense } from 'react';
 import DeleteUserDialog from '@/app/admin/dashboard/users/_components/delete-user-dialog';
 import EditUserRoleDialog from '@/app/admin/dashboard/users/_components/edit-user-role-dialog';
@@ -29,7 +29,7 @@ import {
 import { ISearchParams } from '@/types';
 import { getAllUsers, getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
-import { USERS_SORT_ITEMS } from '@/constants';
+import { BODY_HEIGHT_WITH_HEADER, USERS_SORT_ITEMS } from '@/constants';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -61,7 +61,12 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
 
   if (user.role !== 'admin') {
     return (
-      <div className="container min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] flex items-center justify-center">
+      <div
+        className={cn(
+          BODY_HEIGHT_WITH_HEADER,
+          'container flex items-center justify-center'
+        )}
+      >
         <p className="text-muted-foreground text-lg">
           Sorry, you are not authorized to view this page
         </p>
@@ -71,7 +76,9 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+      <div
+        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+      >
         <AdminDashboardResourceHeader
           title="Users"
           subtitle="All users"
@@ -94,7 +101,13 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
         />
 
         <div className="flex-1 p-5 space-y-7">
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="h-[70vh] flex items-center justify-center">
+                <Loader2 className="h-7 w-7 animate-spin" />
+              </div>
+            }
+          >
             <UsersTable searchParams={searchParamsObject} />
           </Suspense>
         </div>
@@ -242,7 +255,10 @@ const UsersTable: FC<{ searchParams: ISearchParams }> = async ({
         <div className="bg-background/50 border-t p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-7">
           <DataTableItemsPerPage />
 
-          <DataTablePagination totalPages={50} totalPagesToDisplay={3} />
+          <DataTablePagination
+            totalPages={pagination.total_pages}
+            totalPagesToDisplay={3}
+          />
         </div>
       </div>
     </>
