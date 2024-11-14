@@ -26,7 +26,7 @@ import { getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
 import { getAllBrands } from '@/lib/data/brand';
 import EditBrandDialog from './_components/edit-brand-dialog';
-import { BODY_HEIGHT_WITH_HEADER, BRANDS_SORT_ITEMS } from '@/constants';
+import { BODY_MIN_HEIGHT_WITH_HEADER, BRANDS_SORT_ITEMS } from '@/constants';
 import { ISearchParams } from '@/types';
 import {
   Breadcrumb,
@@ -62,7 +62,10 @@ const AdminDashboardBrandsPage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <div
-        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+        className={cn(
+          BODY_MIN_HEIGHT_WITH_HEADER,
+          'flex flex-col bg-secondary'
+        )}
       >
         <AdminDashboardResourceHeader
           title="Brands"

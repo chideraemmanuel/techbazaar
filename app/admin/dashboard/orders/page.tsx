@@ -24,7 +24,7 @@ import { getCurrentUser } from '@/lib/data/user';
 import { getAllOrders } from '@/lib/data/order';
 import { ISearchParams } from '@/types';
 import formatDate from '@/lib/format-date';
-import { BODY_HEIGHT_WITH_HEADER, ORDERS_SORT_ITEMS } from '@/constants';
+import { BODY_MIN_HEIGHT_WITH_HEADER, ORDERS_SORT_ITEMS } from '@/constants';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -61,7 +61,7 @@ const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
     return (
       <div
         className={cn(
-          BODY_HEIGHT_WITH_HEADER,
+          BODY_MIN_HEIGHT_WITH_HEADER,
           'container flex items-center justify-center'
         )}
       >
@@ -75,7 +75,10 @@ const AdminDashboardOrdersPage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <div
-        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+        className={cn(
+          BODY_MIN_HEIGHT_WITH_HEADER,
+          'flex flex-col bg-secondary'
+        )}
       >
         <AdminDashboardResourceHeader
           title="Orders"

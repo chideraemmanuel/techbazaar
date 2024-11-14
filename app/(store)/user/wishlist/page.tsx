@@ -9,7 +9,7 @@ import ProductsGridContainer from '../../_components/products-grid-container';
 import StoreFooter from '../../_components/store-footer';
 import { headers } from 'next/headers';
 import { cn } from '@/lib/cn';
-import { BODY_HEIGHT_WITH_HEADER } from '@/constants';
+import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { Loader2 } from 'lucide-react';
 
 interface Props {
@@ -34,7 +34,10 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <div
-        className={cn(BODY_HEIGHT_WITH_HEADER, 'container py-5 flex flex-col')}
+        className={cn(
+          BODY_MIN_HEIGHT_WITH_HEADER,
+          'container py-5 flex flex-col'
+        )}
       >
         <div className="pb-4 md:pb-5">
           <span className="block pb-1 md:pb-2 text-muted-foreground font-medium text-sm sm:text-base">

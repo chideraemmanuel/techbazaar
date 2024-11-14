@@ -1,6 +1,6 @@
 import AdminDashboardHeader from '@/app/admin/dashboard/_components/admin-dashboard-header';
 import AdminDashboardSidebar from '@/app/admin/dashboard/_components/admin-dashboard-sidebar';
-import { BODY_HEIGHT_WITH_HEADER } from '@/constants';
+import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { cn } from '@/lib/cn';
 import { getCurrentUser } from '@/lib/data/user';
 import { Metadata } from 'next';
@@ -36,7 +36,7 @@ const AdminDashboardLayout: FC<Props> = async ({ children }) => {
       <AdminDashboardHeader />
       <main
         className={cn(
-          BODY_HEIGHT_WITH_HEADER,
+          BODY_MIN_HEIGHT_WITH_HEADER,
           'xl:ml-[min(270px,_30vw)] bg-background'
         )}
       >

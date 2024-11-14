@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import {
-  BODY_HEIGHT_WITH_HEADER,
+  BODY_MIN_HEIGHT_WITH_HEADER,
   PRODUCT_CATEGORIES,
   PRODUCTS_SORT_ITEMS,
 } from '@/constants';
@@ -73,7 +73,10 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <div
-        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+        className={cn(
+          BODY_MIN_HEIGHT_WITH_HEADER,
+          'flex flex-col bg-secondary'
+        )}
       >
         <AdminDashboardResourceHeader
           title="Products"

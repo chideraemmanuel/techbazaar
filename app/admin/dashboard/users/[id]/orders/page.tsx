@@ -23,7 +23,7 @@ import AdminDashboardOrdersFilter from '@/app/admin/dashboard/_components/admin-
 import formatDate from '@/lib/format-date';
 import { getCurrentUser, getUserById } from '@/lib/data/user';
 import { ISearchParams } from '@/types';
-import { BODY_HEIGHT_WITH_HEADER, ORDERS_SORT_ITEMS } from '@/constants';
+import { BODY_MIN_HEIGHT_WITH_HEADER, ORDERS_SORT_ITEMS } from '@/constants';
 import { getUserOrders } from '@/lib/data/order';
 import {
   Breadcrumb,
@@ -70,7 +70,7 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
     return (
       <div
         className={cn(
-          BODY_HEIGHT_WITH_HEADER,
+          BODY_MIN_HEIGHT_WITH_HEADER,
           'container flex items-center justify-center'
         )}
       >
@@ -88,7 +88,10 @@ const AdminDashboardUserOrdersPage: FC<Props> = async ({
   return (
     <>
       <div
-        className={cn(BODY_HEIGHT_WITH_HEADER, 'flex flex-col bg-secondary')}
+        className={cn(
+          BODY_MIN_HEIGHT_WITH_HEADER,
+          'flex flex-col bg-secondary'
+        )}
       >
         <AdminDashboardResourceHeader
           title={`${user.first_name}'s Orders`}
