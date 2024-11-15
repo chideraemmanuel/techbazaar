@@ -22,7 +22,7 @@ import DatePicker from '@/components/ui/date-picker';
 
 interface Props {}
 
-const Home: FC<Props> = () => {
+const Homepage: FC<Props> = () => {
   const product = DUMMY_PRODUCTS[0];
   return (
     <>
@@ -137,7 +137,7 @@ const Home: FC<Props> = () => {
   );
 };
 
-export default Home;
+export default Homepage;
 
 interface SectionHeaderProps {
   title: string;

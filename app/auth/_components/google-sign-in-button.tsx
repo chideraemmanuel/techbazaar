@@ -38,6 +38,8 @@ const GoogleSignInButton = React.forwardRef<
 
       return response.data;
     },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   console.log('uri', data?.uri);

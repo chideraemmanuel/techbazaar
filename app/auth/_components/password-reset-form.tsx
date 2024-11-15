@@ -7,6 +7,7 @@ import { PASSWORD_REQUIREMENTS, PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
 import useCompletePasswordReset from '@/lib/hooks/auth/use-complete-password-reset';
 import validatePasswordRequirement from '@/lib/validate-password-requirement';
+import { decode } from '@/lib/xor-base64-cipher';
 import { PasswordRequirement } from '@/types';
 import { Loader2 } from 'lucide-react';
 import React, { FC } from 'react';
@@ -41,11 +42,14 @@ const PasswordResetForm: FC<Props> = ({ email, encryptedOTP }) => {
   const watched = watch();
 
   const onSubmit: SubmitHandler<PasswordResetFormTypes> = (data, e) => {
-    const decryptedOTP = encryptedOTP;
+    const decryptedOTP = decode(
+      process.env.NEXT_PUBLIC_XOR_CIPHER_KEY!,
+      encryptedOTP
+    );
 
     completePasswordReset({
       email,
-      OTP: decryptedOTP,
+      OTP: decryptedOTP as string,
       new_password: data.password,
     });
   };

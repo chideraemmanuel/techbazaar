@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { Button } from './ui/button';
 import { Heart, ShoppingCart } from 'lucide-react';
-import { IAvailableProduct } from '@/types/product';
+import { IAvailableProduct, ProductTypes } from '@/types/product';
 import WishlistAction from './wishlist-action';
 import RegionalPriceFormat from './regional-price-format';
 
 interface Props {
-  product: IAvailableProduct;
+  product: ProductTypes;
 }
 
 const ProductCard: FC<Props> = ({ product }) => {
@@ -53,6 +53,12 @@ const ProductCard: FC<Props> = ({ product }) => {
         </Button> */}
 
         <WishlistAction product={product} />
+
+        {(product.is_deleted || product.is_archived || product.stock === 0) && (
+          <span className="absolute top-0 left-0 inline-block py-[2px] px-1 bg-destructive text-destructive-foreground text-xs rounded-tl-lg rounded-br-lg">
+            {product.is_deleted ? 'Unavailable' : 'Out of stock'}
+          </span>
+        )}
       </div>
     </>
   );

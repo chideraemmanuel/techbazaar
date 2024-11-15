@@ -11,32 +11,19 @@ const formatCurrency = (
   //     currency: currency,
   //   }).format(amount);
 
-  let formattedAmount = amount.toFixed(2);
+  // Format number to a "currency-like" format but without the currency symbol
+  const formatted = new Intl.NumberFormat(locale, {
+    style: 'decimal', // Use 'decimal' style instead of 'currency'
+    minimumFractionDigits: 2, // Control number of decimal places
+    maximumFractionDigits: 2, // Control number of decimal places
+  }).format(amount);
 
-  // Split the amount into integer and decimal parts
-  let [integer, decimal] = formattedAmount.split('.');
-
-  // Add commas to the integer part
-  integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-  //   get currency symbol
+  // get currency symbol
   const symbol =
     CURRENCIES.find((currency) => currency.code === toCurrency)?.symbol || '';
 
   // TODO: format for different locales
-  return `${symbol}${integer}.${decimal}`;
+  return `${symbol}${formatted}`;
 };
 
 export default formatCurrency;
-
-// =============================================================================
-// Currency Masking with Input Fields
-// =============================================================================
-// const currencyInput = document.getElementById('currency-input');
-
-// currencyInput.addEventListener('input', (event) => {
-//   let value = event.target.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
-//   value = parseFloat(value).toFixed(2); // Ensure two decimal places
-//   value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Add commas
-//   event.target.value = '$' + value; // Prefix with dollar sign
-// });

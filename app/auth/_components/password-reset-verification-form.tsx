@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import OTPInput from '@/components/ui/otp-input';
+import { encode } from '@/lib/xor-base64-cipher';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { FC } from 'react';
@@ -16,12 +17,12 @@ const PasswordResetVerificationForm: FC<Props> = ({ email }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    const encryptedOTP = OTP;
+    const encryptedOTP = encode(process.env.NEXT_PUBLIC_XOR_CIPHER_KEY!, OTP);
 
     router.push(
       `/auth/reset-password?email=${encodeURIComponent(
         email
-      )}&p=${encodeURIComponent(encryptedOTP)}`
+      )}&p=${encodeURIComponent(encryptedOTP as string)}`
     );
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import useWishlistItem from '@/lib/hooks/wishlist/use-wishlist-item';
-import { IAvailableProduct } from '@/types/product';
+import { IAvailableProduct, ProductTypes } from '@/types/product';
 import { Heart } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
@@ -10,7 +10,7 @@ import RemoveFromWishlistButton from '../app/(store)/user/wishlist/_components/r
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 
 interface Props {
-  product: IAvailableProduct;
+  product: ProductTypes;
 }
 
 const WishlistAction: FC<Props> = ({ product }) => {
@@ -31,7 +31,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
       wishlistProductID &&
       wishlistProductID === product._id
     ) {
-      addItemToWishlist(product);
+      addItemToWishlist(product as IAvailableProduct);
       router.replace(pathname);
     }
   }, [data, isLoading]);
@@ -73,7 +73,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
         </button> */}
 
       {!isLoading && data === '' && (
-        <AddToWishlistButton asChild product={product}>
+        <AddToWishlistButton asChild product={product as IAvailableProduct}>
           <button
             className="absolute top-2 right-2 flex items-center justify-center rounded-full h-7 w-7 text-background bg-foreground/30 hover:bg-primary/80 hover:text-white transition-colors"
             title="Add to wishlist"

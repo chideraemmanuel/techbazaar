@@ -20,7 +20,7 @@ const CartItem: FC<Props> = ({ cart_item }) => {
 
   return (
     <>
-      <div className="p-3 sm:p-4 dark:bg-secondary/30 border shadow-sm rounded-md space-y-4 sm:space-y-5">
+      <div className="relative p-3 sm:p-4 dark:bg-secondary/30 border shadow-sm rounded-md space-y-4 sm:space-y-5">
         <div className="flex items-center gap-2">
           <div className="w-[90px] sm:w-[120px] h-[90px] sm:h-[120px] bg-secondary rounded-md sm:rounded-lg flex items-center justify-center">
             <Image
@@ -80,6 +80,12 @@ const CartItem: FC<Props> = ({ cart_item }) => {
             </Button>
           </RemoveFromCartButton>
         </div>
+
+        {(product.is_deleted || product.is_archived || product.stock === 0) && (
+          <span className="absolute top-0 right-0 inline-block py-[2px] px-1 bg-destructive text-destructive-foreground text-xs rounded-l-md">
+            {product.is_deleted ? 'Unavailable' : 'Out of stock'}
+          </span>
+        )}
       </div>
     </>
   );

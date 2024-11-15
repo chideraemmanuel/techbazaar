@@ -6,7 +6,6 @@ import { ISearchParams } from '@/types';
 import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 import ProductsGridContainer from '../../_components/products-grid-container';
-import StoreFooter from '../../_components/store-footer';
 import { headers } from 'next/headers';
 import { cn } from '@/lib/cn';
 import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
@@ -59,10 +58,6 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
           <WishlistContent searchParams={searchParamsObject} />
         </Suspense>
       </div>
-
-      <div className="container">
-        <StoreFooter />
-      </div>
     </>
   );
 };
@@ -107,4 +102,3 @@ const WishlistContent: FC<{
     </>
   );
 };
-// h-[calc(100vh-80px)]

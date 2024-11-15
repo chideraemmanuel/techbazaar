@@ -92,7 +92,5 @@ export const getCurrentUser = async () => {
 
   const user: UserTypes = await response.json();
 
-  console.log('[USER]', user);
-
   return user;
 };
