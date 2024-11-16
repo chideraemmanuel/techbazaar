@@ -15,10 +15,10 @@ interface Props {
 const ProductCard: FC<Props> = ({ product }) => {
   return (
     <>
-      <div className="group inline-block relative">
+      <div className="group inline-block relative h-full">
         <Link
           href={`/products/${product.slug}`}
-          className="grid grid-rows-[1fr,_auto] h-full"
+          className="grid grid-rows-[1fr,_auto] h-full [&>*]:min-w-0"
         >
           <div className="bg-secondary p-7 rounded-lg">
             <Image

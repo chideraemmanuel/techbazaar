@@ -8,7 +8,7 @@ interface Props {
   reset: () => void;
 }
 
-const HomePageError: FC<Props> = ({ error, reset }) => {
+const HomepageError: FC<Props> = ({ error, reset }) => {
   return (
     <>
       <ErrorComponentWithHeader />
@@ -16,4 +16,4 @@ const HomePageError: FC<Props> = ({ error, reset }) => {
   );
 };
 
-export default HomePageError;
+export default HomepageError;

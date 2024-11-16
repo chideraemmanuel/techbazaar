@@ -8,7 +8,6 @@ import { FC, Suspense } from 'react';
 import ProductsGridContainer from '../../_components/products-grid-container';
 import { headers } from 'next/headers';
 import { cn } from '@/lib/cn';
-import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { Loader2 } from 'lucide-react';
 
 interface Props {
@@ -34,8 +33,7 @@ const UserWishlistPage: FC<Props> = async ({ searchParams }) => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'container py-5 flex flex-col'
+          'container py-5 flex flex-col min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <div className="pb-4 md:pb-5">

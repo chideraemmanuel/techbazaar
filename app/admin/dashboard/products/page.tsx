@@ -19,11 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  BODY_MIN_HEIGHT_WITH_HEADER,
-  PRODUCT_CATEGORIES,
-  PRODUCTS_SORT_ITEMS,
-} from '@/constants';
+import { PRODUCT_CATEGORIES, PRODUCTS_SORT_ITEMS } from '@/constants';
 import { DUMMY_PRODUCTS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Loader2, Search } from 'lucide-react';
@@ -74,8 +70,7 @@ const AdminDashboardProductsPage: FC<Props> = async ({ searchParams }) => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex flex-col bg-secondary'
+          'flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <AdminDashboardResourceHeader

@@ -12,7 +12,7 @@ const StoreFooter: FC<Props> = ({ narrow }) => {
     <>
       <footer
         className={cn(
-          'py-10 flex flex-col items-center justify-center gap-5',
+          'py-10 flex flex-col items-center justify-center gap-5 border-t',
           narrow
             ? 'md:py-12 md:flex-row md:justify-between md:gap-3'
             : 'sm:py-12 sm:flex-row sm:justify-between sm:gap-3'

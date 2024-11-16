@@ -108,15 +108,15 @@ export const decode = (key: string, data: string | null) => {
   return xor_decrypt(key, dec);
 };
 
-const key = '123';
+// const key = '123';
 
 // console.log(encode('test', '123456'));
 // console.log(decode('test', 'RVdAQEFT'));
 
 // Encrypt the text
-const encryptedText = encode(key, '123456');
-console.log('Encrypted Text:', encryptedText);
+// const encryptedText = encode(key, '123456');
+// console.log('Encrypted Text:', encryptedText);
 
 // Decrypt the text
-const decryptedText = decode(key, encryptedText);
-console.log('Decrypted Text:', decryptedText);
+// const decryptedText = decode(key, encryptedText);
+// console.log('Decrypted Text:', decryptedText);

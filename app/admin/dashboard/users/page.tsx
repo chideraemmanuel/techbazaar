@@ -29,7 +29,7 @@ import {
 import { ISearchParams } from '@/types';
 import { getAllUsers, getCurrentUser } from '@/lib/data/user';
 import { redirect } from 'next/navigation';
-import { BODY_MIN_HEIGHT_WITH_HEADER, USERS_SORT_ITEMS } from '@/constants';
+import { USERS_SORT_ITEMS } from '@/constants';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -63,8 +63,7 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
     return (
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'container flex items-center justify-center'
+          'container flex items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <p className="text-muted-foreground text-lg">
@@ -78,8 +77,7 @@ const AdminDashboardUsersPage: FC<Props> = async ({ searchParams }) => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex flex-col bg-secondary'
+          'flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <AdminDashboardResourceHeader

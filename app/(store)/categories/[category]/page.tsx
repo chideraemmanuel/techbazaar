@@ -38,13 +38,22 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
 
   const searchParamsObject = await searchParams;
 
+  // bg-[#2f4858]
+  // bg-[#43547f]
+  // bg-[#ffe8d2] // dark text
+  // bg-[#005246] // consider
+  // bg-[#bca79c] // nice too, dark text
+  // bg-[#dfe0df] // similar to secondary, dark text
+  // bg-[#a0afa0] // nice, dark text
+  // bg-[#402e32] // a bit nice
+
   return (
     <>
       {/* hero */}
       <section className="h-[40vh] md:h-[50vh] bg-secondary">
         <div className="container h-full flex items-center gap-5">
           <div className="flex-[3] space-y-5">
-            <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
               {categoryExists.hero_header}
             </h1>
 

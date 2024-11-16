@@ -118,3 +118,50 @@ export const getRelatedProducts = async (idOrSlug: string) => {
 
   return success_response;
 };
+
+export const getFeaturedProducts = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?is_featured=true`
+  );
+
+  if (!response.ok) {
+    const error_response: APIErrorResponse = await response.json();
+    throw new Error(error_response.error || 'Something went wrong');
+  }
+
+  const success_response: APIPaginatedResponse<IAvailableProduct> =
+    await response.json();
+
+  return success_response;
+};
+
+export const getNewProducts = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?sort_by=date_created&sort_order=ascending`
+  );
+
+  if (!response.ok) {
+    const error_response: APIErrorResponse = await response.json();
+    throw new Error(error_response.error || 'Something went wrong');
+  }
+
+  const success_response: APIPaginatedResponse<IAvailableProduct> =
+    await response.json();
+
+  return success_response;
+};
+
+export const getRandomProducts = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/random`
+  );
+
+  if (!response.ok) {
+    const error_response: APIErrorResponse = await response.json();
+    throw new Error(error_response.error || 'Something went wrong');
+  }
+
+  const success_response: IAvailableProduct[] = await response.json();
+
+  return success_response;
+};

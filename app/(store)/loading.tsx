@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 interface Props {}
 
-const LoadingHomePage: FC<Props> = () => {
+const LoadingHomepage: FC<Props> = () => {
   return (
     <>
       <SpinnerWithHeader />
@@ -11,4 +11,4 @@ const LoadingHomePage: FC<Props> = () => {
   );
 };
 
-export default LoadingHomePage;
+export default LoadingHomepage;

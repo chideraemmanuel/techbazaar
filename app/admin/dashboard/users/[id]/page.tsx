@@ -23,7 +23,6 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { cn } from '@/lib/cn';
-import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { headers } from 'next/headers';
 
 interface Props {
@@ -53,8 +52,7 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
     return (
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'container flex items-center justify-center'
+          'container flex items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <p className="text-muted-foreground text-lg">
@@ -72,8 +70,7 @@ const AdminDashboardUserDetailsPage: FC<Props> = async ({ params }) => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex flex-col bg-secondary'
+          'flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <AdminDashboardResourceHeader

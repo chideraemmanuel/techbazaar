@@ -22,8 +22,6 @@ import AdminDashboardResourceHeader from '../../_components/admin-dashboard-reso
 import { headers } from 'next/headers';
 import RegionalPriceFormat from '@/components/regional-price-format';
 import { cn } from '@/lib/cn';
-import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
-import { delay } from '@/lib/delay';
 
 interface Props {
   params: Promise<{
@@ -52,8 +50,7 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
     return (
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'container flex items-center justify-center'
+          'container flex items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <p className="text-muted-foreground text-lg">
@@ -71,8 +68,7 @@ const AdminDashboardOrderDetailsPage: FC<Props> = async ({ params }) => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex flex-col bg-secondary'
+          'flex flex-col bg-secondary min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <AdminDashboardResourceHeader

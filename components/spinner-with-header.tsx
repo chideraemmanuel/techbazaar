@@ -1,4 +1,3 @@
-import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { cn } from '@/lib/cn';
 import { Loader2 } from 'lucide-react';
 import { FC } from 'react';
@@ -10,8 +9,7 @@ const SpinnerWithHeader: FC<Props> = () => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex items-center justify-center'
+          'flex items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <Loader2 className="w-10 h-10 animate-spin" />

@@ -1,6 +1,5 @@
 'use client';
 
-import { BODY_MIN_HEIGHT_WITH_HEADER } from '@/constants';
 import { cn } from '@/lib/cn';
 import { FC } from 'react';
 import { Button, buttonVariants } from './ui/button';
@@ -13,8 +12,7 @@ const ErrorComponentWithHeader: FC<Props> = () => {
     <>
       <div
         className={cn(
-          BODY_MIN_HEIGHT_WITH_HEADER,
-          'flex flex-col items-center justify-center'
+          'flex flex-col items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
         <p className="text-center text-base md:text-lg w-[90%] mb-1 tracking-wide">
@@ -22,7 +20,7 @@ const ErrorComponentWithHeader: FC<Props> = () => {
         </p>
 
         <p className="text-center text-sm md:text-base w-[90%] tracking-wide">
-          Try to{' '}
+          You can{' '}
           <Button
             onClick={() => location.reload()}
             variant={'link'}
@@ -30,7 +28,7 @@ const ErrorComponentWithHeader: FC<Props> = () => {
           >
             refresh
           </Button>{' '}
-          the page. If the error persists, you can contact{' '}
+          the page or try again later. If the error persists, you can{' '}
           <Link
             href={`mailto:thechideraemmanuel@gmail.com`}
             className={cn(
@@ -38,7 +36,7 @@ const ErrorComponentWithHeader: FC<Props> = () => {
               'p-0 h-auto text-sm md:text-base'
             )}
           >
-            support
+            contact support
           </Link>
           .
         </p>

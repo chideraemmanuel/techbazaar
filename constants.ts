@@ -1,4 +1,6 @@
 import {
+  Building,
+  Building2,
   ChartArea,
   ChartColumn,
   Gamepad,
@@ -15,6 +17,8 @@ import {
   Watch,
 } from 'lucide-react';
 import image from '@/assets/images/hero-image.png';
+import homeDeliveryImage from '@/assets/images/home-delivery.jpg';
+import onlinePaymentImage from '@/assets/images/online-payment.jpg';
 
 export const BODY_MIN_HEIGHT_WITH_HEADER =
   'min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]';
@@ -41,8 +45,7 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
       {
         title: 'overview',
         href: '/admin/dashboard',
-        // icon: LineChart,
-        icon: ChartColumn,
+        icon: LineChart,
       },
       {
         title: 'products',
@@ -52,7 +55,7 @@ export const ADMIN_DASHBAORD_SIDEBAR_LINKS = [
       {
         title: 'brands',
         href: '/admin/dashboard/brands',
-        icon: LineChart,
+        icon: Building2,
       },
       {
         title: 'orders',
@@ -615,4 +618,22 @@ export const CURRENCIES = [
   { code: 'YER', name: 'Yemeni Rial', symbol: '﷼' },
   { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
   { code: 'ZMW', name: 'Zambian Kwacha', symbol: 'ZK' },
+];
+
+export const SERVICES = [
+  {
+    title: 'Online Payment Process',
+    // description: 'Updates on safe shoppig in our stores',
+    description:
+      'claws till positive catch wild sister early enemy inch base modern wait can bat thou',
+    href: '#',
+    image: onlinePaymentImage,
+  },
+  {
+    title: 'Home Delivery Options',
+    description:
+      'castle dark tax wash noted possibly parallel burst date mostly hundred way clay sell ten',
+    href: '#',
+    image: homeDeliveryImage,
+  },
 ];

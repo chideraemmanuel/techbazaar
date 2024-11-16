@@ -20,7 +20,7 @@ const ErrorComponentWithoutHeader: FC<Props> = () => {
         </p>
 
         <p className="text-center text-sm md:text-base w-[90%] tracking-wide">
-          Try to{' '}
+          You can{' '}
           <Button
             onClick={() => location.reload()}
             variant={'link'}
@@ -28,7 +28,7 @@ const ErrorComponentWithoutHeader: FC<Props> = () => {
           >
             refresh
           </Button>{' '}
-          the page. If the error persists, you can contact{' '}
+          the page or try again later. If the error persists, you can{' '}
           <Link
             href={`mailto:thechideraemmanuel@gmail.com`}
             className={cn(
@@ -36,7 +36,7 @@ const ErrorComponentWithoutHeader: FC<Props> = () => {
               'p-0 h-auto text-sm md:text-base'
             )}
           >
-            support
+            contact support
           </Link>
           .
         </p>

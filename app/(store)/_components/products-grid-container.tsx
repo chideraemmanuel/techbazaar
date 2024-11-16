@@ -11,7 +11,7 @@ const ProductsGridContainer: FC<Props> = ({ children, className }) => {
     <>
       <div
         className={cn(
-          'grid grid-cols-[repeat(auto-fill,_minmax(130px,_1fr))] sm:grid-cols-[repeat(auto-fill,_minmax(170px,_1fr))] gap-4 sm:gap-5',
+          'grid grid-cols-[repeat(auto-fill,_minmax(130px,_1fr))] sm:grid-cols-[repeat(auto-fill,_minmax(170px,_1fr))] gap-4 sm:gap-5 [&>*]:min-w-0 animate-in fade-in-0 duration-700',
           className
         )}
       >
