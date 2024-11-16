@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { DEFAULT_RATES } from '../convert-price';
 
 export interface IExchangeRatesResponse {
   result: 'success' | 'error';
@@ -12,7 +13,7 @@ export interface IExchangeRatesResponse {
   time_next_update_utc: string;
   time_eol_unix: number;
   base_code: 'NGN';
-  rates: Record<string, number>;
+  rates: Record<keyof typeof DEFAULT_RATES.rates, number>;
 }
 
 const useExchangeRates = () => {

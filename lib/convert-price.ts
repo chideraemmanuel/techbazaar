@@ -179,7 +179,7 @@ const convertPrice = (
   amount: number,
   fromCurrency: keyof typeof DEFAULT_RATES.rates = 'NGN',
   toCurrency: keyof typeof DEFAULT_RATES.rates = 'NGN',
-  rates: Record<string, number> = DEFAULT_RATES.rates
+  rates: Record<keyof typeof DEFAULT_RATES.rates, number> = DEFAULT_RATES.rates
 ) => {
   if (fromCurrency === toCurrency) {
     return amount; // No conversion needed

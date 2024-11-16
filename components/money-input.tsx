@@ -79,18 +79,6 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
       isError: errorFetchingIPInformation,
     } = useIPInformation();
 
-    const getCurrencyRate = (currency: ICurrency | null) => {
-      if (currency) {
-        return rates
-          ? rates[currency.code]
-          : DEFAULT_RATES.rates[
-              currency.code as keyof typeof DEFAULT_RATES.rates
-            ];
-      } else {
-        return rates ? rates['NGN'] : DEFAULT_RATES.rates['NGN'];
-      }
-    };
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       let value = e.target.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
 
@@ -105,25 +93,12 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
 
       setInputValue(formatted_value === '0' ? '' : formatted_value);
 
-      // const converted = convertPrice(+value, 'NGN', rates);
-      const NGN_rate = DEFAULT_RATES.rates['NGN'];
-
-      // const selectedCurrencyRate = currencyValue
-      //   ? DEFAULT_RATES.rates[
-      //       currencyValue.code as keyof typeof DEFAULT_RATES.rates
-      //     ]
-      //   : DEFAULT_RATES.rates['NGN'];
-
-      const selectedCurrencyRate = getCurrencyRate(currencyValue);
-
-      console.log('selectedCurrencyRate', selectedCurrencyRate);
-      console.log('+value', +value);
-
-      console.log('mul', +value * selectedCurrencyRate);
-
-      // const converted = convertPrice(+value, 'NGN', rates);
-
-      const converted = +value * selectedCurrencyRate;
+      const converted = convertPrice(
+        +value,
+        currencyValue?.code as keyof typeof DEFAULT_RATES.rates,
+        'NGN',
+        rates
+      );
 
       console.log({
         formatted_value: formatted_value === '0' ? '' : formatted_value,
