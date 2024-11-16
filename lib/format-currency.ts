@@ -1,8 +1,9 @@
 import { CURRENCIES } from '@/constants';
+import { DEFAULT_RATES } from './convert-price';
 
 const formatCurrency = (
   amount: number,
-  toCurrency: string = 'NGN',
+  toCurrency: keyof typeof DEFAULT_RATES.rates = 'NGN',
   locale: string = 'en-US'
 ) => {
   //! This method does not work for all currency codes

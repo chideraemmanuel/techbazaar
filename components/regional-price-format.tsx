@@ -39,7 +39,7 @@ const RegionalPriceFormat: FC<Props> = ({ price, className, ...props }) => {
       {!isFetchingExchangeRates && !isFetchingIPInformation && (
         <span {...props} className={cn('tracking-wide', className)}>
           {formatCurrency(
-            convertPrice(price, IP_information?.currency, rates),
+            convertPrice(price, 'NGN', IP_information?.currency, rates),
             IP_information?.currency,
             navigator.language
           )}

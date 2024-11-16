@@ -1,11 +1,37 @@
+import RegionalPriceFormat from '@/components/regional-price-format';
+import SelectInput from '@/components/select-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCurrentUser } from '@/lib/data/user';
+import { AnalyticsFilterRange } from '@/types';
+import { RiCalendar2Line } from '@remixicon/react';
 import { DollarSign } from 'lucide-react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
+import AdminDashboardAnalyticsFilter from './_components/admin-dashboard-analytics-filter';
+import AdminDashboardAnalyticsChart from './_components/admin-dashboard-analytics-chart';
 
 interface Props {}
+
+const revenue_summary = {
+  total: 74952631.89,
+  last_month: 2793738.29,
+};
+
+const sales_summary = {
+  total: 571,
+  today: 17,
+};
+
+const orders_summary = {
+  total: 485,
+  today: 3,
+};
+
+const customers_summary = {
+  total: 127,
+  last_month: 21,
+};
 
 const AdminDashboardOverviewPage: FC<Props> = async () => {
   const headerList = await headers();
@@ -34,35 +60,88 @@ const AdminDashboardOverviewPage: FC<Props> = async () => {
             </h1>
           </div>
 
-          <span className="text-xs font-semibold text-muted-foreground">
-            Filter here!
-          </span>
+          <AdminDashboardAnalyticsFilter />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 pb-4">
-          {Array.from({ length: 4 }).map((value, index) => (
-            <Card key={index}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
-                </CardTitle>
+          <TotalCard
+            title="Total Revenue"
+            all_time_total={
+              <RegionalPriceFormat
+                price={revenue_summary.total}
+                className="inline-block w-[100%] text-2xl font-bold truncate"
+                title={`${revenue_summary.total}`}
+              />
+            }
+            sub={
+              <p className="text-xs text-muted-foreground">
+                +
+                <RegionalPriceFormat
+                  price={revenue_summary.last_month}
+                  className="text-xs text-muted-foreground"
+                />{' '}
+                in the last month
+              </p>
+            }
+          />
 
-                <DollarSign className="text-muted-foreground h-4 w-4" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">$45,231.89</div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          <TotalCard
+            title="Sales"
+            all_time_total={sales_summary.total}
+            sub={`+${sales_summary.today} today`}
+          />
+
+          <TotalCard
+            title="Orders"
+            all_time_total={orders_summary.total}
+            sub={`+${orders_summary.today} today`}
+          />
+
+          <TotalCard
+            title="Customers"
+            all_time_total={customers_summary.total}
+            sub={`+${customers_summary.last_month} in the last month`}
+          />
         </div>
 
-        <div className="h-[700px] border border-primary"></div>
+        <AdminDashboardAnalyticsChart />
       </div>
     </>
   );
 };
 
 export default AdminDashboardOverviewPage;
+
+const TotalCard: FC<{
+  title: string;
+  all_time_total: number | React.ReactNode;
+  sub: string | React.ReactNode;
+}> = ({ title, all_time_total, sub }) => {
+  return (
+    <>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{title}</CardTitle>
+
+          <DollarSign className="text-muted-foreground h-4 w-4" />
+        </CardHeader>
+        <CardContent>
+          {typeof all_time_total === 'number' ? (
+            <span className="text-2xl font-bold">{all_time_total}</span>
+          ) : (
+            all_time_total
+          )}
+
+          {typeof sub === 'string' ? (
+            <p className="text-xs text-muted-foreground">
+              {/* +20.1% from last month */}
+              {sub}
+            </p>
+          ) : (
+            sub
+          )}
+        </CardContent>
+      </Card>
+    </>
+  );
+};

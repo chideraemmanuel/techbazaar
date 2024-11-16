@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { DEFAULT_RATES } from '../convert-price';
 
 export interface IPInformationResponse {
   query: string;
@@ -17,7 +18,8 @@ export interface IPInformationResponse {
   lon: number;
   timezone: string;
   offset: number;
-  currency: string;
+  // currency: string;
+  currency: keyof typeof DEFAULT_RATES.rates;
   isp: string;
   org: string;
   as: string;

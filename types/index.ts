@@ -23,3 +23,5 @@ export interface ISearchParams {
 }
 
 export type PasswordRequirement = 'Min. 8 characters' | 'Number' | 'Symbol';
+
+export type AnalyticsFilterRange = '7d' | '30d' | '60d' | '90d';

@@ -177,10 +177,19 @@ export const DEFAULT_RATES = {
 
 const convertPrice = (
   amount: number,
-  currency: string = 'NGN',
+  fromCurrency: keyof typeof DEFAULT_RATES.rates = 'NGN',
+  toCurrency: keyof typeof DEFAULT_RATES.rates = 'NGN',
   rates: Record<string, number> = DEFAULT_RATES.rates
 ) => {
-  return amount * rates[currency];
+  if (fromCurrency === toCurrency) {
+    return amount; // No conversion needed
+  }
+
+  // Convert amount to base currency, then to target currency
+  const baseAmount = amount / rates[fromCurrency]; // Convert to base currency
+  return baseAmount * rates[toCurrency]; // Convert to target currency
+
+  // return amount * rates[currency];
 };
 
 export default convertPrice;
