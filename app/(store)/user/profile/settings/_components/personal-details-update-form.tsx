@@ -40,7 +40,6 @@ const PersonalDetailsUpdateForm: FC<Props> = ({ user }) => {
     watch,
   } = form;
 
-  // Track personal details form change
   const watched = watch();
 
   React.useEffect(() => {

@@ -10,8 +10,6 @@ import { Button } from '@/components/ui/button';
 import { RiFilter3Line } from '@remixicon/react';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { PRODUCT_CATEGORIES } from '@/constants';
-import { Label } from '@/components/ui/label';
-import FormInput from '@/components/form-input';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter, useSearchParams } from 'next/navigation';

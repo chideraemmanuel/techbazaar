@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 import PasswordResetForm from '../_components/password-reset-form';
 import AuthPageBackButton from '../_components/auth-page-back-button';
-import { APIErrorResponse, ISearchParams } from '@/types';
+import { ISearchParams } from '@/types';
 import { EMAIL_REGEX } from '@/constants';
 import { verifyPasswordResetRequestExistence } from '@/lib/data/auth';
 

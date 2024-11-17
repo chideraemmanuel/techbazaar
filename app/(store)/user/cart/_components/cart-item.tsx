@@ -1,10 +1,8 @@
-import { DUMMY_PRODUCTS } from '@/dummy';
 import Image from 'next/image';
 import { FC } from 'react';
 import { Button } from '../../../../../components/ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Separator } from '../../../../../components/ui/separator';
-import { ProductTypes } from '@/types/product';
 import { ICart } from '@/types/cart';
 import RemoveFromCartButton from './remove-from-cart-button';
 import IncrementCartItemButton from './increment-cart-item-button';

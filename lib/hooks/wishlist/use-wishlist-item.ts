@@ -1,6 +1,5 @@
 import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { ICart } from '@/types/cart';
 import { WishlistTypes } from '@/types/wishlist';
 import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';

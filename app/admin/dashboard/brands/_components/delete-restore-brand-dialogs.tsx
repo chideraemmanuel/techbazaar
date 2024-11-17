@@ -1,9 +1,8 @@
 'use client';
 
-import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
+import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -13,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
+import { ArchiveRestore, Loader2, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import useDeleteBrand from '@/lib/hooks/brand/use-delete-brand';
 import { BrandTypes } from '@/types/product';
@@ -130,7 +129,6 @@ export const RestoreBrandDialog = React.forwardRef<
             title="Restore brand"
             {...props}
           >
-            {/* <RotateCcw /> */}
             <ArchiveRestore />
             <span className="sr-only">Restore brand</span>
           </Button>

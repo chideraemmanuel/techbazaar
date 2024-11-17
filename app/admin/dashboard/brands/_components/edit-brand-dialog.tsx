@@ -4,13 +4,12 @@ import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Loader2, Pencil, Plus } from 'lucide-react';
+import { Loader2, Pencil } from 'lucide-react';
 import FormInput from '@/components/form-input';
 import ImageInput from '@/components/image-input';
 import { cn } from '@/lib/cn';
@@ -134,8 +133,6 @@ const EditBrandForm: FC<EditBrandFormProps> = ({ brand, setDialogOpen }) => {
   const onSubmit: SubmitHandler<IBrandForm> = (data, e) => {
     if (!formChanged) return;
 
-    console.log('edit brand data', data);
-
     const updates: Partial<IBrandData> = {};
 
     const { name, logo } = getValues();
@@ -147,8 +144,6 @@ const EditBrandForm: FC<EditBrandFormProps> = ({ brand, setDialogOpen }) => {
     if (logo[0]) {
       updates.logo = logo[0];
     }
-
-    console.log('final edit updates', updates);
 
     editBrand({
       id: brand._id,
@@ -177,12 +172,7 @@ const EditBrandForm: FC<EditBrandFormProps> = ({ brand, setDialogOpen }) => {
           <ImageInput
             label="Image"
             id="image"
-            {...register('logo', {
-              // required: {
-              //   value: true,
-              //   message: 'Brand logo is required',
-              // },
-            })}
+            {...register('logo')}
             defaultImage={brand.logo ?? undefined}
             error={errors.logo?.message}
             disabled={isEditingBrand}

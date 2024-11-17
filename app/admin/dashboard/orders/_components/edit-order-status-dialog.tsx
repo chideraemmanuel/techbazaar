@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Loader2, Pencil } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import SelectInput from '@/components/select-input';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';

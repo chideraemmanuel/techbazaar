@@ -4,17 +4,12 @@ import AddToCartButton from '@/app/(store)/user/cart/_components/add-to-cart-but
 import RemoveFromCartButton from '@/app/(store)/user/cart/_components/remove-from-cart-button';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import axios from '@/config/axios';
 import useAddItemToCart from '@/lib/hooks/cart/use-add-item-to-cart';
 import useCartItem from '@/lib/hooks/cart/use-cart-item';
-import { APIErrorResponse } from '@/types';
-import { ICart } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';
-import { AxiosError } from 'axios';
 import { ShoppingBag, Trash2 } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
-import { useQuery } from 'react-query';
 
 interface Props {
   product: IAvailableProduct;
@@ -44,7 +39,6 @@ const CartAction: FC<Props> = ({ product }) => {
   }, [data, isLoading]);
 
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
-    // if (error?.response?.status > 400 && error?.response?.status < 500) {
     return (
       <Button
         className="flex-1"

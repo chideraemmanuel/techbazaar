@@ -22,11 +22,8 @@ const AdminDashboardAnalyticsFilter: FC<Props> = () => {
         selectInputTriggerProps={{
           className: 'capitalize p-4 text-sm',
         }}
-        // disabled={isFetchingAnalyticsTotal}
         defaultValue={'7d'}
-        onItemSelect={(value) => {
-          // setChartRange(value as AnalyticsFilterRange);
-        }}
+        onItemSelect={(value) => {}}
       />
     </>
   );

@@ -20,7 +20,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { PRODUCT_CATEGORIES, PRODUCTS_SORT_ITEMS } from '@/constants';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Loader2, Search } from 'lucide-react';
 import Image from 'next/image';
@@ -43,7 +42,6 @@ import {
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import RegionalPriceFormat from '@/components/regional-price-format';
-import { delay } from '@/lib/delay';
 
 interface Props {
   searchParams: Promise<ISearchParams>;

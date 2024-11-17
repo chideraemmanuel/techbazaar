@@ -1,11 +1,11 @@
 import { useMutation } from 'react-query';
-import { IBrandData } from './brand/use-add-brand';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { useRouter } from 'next/navigation';
 import axios from '@/config/axios';
 import { BrandTypes } from '@/types/product';
+import { IBrandData } from './use-add-brand';
 
 interface IParams {
   id: string;

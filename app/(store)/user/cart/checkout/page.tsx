@@ -1,5 +1,4 @@
 import { getCurrentUser } from '@/lib/data/user';
-import { ISearchParams } from '@/types';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 import CheckoutContent from '../_components/checkout-content';

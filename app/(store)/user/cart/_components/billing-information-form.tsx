@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 import FormInput from '@/components/form-input';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { COUNTRIES, NAME_REGEX } from '@/constants';
 import ComboBoxInput from '@/components/combobox-input';
 import { PhoneInput } from '@/components/phone-input';

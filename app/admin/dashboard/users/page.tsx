@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { Loader2, Search } from 'lucide-react';
 import { FC, Suspense } from 'react';

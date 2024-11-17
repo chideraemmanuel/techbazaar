@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Loader2, Trash2, UserCheck, UserX } from 'lucide-react';
+import { Loader2, UserCheck, UserX } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import useUpdateUserStatus from '@/lib/hooks/user/use-update-user-status';
 import { UserTypes } from '@/types/user';

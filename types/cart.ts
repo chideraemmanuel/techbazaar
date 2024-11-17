@@ -8,7 +8,6 @@ export interface ICart {
   quantity: number;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export interface ICartSummary {
@@ -34,14 +33,12 @@ export interface IBillingInformation {
   address: IBillingAddress;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export type OrderStatus =
   | 'pending'
   | 'processing'
   | 'in-transit'
-  // | 'dispatched'
   | 'partially-shipped'
   | 'out-for-delivery'
   | 'shipped'
@@ -60,5 +57,4 @@ export interface IOrder {
   total_price: number;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }

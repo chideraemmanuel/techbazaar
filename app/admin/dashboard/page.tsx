@@ -1,9 +1,6 @@
 import RegionalPriceFormat from '@/components/regional-price-format';
-import SelectInput from '@/components/select-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCurrentUser } from '@/lib/data/user';
-import { AnalyticsFilterRange } from '@/types';
-import { RiCalendar2Line } from '@remixicon/react';
 import { DollarSign } from 'lucide-react';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -133,10 +130,7 @@ const TotalCard: FC<{
           )}
 
           {typeof sub === 'string' ? (
-            <p className="text-xs text-muted-foreground">
-              {/* +20.1% from last month */}
-              {sub}
-            </p>
+            <p className="text-xs text-muted-foreground">{sub}</p>
           ) : (
             sub
           )}

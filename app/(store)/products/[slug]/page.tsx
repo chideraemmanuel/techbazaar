@@ -1,12 +1,4 @@
 import ProductCard from '@/components/product-card';
-import { Button } from '@/components/ui/button';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from '@/components/ui/carousel';
-import { DUMMY_PRODUCTS } from '@/dummy';
-import { Heart, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { FC, Suspense } from 'react';
@@ -15,7 +7,6 @@ import {
   getAvailableProductByIdOrSlug,
   getRelatedProducts,
 } from '@/lib/data/product';
-import AddToCartButton from '../../user/cart/_components/add-to-cart-button';
 import CartAction from './_components/cart-action';
 import WishlistAction from './_components/wishlist-action';
 import StoreFooter from '../../_components/store-footer';

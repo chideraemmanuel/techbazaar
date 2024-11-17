@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Loader2, Plus } from 'lucide-react';
-import { getAvailableBrands } from '@/lib/data/brand';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '@/components/form-input';
@@ -142,11 +141,6 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
   });
 
   const onSubmit: SubmitHandler<IProductForm> = (data, e) => {
-    // if (data.price === 0) {
-    //   setError('price', { message: 'Product price is required' });
-    //   return;
-    // }
-
     addProduct({
       ...data,
       price: +data.price.toFixed(2),
@@ -253,7 +247,6 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
             // ref={ref}
             onChange={onChange}
             onFieldChange={(original, converted) => {
-              console.log('converteddd', converted);
               setValue('price', converted);
             }}
             error={errors.price?.message}

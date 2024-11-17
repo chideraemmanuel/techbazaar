@@ -1,15 +1,12 @@
 'use client';
 
 import CartItem from '@/app/(store)/user/cart/_components/cart-item';
-import DataTablePagination from '@/components/data-table-pagination';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import useCartSummary from '@/lib/hooks/cart/use-cart-summary';
 import useCurrentUserCart from '@/lib/hooks/cart/use-current-user-cart';
-import { ISearchParams } from '@/types';
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
 import React, { FC } from 'react';
 import ClearCartButton from './clear-cart-button';
 import RegionalPriceFormat from '@/components/regional-price-format';
@@ -28,8 +25,6 @@ const CartContent: FC<Props> = () => {
     isError,
     error,
   } = useCurrentUserCart();
-
-  //   if (isFetching) return null;
 
   return (
     <>
@@ -90,11 +85,6 @@ const CartContent: FC<Props> = () => {
                     </Button>
                   </div>
                 )}
-
-                {/* <DataTablePagination
-                totalPages={data.pagination.total_pages}
-                totalPagesToDisplay={3}
-              /> */}
               </>
             ) : (
               <div className="flex items-center justify-center h-[50vh]">

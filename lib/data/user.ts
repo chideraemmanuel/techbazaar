@@ -34,8 +34,6 @@ export const getAllUsers = async (searchParams: ISearchParams = {}) => {
   const success_response: APIPaginatedResponse<UserTypes> =
     await response.json();
 
-  console.log('[USERS_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -68,8 +66,6 @@ export const getUserById = async (id: string) => {
 
   const success_response: UserTypes = await response.json();
 
-  console.log('[USER_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -81,14 +77,13 @@ export const getCurrentUser = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me`,
     {
-      // credentials: 'include',
       headers: {
         Cookie: `session_id=${session_id}`,
       },
     }
   );
 
-  if (!response.ok) return null; // throw error..?
+  if (!response.ok) return null;
 
   const user: UserTypes = await response.json();
 

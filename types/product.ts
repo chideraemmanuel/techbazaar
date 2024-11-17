@@ -4,7 +4,6 @@ interface IBrand {
   logo: string | null;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export interface IAvailableBrand extends IBrand {
@@ -42,7 +41,6 @@ interface IProduct {
   is_archived: boolean;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export interface IAvailableProduct extends IProduct {

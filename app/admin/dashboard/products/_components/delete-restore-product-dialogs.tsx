@@ -3,7 +3,6 @@
 import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -13,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
+import { ArchiveRestore, Loader2, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { ProductTypes } from '@/types/product';
 import useDeleteProduct from '@/lib/hooks/product/use-delete-product';
@@ -132,7 +131,6 @@ export const RestoreProductDialog = React.forwardRef<
             title="Restore product"
             {...props}
           >
-            {/* <RotateCcw /> */}
             <ArchiveRestore />
             <span className="sr-only">Restore product</span>
           </Button>

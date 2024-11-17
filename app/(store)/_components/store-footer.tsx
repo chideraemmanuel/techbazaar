@@ -1,5 +1,4 @@
 import { cn } from '@/lib/cn';
-import { RiGithubFill } from '@remixicon/react';
 import Link from 'next/link';
 import { FC } from 'react';
 

@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Sheet,
@@ -12,11 +12,6 @@ import { RiFilter3Line } from '@remixicon/react';
 import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
 import OrdersPageSideFilter from './_components/orders-page-side-filter';
-import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
-import { DUMMY_ORDERS } from '@/dummy';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/cn';
 import DataTablePagination from '@/components/data-table-pagination';
 import OrderCard from './_components/order-card';
 import { getCurrentUserOrders } from '@/lib/data/order';

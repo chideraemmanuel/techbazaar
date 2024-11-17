@@ -114,11 +114,11 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
         rates
       );
 
-      console.log({
-        formatted_value: formatted_value === '0' ? '' : formatted_value,
-        value: +value,
-        converted,
-      });
+      // console.log({
+      //   formatted_value: formatted_value === '0' ? '' : formatted_value,
+      //   value: +value,
+      //   converted,
+      // });
 
       onFieldChange?.(+value, converted);
       onChange?.(e);

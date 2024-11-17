@@ -4,7 +4,6 @@ import StoreHeaderSearch from './store-header-search';
 import StoreHeaderAccountDropdown from './store-header-account-dropdown';
 import StoreHeaderCartLink from './store-header-cart-link';
 import StoreSidebar from './store-sidebar';
-import ThemeSwitcher from '@/components/theme-switcher';
 
 interface Props {}
 

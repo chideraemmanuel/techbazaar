@@ -18,7 +18,6 @@ export interface IProductData {
 }
 
 const addProduct = async (data: IProductData) => {
-  console.log('dataaa', data);
   const response = await axios.post<APISuccessResponse<ProductTypes>>(
     '/products',
     data,

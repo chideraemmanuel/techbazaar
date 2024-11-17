@@ -38,8 +38,6 @@ const CheckoutContent: FC<Props> = ({ saved_billing_information }) => {
   } = form;
 
   const onSubmit: SubmitHandler<BillingInformationFormTypes> = (data, e) => {
-    console.log('billing information data', data);
-
     placeOrder({
       billing_information: data,
     });
@@ -202,7 +200,6 @@ const OrderSummary: FC<{
           </span>
 
           <div className="flex items-center gap-1">
-            {/* <FormInput placeholder="Enter code" className="h-9" /> */}
             <Input placeholder="Enter code" />
             <Button className="h-9 font-normal" type="button">
               Apply

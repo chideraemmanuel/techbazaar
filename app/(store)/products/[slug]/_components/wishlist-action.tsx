@@ -40,7 +40,6 @@ const WishlistAction: FC<Props> = ({ product }) => {
   }, [data, isLoading]);
 
   if (error?.status && error?.status >= 400 && error?.status <= 500) {
-    // if (error?.response?.status > 400 && error?.response?.status < 500) {
     return (
       <Button
         variant={'secondary'}

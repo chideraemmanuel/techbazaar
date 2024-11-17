@@ -42,9 +42,7 @@ const useUpdateViews = () => {
   return useMutation({
     mutationKey: ['update views'],
     mutationFn: updateViews,
-    onSuccess: (data) => {
-      console.log('dataa', data);
-    },
+    onSuccess: (data) => {},
     onError: (error: AxiosError<{ error: string }>) => {},
   });
 };

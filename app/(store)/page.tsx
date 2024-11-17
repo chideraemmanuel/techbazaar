@@ -2,7 +2,6 @@ import ProductCard from '@/components/product-card';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -15,7 +14,7 @@ import {
 } from '@/components/ui/carousel';
 import { PRODUCT_CATEGORIES, SERVICES } from '@/constants';
 import { cn } from '@/lib/cn';
-import { ChevronRight, Laptop, Loader2, LucideProps } from 'lucide-react';
+import { ChevronRight, Loader2, LucideProps } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -28,17 +27,13 @@ import {
 import heroImage from '@/assets/images/hero-image.png';
 import phone from '@/assets/images/phone.png';
 import ProductsGridContainer from './_components/products-grid-container';
-import { DUMMY_PRODUCTS } from '@/dummy';
 import StoreFooter from './_components/store-footer';
-import { Calendar } from '@/components/ui/calendar';
-import DatePicker from '@/components/ui/date-picker';
 import {
   getFeaturedProducts,
   getNewProducts,
   getRandomProducts,
 } from '@/lib/data/product';
 import { getAvailableBrands } from '@/lib/data/brand';
-import { delay } from '@/lib/delay';
 import shuffleArray from '@/lib/shuffle-array';
 
 interface Props {}

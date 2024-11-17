@@ -4,15 +4,14 @@ import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Loader2, Pencil, Plus } from 'lucide-react';
+import { Loader2, Pencil } from 'lucide-react';
 import FormInput from '@/components/form-input';
-import SelectInput, { SelectInputItem } from '@/components/select-input';
+import SelectInput from '@/components/select-input';
 import TextareaInput from '@/components/textarea-input';
 import { PRODUCT_CATEGORIES } from '@/constants';
 import ImageInput from '@/components/image-input';
@@ -189,8 +188,6 @@ const EditProductForm: FC<EditProductFormProps> = ({
   const onSubmit: SubmitHandler<IProductForm> = (data, e) => {
     if (!formChanged) return;
 
-    console.log('edit product data', data);
-
     const updates: Partial<IProductData> = {};
 
     const {
@@ -236,8 +233,6 @@ const EditProductForm: FC<EditProductFormProps> = ({
     if (is_featured !== product.is_featured) {
       updates.is_featured = is_featured;
     }
-
-    console.log('final edit updates', updates);
 
     editProduct({
       id: product._id,
@@ -328,12 +323,7 @@ const EditProductForm: FC<EditProductFormProps> = ({
           <ImageInput
             label="Image"
             id="image"
-            {...register('image', {
-              // required: {
-              //   value: true,
-              //   message: 'Product image is required',
-              // },
-            })}
+            {...register('image')}
             defaultImage={product.image}
             error={errors.image?.message}
             disabled={isEditingProduct}
@@ -347,7 +337,6 @@ const EditProductForm: FC<EditProductFormProps> = ({
             // ref={ref}
             onChange={onChange}
             onFieldChange={(original, converted) => {
-              console.log('converteddd', converted);
               setValue('price', converted);
             }}
             defaultValue={product.price}

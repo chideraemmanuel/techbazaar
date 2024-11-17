@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import useCartSummary from '@/lib/hooks/cart/use-cart-summary';
-import useCurrentUserCart from '@/lib/hooks/cart/use-current-user-cart';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -13,8 +12,6 @@ interface Props {}
 
 const StoreHeaderCartLink: FC<Props> = () => {
   const { data, isLoading } = useCartSummary();
-
-  //   if (isLoading) return null;
 
   return (
     <>

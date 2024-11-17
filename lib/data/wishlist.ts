@@ -2,7 +2,6 @@ import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';
 import { cookies } from 'next/headers';
 import { getCurrentUser } from './user';
 import createSearchParams from '../create-search-params';
-import { ICart } from '@/types/cart';
 import { WishlistTypes } from '@/types/wishlist';
 
 export const getCurrentUserWishlist = async (
@@ -38,8 +37,6 @@ export const getCurrentUserWishlist = async (
 
   const success_response: APIPaginatedResponse<WishlistTypes> =
     await response.json();
-
-  console.log('[WISHLIST_SUCCESS_RESPONSE]', success_response);
 
   return success_response;
 };

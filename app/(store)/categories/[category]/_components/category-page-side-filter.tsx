@@ -1,10 +1,8 @@
 'use client';
 
-import FormInput from '@/components/form-input';
 import MoneyInput from '@/components/money-input';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { FC } from 'react';
 

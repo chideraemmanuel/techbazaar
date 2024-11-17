@@ -1,4 +1,3 @@
-import AuthPageBackButton from '@/app/auth/_components/auth-page-back-button';
 import EmailVerificationForm from '@/app/auth/_components/email-verification-form';
 import LogoutUserButton from '@/components/logout-user-button';
 import { getCurrentUser } from '@/lib/data/user';

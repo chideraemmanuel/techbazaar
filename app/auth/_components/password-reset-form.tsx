@@ -2,7 +2,6 @@
 
 import FormInput from '@/components/form-input';
 import { Button } from '@/components/ui/button';
-import OTPInput from '@/components/ui/otp-input';
 import { PASSWORD_REQUIREMENTS, PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
 import useCompletePasswordReset from '@/lib/hooks/auth/use-complete-password-reset';

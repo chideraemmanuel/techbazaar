@@ -42,8 +42,6 @@ const GoogleSignInButton = React.forwardRef<
     refetchOnWindowFocus: false,
   });
 
-  console.log('uri', data?.uri);
-
   return (
     <>
       <Button

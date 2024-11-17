@@ -36,8 +36,6 @@ const AdminDashboardResourceSort: FC<Props> = ({ sort_items = [] }) => {
   const [sortOrder, setSortOrder] = React.useState(default_sort_order);
 
   const applySort = () => {
-    console.log({ sortBy, sortOrder });
-
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
     if (!sortBy || sortBy === '' || !sortOrder || sortOrder === '') {

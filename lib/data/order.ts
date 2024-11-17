@@ -33,8 +33,6 @@ export const getAllOrders = async (searchParams: ISearchParams = {}) => {
 
   const success_response: APIPaginatedResponse<IOrder> = await response.json();
 
-  console.log('[ORDERS_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -66,8 +64,6 @@ export const getOrderById = async (orderId: string) => {
   }
 
   const success_response: IOrder = await response.json();
-
-  console.log('[ORDER_SUCCESS_RESPONSE]', success_response);
 
   return success_response;
 };
@@ -106,8 +102,6 @@ export const getUserOrders = async (
 
   const success_response: APIPaginatedResponse<IOrder> = await response.json();
 
-  console.log('[ORDERS_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -144,8 +138,6 @@ export const getCurrentUserOrders = async (
 
   const success_response: APIPaginatedResponse<IOrder> = await response.json();
 
-  console.log('[ORDERS_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -175,8 +167,6 @@ export const getCurrentUserOrderById = async (orderId: string) => {
   }
 
   const success_response: IOrder = await response.json();
-
-  console.log('[ORDER_SUCCESS_RESPONSE]', success_response);
 
   return success_response;
 };

@@ -4,7 +4,6 @@ import { getCurrentUser } from './user';
 import { APIErrorResponse, APIPaginatedResponse, ISearchParams } from '@/types';
 import { IAvailableProduct, ProductTypes } from '@/types/product';
 import createSearchParams from '../create-search-params';
-import { delay } from '../delay';
 
 export const getAllProducts = async (searchParams: ISearchParams = {}) => {
   const session_id = (await cookies()).get('session_id')?.value;

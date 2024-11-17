@@ -12,10 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DUMMY_ORDERS, DUMMY_USERS } from '@/dummy';
 import { cn } from '@/lib/cn';
 import { FC, Suspense } from 'react';
-import AdminDashboardUsersFilter from '@/app/admin/dashboard/_components/admin-dashboard-users-filter';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import EditOrderStatusDialog from '@/app/admin/dashboard/orders/_components/edit-order-status-dialog';

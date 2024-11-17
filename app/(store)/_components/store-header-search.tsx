@@ -1,14 +1,7 @@
 'use client';
 
 import { ArrowLeft, Search } from 'lucide-react';
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FC, FormEvent, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useRouter, useSearchParams } from 'next/navigation';

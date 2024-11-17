@@ -1,5 +1,4 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { delay } from '@/lib/delay';
 import { APIPaginatedResponse } from '@/types';
 import { FC, Suspense } from 'react';
 

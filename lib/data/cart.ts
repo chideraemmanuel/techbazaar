@@ -31,8 +31,6 @@ export const getCurrentUserCart = async () => {
 
   const success_response: APIPaginatedResponse<ICart> = await response.json();
 
-  console.log('[CART_SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };
 
@@ -66,8 +64,6 @@ export const getCurrentUserBillingInformation = async () => {
   }
 
   const success_response: IBillingInformation = await response.json();
-
-  console.log('[ILLING_INFORMATION_SUCCESS_RESPONSE]', success_response);
 
   return success_response;
 };

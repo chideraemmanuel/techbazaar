@@ -11,7 +11,6 @@ interface IUser {
   disabled: boolean;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
 }
 
 export interface IGoogleUser extends IUser {

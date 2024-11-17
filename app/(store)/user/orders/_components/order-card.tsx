@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/cn';
 import { IOrder } from '@/types/cart';
@@ -56,7 +56,6 @@ const OrderCard: FC<Props> = ({ order }) => {
             order={order}
             disabled={
               order.status === 'in-transit' ||
-              // order.status === 'dispatched' ||
               order.status === 'partially-shipped' ||
               order.status === 'shipped' ||
               order.status === 'out-for-delivery' ||

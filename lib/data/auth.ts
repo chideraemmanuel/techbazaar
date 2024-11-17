@@ -15,7 +15,5 @@ export const verifyPasswordResetRequestExistence = async (email: string) => {
 
   const success_response: { message: string } | string = await response.json();
 
-  console.log('[SUCCESS_RESPONSE]', success_response);
-
   return success_response;
 };

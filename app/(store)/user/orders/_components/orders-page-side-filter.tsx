@@ -1,8 +1,7 @@
 'use client';
 
 import DateInput from '@/components/date-input';
-import FormInput from '@/components/form-input';
-import SelectInput, { SelectInputItem } from '@/components/select-input';
+import SelectInput from '@/components/select-input';
 import { Button } from '@/components/ui/button';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
 import formatDate from '@/lib/format-date';

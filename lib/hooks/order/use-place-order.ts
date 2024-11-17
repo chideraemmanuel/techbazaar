@@ -28,8 +28,6 @@ const placeOrder = async ({
     ? { use_saved_billing_information }
     : { billing_information };
 
-  console.log('data?', data);
-
   const response = await axios.post<APISuccessResponse<IOrder>>(url, data);
 
   return response.data;
