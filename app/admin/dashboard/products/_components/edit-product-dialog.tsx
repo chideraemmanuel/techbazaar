@@ -155,6 +155,18 @@ const EditProductForm: FC<EditProductFormProps> = ({
     watch,
   } = form;
 
+  // register price separately because of how <MoneyInput /> and react-hook-form work.
+  // if the `ref` from `register` is passed to <MoneyInput />, when the form is submitted, it changes the input value (the currency-formatted string) to the submitted value.
+  const { name, onBlur, onChange, ref } = register('price', {
+    required: {
+      value: true,
+      message: 'Product price is required',
+    },
+    validate: (fieldValue) => {
+      return fieldValue !== 0 || 'Product price is required';
+    },
+  });
+
   const watched = watch();
 
   React.useEffect(() => {
@@ -214,7 +226,7 @@ const EditProductForm: FC<EditProductFormProps> = ({
     }
 
     if (price !== product.price) {
-      updates.price = +price;
+      updates.price = +price.toFixed(2);
     }
 
     if (stock !== product.stock) {
@@ -330,12 +342,15 @@ const EditProductForm: FC<EditProductFormProps> = ({
           <MoneyInput
             label="Price"
             id="price"
-            {...register('price', {
-              required: {
-                value: true,
-                message: 'Product price is required',
-              },
-            })}
+            name={name}
+            onBlur={onBlur}
+            // ref={ref}
+            onChange={onChange}
+            onFieldChange={(original, converted) => {
+              console.log('converteddd', converted);
+              setValue('price', converted);
+            }}
+            defaultValue={product.price}
             error={errors.price?.message}
             disabled={isEditingProduct}
           />

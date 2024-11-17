@@ -1,6 +1,7 @@
 'use client';
 
 import FormInput from '@/components/form-input';
+import MoneyInput from '@/components/money-input';
 import SelectInput, { SelectInputItem } from '@/components/select-input';
 import { Button } from '@/components/ui/button';
 import { PRODUCT_CATEGORIES } from '@/constants';
@@ -29,6 +30,10 @@ const ProductsPageSideFilter: FC<Props> = ({
   const [minPrice, setMinPrice] = React.useState(minPriceParam);
   const [maxPrice, setMaxPrice] = React.useState(maxPriceParam);
 
+  const [maxPriceError, setMaxPriceError] = React.useState<undefined | string>(
+    undefined
+  );
+
   const applyFilter = () => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
@@ -51,6 +56,13 @@ const ProductsPageSideFilter: FC<Props> = ({
 
     if (maxPrice) {
       newSearchParams.set('max_price', maxPrice);
+    }
+
+    if (minPrice && maxPrice) {
+      if (+minPrice > +maxPrice) {
+        setMaxPriceError('Max price cannot be less than Min price');
+        return;
+      }
     }
 
     router.replace(`?${newSearchParams}`, { scroll: false });
@@ -103,20 +115,26 @@ const ProductsPageSideFilter: FC<Props> = ({
 
             <div>
               <span>Price</span>
-              <div className="flex gap-2">
-                <FormInput
+
+              <div className="space-y-2">
+                <MoneyInput
                   label="Min:"
-                  type="number"
                   labelProps={{ className: 'text-xs text-muted-foreground' }}
-                  value={minPrice || ''}
-                  onChange={(e) => setMinPrice(e.target.value)}
+                  defaultValue={minPrice ? +minPrice : 0}
+                  onFieldChange={(original, converted) =>
+                    setMinPrice(converted.toFixed(2))
+                  }
                 />
-                <FormInput
+
+                <MoneyInput
                   label="Max:"
-                  type="number"
                   labelProps={{ className: 'text-xs text-muted-foreground' }}
-                  value={maxPrice || ''}
-                  onChange={(e) => setMaxPrice(e.target.value)}
+                  defaultValue={maxPrice ? +maxPrice : 0}
+                  onFieldChange={(original, converted) => {
+                    setMaxPriceError(undefined);
+                    setMaxPrice(converted.toFixed(2));
+                  }}
+                  error={maxPriceError}
                 />
               </div>
             </div>

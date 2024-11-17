@@ -15,6 +15,7 @@ import FormInput from '@/components/form-input';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter, useSearchParams } from 'next/navigation';
+import MoneyInput from '@/components/money-input';
 
 interface Props {
   brands: SelectInputItem[];
@@ -42,6 +43,10 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
   const [isArchived, setIsArchived] = React.useState(isArchivedParam);
   const [isDeleted, setIsDeleted] = React.useState(isDeletedParam);
 
+  const [maxPriceError, setMaxPriceError] = React.useState<undefined | string>(
+    undefined
+  );
+
   const applyFilter = () => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
@@ -67,6 +72,13 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
 
     if (maxPrice) {
       newSearchParams.set('max_price', maxPrice);
+    }
+
+    if (minPrice && maxPrice) {
+      if (+minPrice > +maxPrice) {
+        setMaxPriceError('Max price cannot be less than Min price');
+        return;
+      }
     }
 
     if (isFeatured) {
@@ -148,20 +160,25 @@ const AdminDashboardProductsFilter: FC<Props> = ({ brands }) => {
               </FilterSection>
 
               <FilterSection label="Price range">
-                <div className="flex gap-2">
-                  <FormInput
+                <div className="space-y-2">
+                  <MoneyInput
                     label="Min:"
-                    type="number"
                     labelProps={{ className: 'text-xs text-muted-foreground' }}
-                    value={minPrice || ''}
-                    onChange={(e) => setMinPrice(e.target.value)}
+                    defaultValue={minPrice ? +minPrice : 0}
+                    onFieldChange={(original, converted) =>
+                      setMinPrice(converted.toFixed(2))
+                    }
                   />
-                  <FormInput
+
+                  <MoneyInput
                     label="Max:"
-                    type="number"
                     labelProps={{ className: 'text-xs text-muted-foreground' }}
-                    value={maxPrice || ''}
-                    onChange={(e) => setMaxPrice(e.target.value)}
+                    defaultValue={maxPrice ? +maxPrice : 0}
+                    onFieldChange={(original, converted) => {
+                      setMaxPriceError(undefined);
+                      setMaxPrice(converted.toFixed(2));
+                    }}
+                    error={maxPriceError}
                   />
                 </div>
               </FilterSection>

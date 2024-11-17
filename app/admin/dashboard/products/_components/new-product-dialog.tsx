@@ -123,14 +123,33 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
     clearErrors,
     setValue,
+    watch,
   } = form;
 
+  // register price separately because of how <MoneyInput /> and react-hook-form work.
+  // if the `ref` from `register` is passed to <MoneyInput />, when the form is submitted, it changes the input value (the currency-formatted string) to the submitted value.
+  const { name, onBlur, onChange, ref } = register('price', {
+    required: {
+      value: true,
+      message: 'Product price is required',
+    },
+    validate: (fieldValue) => {
+      return fieldValue !== 0 || 'Product price is required';
+    },
+  });
+
   const onSubmit: SubmitHandler<IProductForm> = (data, e) => {
+    // if (data.price === 0) {
+    //   setError('price', { message: 'Product price is required' });
+    //   return;
+    // }
+
     addProduct({
       ...data,
-      price: +data.price,
+      price: +data.price.toFixed(2),
       stock: +data.stock,
       ...(data.image && { image: data.image?.[0] }),
     });
@@ -229,12 +248,14 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
           <MoneyInput
             label="Price"
             id="price"
-            {...register('price', {
-              required: {
-                value: true,
-                message: 'Product price is required',
-              },
-            })}
+            name={name}
+            onBlur={onBlur}
+            // ref={ref}
+            onChange={onChange}
+            onFieldChange={(original, converted) => {
+              console.log('converteddd', converted);
+              setValue('price', converted);
+            }}
             error={errors.price?.message}
             disabled={isAddingProduct}
           />

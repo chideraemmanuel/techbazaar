@@ -28,10 +28,14 @@ import useIPInformation from '@/lib/hooks/use-ip-information';
 import convertPrice, { DEFAULT_RATES } from '@/lib/convert-price';
 
 interface MoneyInputProps
-  extends Omit<ComponentPropsWithoutRef<typeof Input>, 'value'> {
+  extends Omit<
+    ComponentPropsWithoutRef<typeof Input>,
+    'value' | 'defaultValue'
+  > {
   label?: string;
   labelProps?: ComponentPropsWithoutRef<typeof Label>;
   defaultCurrency?: string;
+  defaultValue?: number;
   error?: string;
   onFieldChange?: (original: number, converted: number) => void;
   disableCurrencySelect?: boolean;
@@ -47,6 +51,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
       defaultCurrency = 'NGN',
       error,
       placeholder,
+      defaultValue,
       onChange,
       onPaste,
       onFieldChange,
@@ -65,7 +70,16 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
       defaultCurrencyValue || null
     );
 
-    const [inputValue, setInputValue] = React.useState('');
+    const formatted_default_value = new Intl.NumberFormat(
+      navigator.language || 'en-US',
+      {
+        style: 'decimal',
+      }
+    ).format(defaultValue || 0);
+
+    const [inputValue, setInputValue] = React.useState(
+      formatted_default_value === '0' ? '' : formatted_default_value
+    );
 
     const {
       data: rates,
@@ -89,7 +103,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
         }
       ).format(+value);
 
-      e.target.value = value;
+      // e.target.value = value;
 
       setInputValue(formatted_value === '0' ? '' : formatted_value);
 
@@ -184,6 +198,7 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
             />
 
             <Input
+              {...props}
               id={id}
               ref={ref}
               placeholder={placeholder || 'Enter amount'}
@@ -197,7 +212,6 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
               )}
               onChange={handleChange}
               onPaste={handlePaste}
-              {...props}
             />
           </div>
 
