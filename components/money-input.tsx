@@ -87,11 +87,11 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
       isError: errorFetchingExchangeRates,
     } = useExchangeRates();
 
-    const {
-      data: IP_information,
-      isLoading: isFetchingIPInformation,
-      isError: errorFetchingIPInformation,
-    } = useIPInformation();
+    // const {
+    //   data: IP_information,
+    //   isLoading: isFetchingIPInformation,
+    //   isError: errorFetchingIPInformation,
+    // } = useIPInformation();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       let value = e.target.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters

@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { FC } from 'react';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { Toaster } from '@/components/ui/sonner';
+import ViewsUpdateProvider from './views-update-provider';
 
 const ThemeProvider = dynamic(
   () =>
@@ -25,9 +26,11 @@ const Providers: FC<Props> = ({ children }) => {
     <>
       <ThemeProvider defaultTheme="dark">
         <QueryClientProvider client={client}>
-          <Toaster richColors />
-          <TailwindIndicator />
-          {children}
+          <ViewsUpdateProvider>
+            <Toaster richColors />
+            <TailwindIndicator />
+            {children}
+          </ViewsUpdateProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </>
