@@ -24,7 +24,8 @@ import {
   RefAttributes,
   Suspense,
 } from 'react';
-import heroImage from '@/assets/images/hero-image.png';
+// import heroImage from '@/assets/images/hero-image.png';
+import heroImage from '@/assets/images/hero.png';
 import phone from '@/assets/images/phone.png';
 import ProductsGridContainer from './_components/products-grid-container';
 import StoreFooter from './_components/store-footer';
@@ -57,7 +58,7 @@ const Homepage: FC<Props> = () => {
   return (
     <>
       <section className="h-[60vh] md:h-[70vh] bg-secondary">
-        <div className="container h-full flex items-center gap-5">
+        <div className="container h-full flex items-center gap-7">
           <div className="flex-[3] space-y-5">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
               Your Go-To Spot for the Best Gadgets
@@ -198,7 +199,7 @@ const Homepage: FC<Props> = () => {
 
             <div className="flex-[2] h-full py-7 hidden md:block">
               <Image
-                src={heroImage.src}
+                src={random_category.hero_image}
                 alt={'#'}
                 width={295}
                 height={379}

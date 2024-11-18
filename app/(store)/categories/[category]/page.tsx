@@ -51,7 +51,7 @@ const CategoryPage: FC<Props> = async ({ searchParams, params }) => {
     <>
       {/* hero */}
       <section className="h-[40vh] md:h-[50vh] bg-secondary">
-        <div className="container h-full flex items-center gap-5">
+        <div className="container h-full flex items-center gap-7">
           <div className="flex-[3] space-y-5">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
               {categoryExists.hero_header}

@@ -17,6 +17,13 @@ import {
   Watch,
 } from 'lucide-react';
 import image from '@/assets/images/hero-image.png';
+import smartphone from '@/assets/images/smartphone.png';
+import laptop from '@/assets/images/laptop.png';
+import tablet from '@/assets/images/tablet.png';
+import headphone from '@/assets/images/headphone.png';
+import gamingConsole from '@/assets/images/gaming-console.png';
+import smartwatch from '@/assets/images/smartwatch.png';
+import speaker from '@/assets/images/speaker.png';
 import homeDeliveryImage from '@/assets/images/home-delivery.jpg';
 import onlinePaymentImage from '@/assets/images/online-payment.jpg';
 
@@ -77,7 +84,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'smartphones',
     icon: Smartphone,
     image: '',
-    hero_image: image.src,
+    hero_image: smartphone.src,
     hero_header: 'Smartphones for Every Need',
     hero_paragraph:
       'From the latest models to budget-friendly options, explore our wide range of smartphones. Stay connected, capture memories, and enjoy all the features you need to make your day-to-day easier.',
@@ -87,7 +94,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'tablets',
     icon: Tablet,
     image: '',
-    hero_image: image.src,
+    hero_image: tablet.src,
     hero_header: 'Tablets That Keep You Going',
     hero_paragraph:
       'Work, play, or watch – tablets that do it all. Whether you need a portable workspace or a device for entertainment, our tablets offer the perfect balance of power and portability.',
@@ -97,7 +104,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'laptops',
     icon: Laptop,
     image: '',
-    hero_image: image.src,
+    hero_image: laptop.src,
     hero_header: 'Laptops Built for Performance',
     hero_paragraph:
       'Need speed, power, and reliability? Our selection of laptops brings you the best of work and play. Whether for gaming, productivity, or creative projects, find the perfect one for you.',
@@ -107,7 +114,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'headphones',
     icon: Headphones,
     image: '',
-    hero_image: image.src,
+    hero_image: headphone.src,
     hero_header: 'Headphones That Deliver Quality Sound',
     hero_paragraph:
       'Experience your music, calls, and podcasts in crystal-clear sound. From wireless to noise-canceling, we have headphones that fit your lifestyle and bring you the best audio experience.',
@@ -117,7 +124,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'speakers',
     icon: Speaker,
     image: '',
-    hero_image: image.src,
+    hero_image: speaker.src,
     hero_header: 'Speakers for Every Occasion',
     hero_paragraph:
       'From compact Bluetooth speakers to powerful sound systems, our selection offers the perfect speakers for any gathering. Bring the party wherever you go or fill your home with rich, immersive sound.',
@@ -127,7 +134,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'smartwatches',
     icon: Watch,
     image: '',
-    hero_image: image.src,
+    hero_image: smartwatch.src,
     hero_header: 'Smartwatches for a Smarter You',
     hero_paragraph: `Stay connected and track your health with smartwatches that fit your style. Whether you're tracking steps, getting notifications, or monitoring your fitness, our smartwatches offer features to keep you on top of your day.`,
   },
@@ -136,7 +143,7 @@ export const PRODUCT_CATEGORIES = [
     value: 'gaming-consoles',
     icon: Gamepad,
     image: '',
-    hero_image: image.src,
+    hero_image: gamingConsole.src,
     hero_header: 'Gaming Consoles for Next-Level Fun',
     hero_paragraph: `Step up your gaming experience with our latest consoles. Whether you're a casual gamer or a hardcore player, we have the gaming systems that offer top-tier performance and endless fun`,
   },

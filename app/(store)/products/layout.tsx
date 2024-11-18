@@ -1,12 +1,10 @@
-import { Metadata } from 'next';
+import { ISearchParams } from '@/types';
+import { Metadata, ResolvingMetadata } from 'next';
 import { FC } from 'react';
-
-export const metadata: Metadata = {
-  title: 'All products',
-};
 
 interface Props {
   children: React.ReactNode;
+  searchParams: Promise<ISearchParams>;
 }
 
 const ProductsLayout: FC<Props> = ({ children }) => {

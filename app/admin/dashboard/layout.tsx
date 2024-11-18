@@ -8,7 +8,8 @@ import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Dashboard Overview',
+  title: 'Admin Dashboard',
+  description: 'Manage your store and settings with ease.',
 };
 
 interface Props {

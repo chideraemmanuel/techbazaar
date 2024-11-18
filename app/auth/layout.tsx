@@ -1,7 +1,15 @@
 import Logo from '@/components/logo';
 import { getCurrentUser } from '@/lib/data/user';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { FC, Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'TechBazaar',
+    template: '%s | TechBazaar',
+  },
+};
 
 interface Props {
   children: React.ReactNode;

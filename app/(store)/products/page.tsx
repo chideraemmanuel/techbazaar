@@ -17,9 +17,30 @@ import { getAvailableBrands } from '@/lib/data/brand';
 import ProductsPageSideFilter from './_components/products-page-side-filter';
 import { Loader2 } from 'lucide-react';
 import SideFilterLoading from '../_components/side-filter-loading';
+import { Metadata, ResolvingMetadata } from 'next';
 
 interface Props {
   searchParams: Promise<ISearchParams>;
+}
+
+export async function generateMetadata(
+  { searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const searchParamsObject = await searchParams;
+  const { search_query } = searchParamsObject;
+
+  return {
+    title: search_query
+      ? `Search results for ${search_query}`
+      : 'Explore Our Gadget Collection',
+    description:
+      'Browse our wide selection of gadgets, including smartphones, laptops, smartwatches, and more. Find high-quality tech products tailored to your lifestyle.',
+    openGraph: {
+      title: '',
+      description: '',
+    },
+  };
 }
 
 const ProductsPage: FC<Props> = async ({ searchParams }) => {
