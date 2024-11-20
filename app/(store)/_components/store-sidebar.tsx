@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import React, { FC } from 'react';
 import {
   Sheet,
   SheetClose,
@@ -40,8 +40,8 @@ const StoreSidebar: FC<Props> = () => {
             <div className="py-4">
               <nav>
                 {STORE_SIDEBAR_LINKS.map((sidebar_link, index) => (
-                  <>
-                    <div className="py-4" key={index}>
+                  <React.Fragment key={index}>
+                    <div className="py-4">
                       <span className="inline-block px-4 pb-2 font-medium text-muted-foreground text-xs leading-[140%] tracking-[-0.8%] uppercase">
                         {sidebar_link.title}
                       </span>
@@ -57,7 +57,7 @@ const StoreSidebar: FC<Props> = () => {
                       </ul>
                     </div>
                     {index !== STORE_SIDEBAR_LINKS.length - 1 && <Separator />}
-                  </>
+                  </React.Fragment>
                 ))}
               </nav>
             </div>
