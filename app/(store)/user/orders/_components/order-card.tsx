@@ -6,6 +6,7 @@ import { IOrder } from '@/types/cart';
 import Link from 'next/link';
 import { FC } from 'react';
 import CancelOrderDialog from './cancel-order-dialog';
+import formatDate from '@/lib/format-date';
 
 interface Props {
   order: IOrder;
@@ -40,6 +41,13 @@ const OrderCard: FC<Props> = ({ order }) => {
               </span>
             </span>
           </div>
+
+          <span className="inline-block text-sm font-medium">
+            {formatDate(new Date(order.createdAt), 'en-us', {
+              dateStyle: 'long',
+              timeStyle: 'short',
+            })}
+          </span>
         </div>
 
         <Separator />

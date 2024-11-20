@@ -40,24 +40,25 @@ const StoreSidebar: FC<Props> = () => {
             <div className="py-4">
               <nav>
                 {STORE_SIDEBAR_LINKS.map((sidebar_link, index) => (
-                  <div className="py-4" key={index}>
-                    <span className="inline-block px-4 pb-2 font-medium text-muted-foreground text-xs leading-[140%] tracking-[-0.8%] uppercase">
-                      {sidebar_link.title}
-                    </span>
+                  <>
+                    <div className="py-4" key={index}>
+                      <span className="inline-block px-4 pb-2 font-medium text-muted-foreground text-xs leading-[140%] tracking-[-0.8%] uppercase">
+                        {sidebar_link.title}
+                      </span>
 
-                    <ul className="flex flex-col gap-1">
-                      {sidebar_link.items.map((link_item, index) => (
-                        <li key={index}>
-                          <SheetClose asChild>
-                            <SidebarLink {...link_item} />
-                          </SheetClose>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                      <ul className="flex flex-col gap-1">
+                        {sidebar_link.items.map((link_item, index) => (
+                          <li key={index}>
+                            <SheetClose asChild>
+                              <SidebarLink {...link_item} />
+                            </SheetClose>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {index !== STORE_SIDEBAR_LINKS.length - 1 && <Separator />}
+                  </>
                 ))}
-
-                <Separator />
               </nav>
             </div>
           </SheetContent>

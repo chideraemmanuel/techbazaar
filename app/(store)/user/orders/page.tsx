@@ -93,7 +93,11 @@ export default UserOrdersPage;
 const OrdersList: FC<{ searchParams: ISearchParams }> = async ({
   searchParams,
 }) => {
-  const { data: orders, pagination } = await getCurrentUserOrders(searchParams);
+  const { data: orders, pagination } = await getCurrentUserOrders({
+    ...searchParams,
+    sort_by: 'date_created',
+    sort_order: 'descending',
+  });
 
   return (
     <>

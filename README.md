@@ -4,13 +4,13 @@ TechBazaar is a fake e-commerce site built for demonstration purposes. It showca
 
 ## Overview
 
-This repository contains the code for TechBazaar, a fake e-commerce web application. It interacts with the [TechBazaar API](), which is responsible for handling data retrieval and user session management.
+This repository contains the code for TechBazaar, a fake e-commerce web application. It interacts with the [TechBazaar API](https://github.com/chideraemmanuel/techbazaar-api), which is responsible for handling data retrieval and user session management.
 
 This document is intended to provide an overview of the project, the technologies used, and brief explanations of the major features of the application.
 
-## Live Demo
+<!-- ## Live Demo
 
-Check out the live demo of the application [here]().
+Check out the live demo of the application [here](). -->
 
 ## Features
 

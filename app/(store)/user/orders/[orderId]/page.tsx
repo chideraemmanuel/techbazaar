@@ -110,6 +110,7 @@ const OrderDetailsPage: FC<Props> = async ({ params }) => {
               label="Order date"
               value={`${formatDate(new Date(order.createdAt), 'en-us', {
                 dateStyle: 'long',
+                timeStyle: 'short',
               })}`}
             />
           </div>

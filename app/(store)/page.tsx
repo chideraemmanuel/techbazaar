@@ -52,9 +52,6 @@ interface IProductCategories {
 }
 
 const Homepage: FC<Props> = () => {
-  const random_category =
-    shuffleArray<IProductCategories>(PRODUCT_CATEGORIES)[0];
-
   return (
     <>
       <section className="h-[60vh] md:h-[70vh] bg-secondary">
@@ -103,7 +100,7 @@ const Homepage: FC<Props> = () => {
                   className="group rounded-lg"
                 >
                   <Card className="px-3 sm:px-5 py-3 sm:py-5 flex items-center space-x-2 sm:space-x-3 group-hover:border-foreground/20 group-hover:bg-secondary/50 transition-colors">
-                    <div className="w-[50px] h-[50px]">
+                    {/* <div className="w-[50px] h-[50px]">
                       <Image
                         src={phone.src}
                         alt="#"
@@ -111,8 +108,8 @@ const Homepage: FC<Props> = () => {
                         height={585}
                         className="w-full h-full object-contain transition-transform group-hover:scale-110"
                       />
-                    </div>
-                    {/* <Laptop /> */}
+                    </div> */}
+                    <category.icon className="text-foreground/75" />
                     <span className="capitalize text-sm sm:text-base">
                       {category.name}
                     </span>
@@ -178,36 +175,7 @@ const Homepage: FC<Props> = () => {
           </div>
         </section>
 
-        <section className="h-[40vh] md:h-[50vh] bg-secondary">
-          <div className="container h-full flex items-center gap-5">
-            <div className="flex-[3] space-y-5">
-              <h1 className="text-3xl lg:text-4xl font-semibold">
-                {random_category.hero_header}
-              </h1>
-
-              <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
-                {random_category.hero_paragraph}
-              </p>
-
-              <Link
-                href={`/categories/${random_category.value}`}
-                className={buttonVariants()}
-              >
-                Shop now
-              </Link>
-            </div>
-
-            <div className="flex-[2] h-full py-7 hidden md:block">
-              <Image
-                src={random_category.hero_image}
-                alt={'#'}
-                width={295}
-                height={379}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          </div>
-        </section>
+        <RandomCategory />
 
         <section>
           <div className="container">
@@ -384,6 +352,46 @@ const NewProducts: FC = async () => {
           </Carousel>
         </>
       )}
+    </>
+  );
+};
+
+const RandomCategory: FC = () => {
+  const random_category =
+    shuffleArray<IProductCategories>(PRODUCT_CATEGORIES)[0];
+
+  return (
+    <>
+      <section className="h-[40vh] md:h-[50vh] bg-secondary">
+        <div className="container h-full flex items-center gap-5">
+          <div className="flex-[3] space-y-5">
+            <h1 className="text-3xl lg:text-4xl font-semibold">
+              {random_category.hero_header}
+            </h1>
+
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
+              {random_category.hero_paragraph}
+            </p>
+
+            <Link
+              href={`/categories/${random_category.value}`}
+              className={buttonVariants()}
+            >
+              Shop now
+            </Link>
+          </div>
+
+          <div className="flex-[2] h-full py-7 hidden md:block">
+            <Image
+              src={random_category.hero_image}
+              alt={'#'}
+              width={295}
+              height={379}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      </section>
     </>
   );
 };

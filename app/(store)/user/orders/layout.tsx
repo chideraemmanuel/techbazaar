@@ -2,7 +2,10 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Your orders',
+  title: {
+    default: 'Your orders',
+    template: '%s | TechBazaar',
+  },
   description:
     'View your order history and track the status of your recent purchases. Keep tabs on your favorite gadgets.',
 };
