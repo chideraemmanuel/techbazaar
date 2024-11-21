@@ -8,9 +8,9 @@ This repository contains the code for TechBazaar, a fake e-commerce web applicat
 
 This document is intended to provide an overview of the project, the technologies used, and brief explanations of the major features of the application.
 
-<!-- ## Live Demo
+## Live Demo
 
-Check out the live demo of the application [here](). -->
+Check out the live demo of the application [here](https://techbazaar.vercel.app/).
 
 ## Features
 
