@@ -731,3 +731,63 @@ export const ANALYTICS = [
     users: Math.floor(Math.random() * 500) + 100,
   },
 ];
+
+export const CATEGORY_KEYWORDS = {
+  smartphones: [
+    'Buy smartphones online',
+    'Latest smartphones 2024',
+    'Affordable smartphones',
+    'Smartphone deals',
+    'Android phones',
+    'iPhones for sale',
+    'Best mobile phones',
+  ],
+  tablets: [
+    'Buy tablets online',
+    'Latest tablets for work and play',
+    'Affordable tablets for sale',
+    'Tablet deals',
+    'Android tablets',
+    'iPads for sale',
+  ],
+  laptops: [
+    'Buy laptops online',
+    'Best laptops for work',
+    'Gaming laptops for sale',
+    'Affordable laptops 2024',
+    'Laptop deals',
+    'Top laptop brands',
+  ],
+  headphones: [
+    'Buy headphones online',
+    'Best wireless headphones',
+    'Noise-canceling headphones',
+    'Affordable headphones',
+    'Headphone deals',
+    'Bluetooth headphones',
+  ],
+  speakers: [
+    'Buy speakers online',
+    'Bluetooth speakers for sale',
+    'Best home speakers',
+    'Portable speakers 2024',
+    'Affordable speakers',
+    'Speaker deals',
+  ],
+  smartwatches: [
+    'Buy smartwatches online',
+    'Best fitness smartwatches',
+    'Affordable smartwatches 2024',
+    'Smartwatch deals',
+    'Android smartwatches',
+    'Apple Watches for sale',
+  ],
+  'gaming-consoles': [
+    'Buy gaming consoles online',
+    'Best gaming systems 2024',
+    'Affordable gaming consoles',
+    'PlayStation for sale',
+    'Xbox deals',
+    'Nintendo Switch online',
+  ],
+};

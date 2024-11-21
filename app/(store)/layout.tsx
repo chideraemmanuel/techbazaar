@@ -9,7 +9,17 @@ export const metadata: Metadata = {
   },
   description:
     'Discover the latest gadgets at unbeatable prices. From smartphones, to laptops, to tablets, to gaming consoles and more! Shop for all your tech needs in one place.',
-  keywords: [],
+  keywords: [
+    'Gadgets online store',
+    'Buy gadgets online',
+    'Latest gadgets for sale',
+    'Affordable tech gadgets',
+    'Online gadget shopping',
+    'Smart devices',
+    'Tech essentials',
+    'Best gadget deals',
+    'Electronics and gadgets',
+  ],
 };
 
 interface Props {

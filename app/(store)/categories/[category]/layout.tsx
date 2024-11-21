@@ -1,4 +1,4 @@
-import { PRODUCT_CATEGORIES } from '@/constants';
+import { CATEGORY_KEYWORDS, PRODUCT_CATEGORIES } from '@/constants';
 import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
@@ -32,7 +32,8 @@ export async function generateMetadata(
       .charAt(0)
       .toUpperCase()}${categoryExists.name.slice(1)}`,
     description: categoryExists.hero_paragraph,
-    keywords: [],
+    keywords:
+      CATEGORY_KEYWORDS[categoryExists.value as keyof typeof CATEGORY_KEYWORDS],
     openGraph: {
       title: categoryExists.hero_header,
       description: categoryExists.hero_paragraph,
