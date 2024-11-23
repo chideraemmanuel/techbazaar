@@ -96,6 +96,27 @@ const MoneyInput = React.forwardRef<MoneyInputRef, MoneyInputProps>(
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       let value = e.target.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
 
+      // =======================================================================
+      // Handle different decimal separators based on the user's locale
+      const decimalSeparator = new Intl.NumberFormat(navigator.language)
+        .format(1.1)
+        .charAt(1); // Detect the locale's decimal separator
+      if (decimalSeparator === ',') {
+        // If the locale uses a comma as a decimal separator, replace period with comma for input
+        value = value.replace('.', ',');
+      }
+
+      // Ensure only one decimal separator (comma or period)
+      const firstDecimalIndex = value.indexOf(decimalSeparator);
+      if (firstDecimalIndex !== -1) {
+        value =
+          value.substring(0, firstDecimalIndex + 1) +
+          value
+            .substring(firstDecimalIndex + 1)
+            .replace(new RegExp(`[^0-9]`, 'g'), ''); // Remove anything after the first decimal separator
+      }
+      // =======================================================================
+
       const formatted_value = new Intl.NumberFormat(
         navigator.language || 'en-US',
         {

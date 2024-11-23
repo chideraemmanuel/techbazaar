@@ -150,10 +150,11 @@ const OrdersTable: FC<{
   userId: string;
   searchParams: ISearchParams;
 }> = async ({ userId, searchParams }) => {
-  const { data: orders, pagination } = await getUserOrders(
-    userId,
-    searchParams
-  );
+  const { data: orders, pagination } = await getUserOrders(userId, {
+    sort_by: 'date_created',
+    sort_order: 'descending',
+    ...searchParams,
+  });
 
   return (
     <>

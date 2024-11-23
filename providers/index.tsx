@@ -6,7 +6,6 @@ import { FC } from 'react';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { Toaster } from '@/components/ui/sonner';
 import ViewsUpdateProvider from './views-update-provider';
-import GoogleSignInToast from './google-sign-in-toast';
 import SessionUpdate from './session-update';
 
 const ThemeProvider = dynamic(
@@ -16,6 +15,10 @@ const ThemeProvider = dynamic(
     ssr: false,
   }
 );
+
+const GoogleSignInToast = dynamic(() => import('./google-sign-in-toast'), {
+  ssr: false,
+});
 
 interface Props {
   children: React.ReactNode;

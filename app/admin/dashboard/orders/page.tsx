@@ -128,7 +128,11 @@ const tableHeaders = [
 const OrdersTable: FC<{ searchParams: ISearchParams }> = async ({
   searchParams,
 }) => {
-  const { data: orders, pagination } = await getAllOrders(searchParams);
+  const { data: orders, pagination } = await getAllOrders({
+    sort_by: 'date_created',
+    sort_order: 'descending',
+    ...searchParams,
+  });
 
   return (
     <>
