@@ -75,7 +75,7 @@ const Homepage: FC<Props> = () => {
             </Link>
           </div>
 
-          <div className="flex-[2] h-full py-7 hidden md:block">
+          <div className="flex-[2.5] h-full py-7 hidden md:block">
             <Image
               src={heroImage.src}
               alt="hero"

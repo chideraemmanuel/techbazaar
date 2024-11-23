@@ -15,18 +15,17 @@ interface Props {
 const ProductCard: FC<Props> = ({ product }) => {
   return (
     <>
-      <div className="group inline-block relative h-full">
+      <div className="group inline-block relative h-full w-full">
         <Link
           href={`/products/${product.slug}`}
           className="grid grid-rows-[1fr,_auto] h-full [&>*]:min-w-0"
         >
-          <div className="bg-secondary p-7 rounded-lg">
+          <div className="bg-secondary rounded-lg relative min-h-[220px]">
             <Image
               src={product.image}
               alt={product.name}
-              width={426}
-              height={585}
-              className="w-full h-full group-hover:scale-105 transition-transform object-contain"
+              fill={true}
+              className="group-hover:scale-105 transition-transform object-contain !max-w-[80%] !max-h-[80%] !top-1/2 !left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           </div>
 

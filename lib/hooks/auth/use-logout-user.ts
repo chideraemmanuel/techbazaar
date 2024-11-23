@@ -27,13 +27,13 @@ const useLogoutUser = () => {
   return useMutation({
     mutationKey: ['logout user'],
     mutationFn: logoutUser,
-    onSuccess: async (data) => {
+    onSuccess: async (data, axios) => {
       toast.success('Logout successful');
 
       setCookie('session_id', '', 0);
 
       queryClient.setQueryData(
-        'get cart summary',
+        ['get cart summary', axios],
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
           if (!previous_cart_summary_data) return previous_cart_summary_data;
@@ -46,7 +46,7 @@ const useLogoutUser = () => {
       );
 
       queryClient.setQueryData(
-        'get current user cart',
+        ['get current user cart', axios],
         // @ts-ignore
         (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {
           if (!previous_cart_data) return previous_cart_data;
@@ -67,11 +67,17 @@ const useLogoutUser = () => {
         }
       );
 
-      await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart summary');
+      await queryClient.invalidateQueries(['get current user cart', axios]);
+      await queryClient.invalidateQueries(['get cart summary', axios]);
 
-      await queryClient.invalidateQueries('get cart item by product ID');
-      await queryClient.invalidateQueries('get wishlist item by product ID');
+      await queryClient.invalidateQueries([
+        'get cart item by product ID',
+        axios,
+      ]);
+      await queryClient.invalidateQueries([
+        'get wishlist item by product ID',
+        axios,
+      ]);
 
       router.refresh();
     },
