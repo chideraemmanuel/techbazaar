@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from '../../config/axios';
-import { getCookie } from '../cookie';
+import { getCookie, ONE_DAY, setCookie } from '../cookie';
 
 const useAxiosPrivate = () => {
   React.useEffect(() => {
@@ -8,8 +8,6 @@ const useAxiosPrivate = () => {
       (config) => {
         if (!config.headers['Authorization']) {
           const cookie = getCookie('session_id');
-
-          console.log('[COOKIE]', cookie);
 
           if (cookie) {
             config.headers['Authorization'] = `Bearer ${cookie}`;
@@ -24,7 +22,15 @@ const useAxiosPrivate = () => {
     );
 
     const response_intercept = axios.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        const cookie = getCookie('session_id');
+
+        if (cookie) {
+          setCookie('session_id', cookie, ONE_DAY);
+        }
+
+        return response;
+      },
       (error) => {
         return Promise.reject(error);
       }

@@ -7,6 +7,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { Toaster } from '@/components/ui/sonner';
 import ViewsUpdateProvider from './views-update-provider';
 import GoogleSignInToast from './google-sign-in-toast';
+import SessionUpdate from './session-update';
 
 const ThemeProvider = dynamic(
   () =>
@@ -28,6 +29,7 @@ const Providers: FC<Props> = ({ children }) => {
       <ThemeProvider defaultTheme="dark">
         <QueryClientProvider client={client}>
           <ViewsUpdateProvider>
+            <SessionUpdate />
             <Toaster richColors />
             <GoogleSignInToast />
             <TailwindIndicator />
