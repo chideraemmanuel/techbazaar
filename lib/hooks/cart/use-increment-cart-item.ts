@@ -1,11 +1,16 @@
-import axios from '@/config/axios';
 import { APIErrorResponse, APIPaginatedResponse } from '@/types';
 import { ICart, ICartSummary } from '@/types/cart';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 
-const incrementCartItem = async (cartItem: ICart) => {
+const incrementCartItem = async ({
+  axios,
+  cartItem,
+}: {
+  axios: AxiosInstance;
+  cartItem: ICart;
+}) => {
   const response = await axios.put(`/users/me/cart/${cartItem._id}/increment`);
 
   return response.data;
@@ -17,19 +22,20 @@ const useIncrementCartItem = () => {
   return useMutation({
     mutationKey: ['increment cart item'],
     mutationFn: incrementCartItem,
-    onMutate: async (cartItem) => {
-      await queryClient.cancelQueries('get current user cart');
-      await queryClient.cancelQueries('get cart summary');
+    onMutate: async ({ axios, cartItem }) => {
+      await queryClient.cancelQueries(['get current user cart', axios]);
+      await queryClient.cancelQueries(['get cart summary', axios]);
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
-      >('get current user cart');
+      >(['get current user cart', axios]);
 
-      const previous_cart_summary_data =
-        queryClient.getQueryData<ICartSummary>('get cart summary');
+      const previous_cart_summary_data = queryClient.getQueryData<ICartSummary>(
+        ['get cart summary', axios]
+      );
 
       queryClient.setQueryData(
-        'get current user cart',
+        ['get current user cart', axios],
         // @ts-ignore
         (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {
           if (!previous_cart_data) return previous_cart_data;
@@ -58,7 +64,7 @@ const useIncrementCartItem = () => {
       );
 
       queryClient.setQueryData(
-        'get cart summary',
+        ['get cart summary', axios],
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
           if (!previous_cart_summary_data) return previous_cart_summary_data;
@@ -93,9 +99,9 @@ const useIncrementCartItem = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async (data, error, product) => {
-      await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart summary');
+    onSettled: async (data, error, { axios, cartItem }) => {
+      await queryClient.invalidateQueries(['get current user cart', axios]);
+      await queryClient.invalidateQueries(['get cart summary', axios]);
     },
   });
 };

@@ -20,7 +20,8 @@ export const getAllProducts = async (searchParams: ISearchParams = {}) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/all?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -69,7 +70,8 @@ export const getProductByIdOrSlug = async (idOrSlug: string) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${idOrSlug}/all`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );

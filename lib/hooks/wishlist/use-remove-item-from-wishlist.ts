@@ -1,11 +1,15 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
 import { WishlistTypes } from '@/types/wishlist';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 
-const removeItemFromWishlist = async (wishlistItem: WishlistTypes) => {
+interface IParams {
+  axios: AxiosInstance;
+  wishlistItem: WishlistTypes;
+}
+
+const removeItemFromWishlist = async ({ axios, wishlistItem }: IParams) => {
   const response = await axios.delete(`/users/me/wishlist/${wishlistItem._id}`);
 
   return response.data;
@@ -17,18 +21,19 @@ const useRemoveItemFromWishlist = () => {
   return useMutation({
     mutationKey: ['remove item from wishlist'],
     mutationFn: removeItemFromWishlist,
-    onMutate: async (wishlistItem) => {
+    onMutate: async ({ axios, wishlistItem }) => {
       await queryClient.cancelQueries([
         'get wishlist item by product ID',
         wishlistItem.product._id,
+        axios,
       ]);
 
       const previous_wishlist_item_data = queryClient.getQueryData<
         '' | WishlistTypes
-      >(['get wishlist item by product ID', wishlistItem.product._id]);
+      >(['get wishlist item by product ID', wishlistItem.product._id, axios]);
 
       queryClient.setQueryData(
-        ['get wishlist item by product ID', wishlistItem.product._id],
+        ['get wishlist item by product ID', wishlistItem.product._id, axios],
         ''
       );
 
@@ -36,7 +41,11 @@ const useRemoveItemFromWishlist = () => {
         previous_wishlist_item_data,
       };
     },
-    onError: (error: AxiosError<APIErrorResponse>, wishlistItem, context) => {
+    onError: (
+      error: AxiosError<APIErrorResponse>,
+      { axios, wishlistItem },
+      context
+    ) => {
       toast.error(
         error?.response?.data?.error ||
           error?.message ||
@@ -48,10 +57,11 @@ const useRemoveItemFromWishlist = () => {
         context?.previous_wishlist_item_data
       );
     },
-    onSettled: async (data, error, wishlistItem) => {
+    onSettled: async (data, error, { axios, wishlistItem }) => {
       await queryClient.invalidateQueries([
         'get cart item by product ID',
         wishlistItem.product._id,
+        axios,
       ]);
     },
   });

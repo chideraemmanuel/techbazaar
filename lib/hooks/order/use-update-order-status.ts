@@ -1,17 +1,17 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
 import { OrderStatus } from '@/types/cart';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
 interface Params {
+  axios: AxiosInstance;
   orderId: string;
   status: OrderStatus;
 }
 
-const updateOrderStatus = async ({ orderId, status }: Params) => {
+const updateOrderStatus = async ({ axios, orderId, status }: Params) => {
   const response = await axios.put(`/orders/${orderId}`, { status });
 
   return response.data;

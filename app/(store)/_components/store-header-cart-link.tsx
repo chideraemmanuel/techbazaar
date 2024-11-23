@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import useCartSummary from '@/lib/hooks/cart/use-cart-summary';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -11,7 +12,8 @@ import { FC } from 'react';
 interface Props {}
 
 const StoreHeaderCartLink: FC<Props> = () => {
-  const { data, isLoading } = useCartSummary();
+  const axios = useAxiosPrivate();
+  const { data, isLoading } = useCartSummary(axios);
 
   return (
     <>

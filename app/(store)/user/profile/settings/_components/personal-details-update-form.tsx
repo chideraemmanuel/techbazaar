@@ -3,6 +3,7 @@
 import FormInput from '@/components/form-input';
 import FullScreenSpinner from '@/components/full-screen-spinner';
 import { Button } from '@/components/ui/button';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import useUpdateProfile from '@/lib/hooks/user/use-update-profile';
 import { UserTypes } from '@/types/user';
 import { Loader2 } from 'lucide-react';
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const PersonalDetailsUpdateForm: FC<Props> = ({ user }) => {
+  const axios = useAxiosPrivate();
+
   const { mutate: updateProfile, isLoading: isUpdatingProfile } =
     useUpdateProfile();
 
@@ -68,7 +71,7 @@ const PersonalDetailsUpdateForm: FC<Props> = ({ user }) => {
       updates.last_name = values.last_name;
     }
 
-    updateProfile(updates);
+    updateProfile({ axios, updates });
   };
 
   return (

@@ -17,6 +17,7 @@ import SelectInput from '@/components/select-input';
 import { ORDER_STATUSES_SORT_ITEMS } from '@/constants';
 import { IOrder, OrderStatus } from '@/types/cart';
 import useUpdateOrderStatus from '@/lib/hooks/order/use-update-order-status';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type EditOrderStatusDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -30,6 +31,8 @@ const EditOrderStatusDialog = React.forwardRef<
   EditOrderStatusDialogTriggerRef,
   EditOrderStatusDialogTriggerProps
 >(({ className, order, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [orderStatus, setOrderStatus] = React.useState(order.status);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -86,7 +89,11 @@ const EditOrderStatusDialog = React.forwardRef<
             <Button
               disabled={isUpdatingOrderStatus || orderStatus === order.status}
               onClick={() =>
-                updateOrderStatus({ orderId: order._id, status: orderStatus })
+                updateOrderStatus({
+                  axios,
+                  orderId: order._id,
+                  status: orderStatus,
+                })
               }
             >
               {isUpdatingOrderStatus && (

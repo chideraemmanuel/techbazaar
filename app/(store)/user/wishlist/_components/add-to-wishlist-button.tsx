@@ -1,5 +1,6 @@
 'use client';
 
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
@@ -17,6 +18,8 @@ const AddToWishlistButton = React.forwardRef<
 >(({ product, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: addItemToWishlist } = useAddItemToWishlist();
 
   return (
@@ -24,7 +27,7 @@ const AddToWishlistButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          addItemToWishlist(product);
+          addItemToWishlist({ axios, product });
           onClick?.(e);
         }}
         ref={ref}

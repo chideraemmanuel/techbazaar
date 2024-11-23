@@ -17,12 +17,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IBillingInformation } from '@/types/cart';
 import usePlaceOrder from '@/lib/hooks/order/use-place-order';
 import RegionalPriceFormat from '@/components/regional-price-format';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {
   saved_billing_information: IBillingInformation | null;
 }
 
 const CheckoutContent: FC<Props> = ({ saved_billing_information }) => {
+  const axios = useAxiosPrivate();
+
   const [useSavedBillingInfo, setUseSavedBillingInfo] = React.useState(false);
 
   const { mutate: placeOrder, isLoading: isPlacingOrder } = usePlaceOrder();
@@ -39,6 +42,7 @@ const CheckoutContent: FC<Props> = ({ saved_billing_information }) => {
 
   const onSubmit: SubmitHandler<BillingInformationFormTypes> = (data, e) => {
     placeOrder({
+      axios,
       billing_information: data,
     });
   };
@@ -129,6 +133,8 @@ const OrderSummary: FC<{
   use_saved_billing_information: boolean;
   placeOrder: any;
 }> = ({ isPlacingOrder, use_saved_billing_information, placeOrder }) => {
+  const axios = useAxiosPrivate();
+
   const {
     data,
     isFetching,
@@ -137,10 +143,10 @@ const OrderSummary: FC<{
     fetchNextPage,
     isError,
     error,
-  } = useCurrentUserCart();
+  } = useCurrentUserCart(axios);
 
   const { data: cart_summary, isLoading: isLoadingCartSummary } =
-    useCartSummary();
+    useCartSummary(axios);
 
   return (
     <>
@@ -261,6 +267,7 @@ const OrderSummary: FC<{
               disabled={isPlacingOrder}
               onClick={() =>
                 placeOrder({
+                  axios,
                   use_saved_billing_information: true,
                 })
               }

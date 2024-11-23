@@ -44,6 +44,7 @@ const useIPInformation = () => {
       return IP_information_response.data;
     },
     retry: false,
+    refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 60, // 1 hour
     staleTime: 1000 * 60 * 60, // 1 hour
   });

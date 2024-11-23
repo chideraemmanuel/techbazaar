@@ -1,11 +1,10 @@
-import axios from '@/config/axios';
 import { APIErrorResponse, APIPaginatedResponse } from '@/types';
 import { ICart, ICartSummary } from '@/types/cart';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 
-const clearCart = async () => {
+const clearCart = async (axios: AxiosInstance) => {
   const response = await axios.delete(`/users/me/cart`);
 
   return response.data;
@@ -17,19 +16,20 @@ const useClearCart = () => {
   return useMutation({
     mutationKey: ['increment cart item'],
     mutationFn: clearCart,
-    onMutate: async () => {
-      await queryClient.cancelQueries('get current user cart');
-      await queryClient.cancelQueries('get cart summary');
+    onMutate: async (axios) => {
+      await queryClient.cancelQueries(['get current user cart', axios]);
+      await queryClient.cancelQueries(['get cart summary', axios]);
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
-      >('get current user cart');
+      >(['get current user cart', axios]);
 
-      const previous_cart_summary_data =
-        queryClient.getQueryData<ICartSummary>('get cart summary');
+      const previous_cart_summary_data = queryClient.getQueryData<ICartSummary>(
+        ['get cart summary', axios]
+      );
 
       queryClient.setQueryData(
-        'get current user cart',
+        ['get current user cart', axios],
         // @ts-ignore
         (previous_cart_data: InfiniteData<APIPaginatedResponse<ICart>>) => {
           if (!previous_cart_data) return previous_cart_data;
@@ -51,7 +51,7 @@ const useClearCart = () => {
       );
 
       queryClient.setQueryData(
-        'get cart summary',
+        ['get cart summary', axios],
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
           if (!previous_cart_summary_data) return previous_cart_summary_data;
@@ -85,9 +85,9 @@ const useClearCart = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async () => {
-      await queryClient.invalidateQueries('get current user cart');
-      await queryClient.invalidateQueries('get cart summary');
+    onSettled: async (data, error, axios) => {
+      await queryClient.invalidateQueries(['get current user cart', axios]);
+      await queryClient.invalidateQueries(['get cart summary', axios]);
     },
   });
 };

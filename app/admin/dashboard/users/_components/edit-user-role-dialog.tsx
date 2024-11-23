@@ -17,6 +17,7 @@ import SelectInput from '@/components/select-input';
 import { UserRole, UserTypes } from '@/types/user';
 import { USER_ROLES_SORT_ITEMS } from '@/constants';
 import useUpdateUserStatus from '@/lib/hooks/user/use-update-user-status';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type EditUserRoleDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -30,6 +31,8 @@ const EditUserRoleDialog = React.forwardRef<
   EditUserRoleDialogTriggerRef,
   EditUserRoleDialogTriggerProps
 >(({ user, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [role, setRole] = React.useState(user.role);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -85,7 +88,7 @@ const EditUserRoleDialog = React.forwardRef<
             <Button
               disabled={isUpdatingUserStatus || role === user.role}
               onClick={() =>
-                updateUserStatus({ userId: user._id, updates: { role } })
+                updateUserStatus({ axios, userId: user._id, updates: { role } })
               }
             >
               {isUpdatingUserStatus && (

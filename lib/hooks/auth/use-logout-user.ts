@@ -1,4 +1,3 @@
-import axios from '@/config/axios';
 import {
   APIErrorResponse,
   APIPaginatedResponse,
@@ -6,12 +5,13 @@ import {
 } from '@/types';
 import { ICart } from '@/types/cart';
 import { UserTypes } from '@/types/user';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
+import { setCookie } from '@/lib/cookie';
 
-const logoutUser = async () => {
+const logoutUser = async (axios: AxiosInstance) => {
   const response = await axios.delete<APISuccessResponse<UserTypes>>(
     '/auth/logout'
   );
@@ -29,6 +29,8 @@ const useLogoutUser = () => {
     mutationFn: logoutUser,
     onSuccess: async (data) => {
       toast.success('Logout successful');
+
+      setCookie('session_id', '', 0);
 
       queryClient.setQueryData(
         'get cart summary',

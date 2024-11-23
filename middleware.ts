@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies, headers as NextHeaders } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextFetchEvent, NextRequest } from 'next/server';
 

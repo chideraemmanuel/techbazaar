@@ -25,7 +25,8 @@ export const getCurrentUserWishlist = async (
     }/users/me/wishlist?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );

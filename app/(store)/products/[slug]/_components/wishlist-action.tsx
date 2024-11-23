@@ -4,6 +4,7 @@ import AddToWishlistButton from '@/app/(store)/user/wishlist/_components/add-to-
 import RemoveFromWishlistButton from '@/app/(store)/user/wishlist/_components/remove-from-wishlist-button';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
 import useWishlistItem from '@/lib/hooks/wishlist/use-wishlist-item';
 import { IAvailableProduct } from '@/types/product';
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const WishlistAction: FC<Props> = ({ product }) => {
+  const axios = useAxiosPrivate();
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,7 +28,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
 
   const { mutate: addItemToWishlist } = useAddItemToWishlist();
 
-  const { data, isLoading, error } = useWishlistItem(product._id);
+  const { data, isLoading, error } = useWishlistItem(product._id, axios);
 
   React.useEffect(() => {
     if (
@@ -34,7 +37,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
       wishlistProductID &&
       wishlistProductID === product._id
     ) {
-      addItemToWishlist(product);
+      addItemToWishlist({ axios, product });
       router.replace(pathname);
     }
   }, [data, isLoading]);

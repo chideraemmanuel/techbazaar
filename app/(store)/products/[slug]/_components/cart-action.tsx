@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import useAddItemToCart from '@/lib/hooks/cart/use-add-item-to-cart';
 import useCartItem from '@/lib/hooks/cart/use-cart-item';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { IAvailableProduct } from '@/types/product';
 import { ShoppingBag, Trash2 } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const CartAction: FC<Props> = ({ product }) => {
+  const axios = useAxiosPrivate();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,7 +26,7 @@ const CartAction: FC<Props> = ({ product }) => {
 
   const { mutate: addItemToCart } = useAddItemToCart();
 
-  const { data, isLoading, error } = useCartItem(product._id);
+  const { data, isLoading, error } = useCartItem(product._id, axios);
 
   React.useEffect(() => {
     if (
@@ -33,7 +35,7 @@ const CartAction: FC<Props> = ({ product }) => {
       cartProductID &&
       cartProductID === product._id
     ) {
-      addItemToCart(product);
+      addItemToCart({ axios, product });
       router.replace(pathname);
     }
   }, [data, isLoading]);

@@ -1,11 +1,15 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const requestPasswordReset = async (email: string) => {
+interface IParams {
+  axios: AxiosInstance;
+  email: string;
+}
+
+const requestPasswordReset = async ({ axios, email }: IParams) => {
   const response = await axios.post<{ message: string }>(
     '/auth/request-password-reset',
     {

@@ -21,7 +21,8 @@ export const getAllOrders = async (searchParams: ISearchParams = {}) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -51,7 +52,8 @@ export const getOrderById = async (orderId: string) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/${orderId}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -90,7 +92,8 @@ export const getUserOrders = async (
     }/users/${userId}/orders?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -126,7 +129,8 @@ export const getCurrentUserOrders = async (
     }/users/me/orders?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -154,7 +158,8 @@ export const getCurrentUserOrderById = async (orderId: string) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me/orders/${orderId}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );

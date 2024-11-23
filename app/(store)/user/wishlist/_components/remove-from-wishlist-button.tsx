@@ -1,5 +1,6 @@
 'use client';
 
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import useRemoveItemFromWishlist from '@/lib/hooks/wishlist/use-remove-item-from-wishlist';
 import { WishlistTypes } from '@/types/wishlist';
 import { Slot } from '@radix-ui/react-slot';
@@ -18,6 +19,8 @@ const RemoveFromWishlistButton = React.forwardRef<
 >(({ wishlistItem, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: removeItemFromWishlist } = useRemoveItemFromWishlist();
 
   return (
@@ -25,7 +28,7 @@ const RemoveFromWishlistButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          removeItemFromWishlist(wishlistItem);
+          removeItemFromWishlist({ axios, wishlistItem });
           onClick?.(e);
         }}
         ref={ref}

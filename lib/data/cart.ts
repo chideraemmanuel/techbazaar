@@ -19,7 +19,8 @@ export const getCurrentUserCart = async () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me/cart`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -49,7 +50,8 @@ export const getCurrentUserBillingInformation = async () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me/billing`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );

@@ -1,6 +1,5 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
@@ -11,7 +10,13 @@ interface IUpdates {
   password?: string;
 }
 
-const updateProfile = async (updates: IUpdates) => {
+const updateProfile = async ({
+  axios,
+  updates,
+}: {
+  axios: AxiosInstance;
+  updates: IUpdates;
+}) => {
   const response = await axios.put('/users/me', updates);
 
   return response.data;

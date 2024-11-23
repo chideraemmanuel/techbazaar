@@ -1,11 +1,16 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const restoreBrand = async (id: string) => {
+const restoreBrand = async ({
+  axios,
+  id,
+}: {
+  axios: AxiosInstance;
+  id: string;
+}) => {
   const response = await axios.put<{ message: string }>(
     `/brands/${id}/restore`
   );

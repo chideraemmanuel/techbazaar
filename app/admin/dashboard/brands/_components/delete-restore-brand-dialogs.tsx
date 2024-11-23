@@ -17,6 +17,7 @@ import { cn } from '@/lib/cn';
 import useDeleteBrand from '@/lib/hooks/brand/use-delete-brand';
 import { BrandTypes } from '@/types/product';
 import useRestoreBrand from '@/lib/hooks/brand/use-restore-brand';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type DeleteBrandDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -30,6 +31,8 @@ export const DeleteBrandDialog = React.forwardRef<
   DeleteBrandDialogTriggerRef,
   DeleteBrandDialogTriggerProps
 >(({ brand, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -79,7 +82,7 @@ export const DeleteBrandDialog = React.forwardRef<
 
             <Button
               variant={'destructive'}
-              onClick={() => deleteBrand(brand._id)}
+              onClick={() => deleteBrand({ axios, id: brand._id })}
               disabled={isDeletingBrand}
             >
               {isDeletingBrand && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -104,6 +107,8 @@ export const RestoreBrandDialog = React.forwardRef<
   RestoreBrandDialogTriggerRef,
   RestoreBrandDialogTriggerProps
 >(({ brand, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -147,7 +152,7 @@ export const RestoreBrandDialog = React.forwardRef<
             <AlertDialogCancel>Cancel</AlertDialogCancel>
 
             <Button
-              onClick={() => restoreBrand(brand._id)}
+              onClick={() => restoreBrand({ axios, id: brand._id })}
               disabled={isRestoringBrand}
             >
               {isRestoringBrand && <Loader2 className="h-4 w-4 animate-spin" />}

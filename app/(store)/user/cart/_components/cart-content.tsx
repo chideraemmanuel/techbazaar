@@ -11,10 +11,13 @@ import React, { FC } from 'react';
 import ClearCartButton from './clear-cart-button';
 import RegionalPriceFormat from '@/components/regional-price-format';
 import { useRouter } from 'next/navigation';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {}
 
 const CartContent: FC<Props> = () => {
+  const axios = useAxiosPrivate();
+
   const {
     data,
     isLoading,
@@ -24,7 +27,7 @@ const CartContent: FC<Props> = () => {
     fetchNextPage,
     isError,
     error,
-  } = useCurrentUserCart();
+  } = useCurrentUserCart(axios);
 
   return (
     <>
@@ -104,7 +107,8 @@ const CartContent: FC<Props> = () => {
 export default CartContent;
 
 const CartSummary: FC<{}> = () => {
-  const { data, isLoading } = useCartSummary();
+  const axios = useAxiosPrivate();
+  const { data, isLoading } = useCartSummary(axios);
 
   const router = useRouter();
 

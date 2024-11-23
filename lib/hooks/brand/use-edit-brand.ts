@@ -1,18 +1,18 @@
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { useRouter } from 'next/navigation';
-import axios from '@/config/axios';
 import { BrandTypes } from '@/types/product';
 import { IBrandData } from './use-add-brand';
 
 interface IParams {
+  axios: AxiosInstance;
   id: string;
   data: Partial<IBrandData>;
 }
 
-const editBrand = async ({ id, data }: IParams) => {
+const editBrand = async ({ axios, id, data }: IParams) => {
   const response = await axios.put<APISuccessResponse<BrandTypes>>(
     `/brands/${id}`,
     data,

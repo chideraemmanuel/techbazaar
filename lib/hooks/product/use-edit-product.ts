@@ -1,18 +1,18 @@
 import { useMutation } from 'react-query';
 import { IProductData } from './use-add-product';
 import { toast } from 'sonner';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { useRouter } from 'next/navigation';
-import axios from '@/config/axios';
 import { ProductTypes } from '@/types/product';
 
 interface IParams {
+  axios: AxiosInstance;
   id: string;
   data: Partial<IProductData>;
 }
 
-const editProduct = async ({ id, data }: IParams) => {
+const editProduct = async ({ axios, id, data }: IParams) => {
   const response = await axios.put<APISuccessResponse<ProductTypes>>(
     `/products/${id}`,
     data,

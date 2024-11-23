@@ -1,6 +1,7 @@
 'use client';
 
 import useRemoveItemFromCart from '@/lib/hooks/cart/use-remove-item-from-cart';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { ICart } from '@/types/cart';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
@@ -17,6 +18,8 @@ const RemoveFromCartButton = React.forwardRef<
 >(({ cartItem, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: removeItemFromCart } = useRemoveItemFromCart();
 
   return (
@@ -24,7 +27,7 @@ const RemoveFromCartButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          removeItemFromCart(cartItem);
+          removeItemFromCart({ axios, cartItem });
           onClick?.(e);
         }}
         ref={ref}

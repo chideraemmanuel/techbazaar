@@ -1,4 +1,3 @@
-import axios from '@/config/axios';
 import {
   APIErrorResponse,
   APIPaginatedResponse,
@@ -6,11 +5,18 @@ import {
 } from '@/types';
 import { ICart, ICartSummary } from '@/types/cart';
 import { IAvailableProduct } from '@/types/product';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
+import useAxiosPrivate from '../use-axios-private';
 
-const addItemToCart = async (product: IAvailableProduct) => {
+const addItemToCart = async ({
+  axios,
+  product,
+}: {
+  axios: AxiosInstance;
+  product: IAvailableProduct;
+}) => {
   const response = await axios.post<Required<APISuccessResponse<ICart>>>(
     '/users/me/cart',
     { product: product._id }
@@ -25,28 +31,31 @@ const useAddItemToCart = () => {
   return useMutation({
     mutationKey: ['add item to cart'],
     mutationFn: addItemToCart,
-    onMutate: async (product) => {
-      await queryClient.cancelQueries('get current user cart');
+    onMutate: async ({ axios, product }) => {
+      await queryClient.cancelQueries(['get current user cart', axios]);
       await queryClient.cancelQueries([
         'get cart item by product ID',
         product._id,
+        axios,
       ]);
-      await queryClient.cancelQueries('get cart summary');
+      await queryClient.cancelQueries(['get cart summary', axios]);
 
       const previous_cart_data = queryClient.getQueryData<
         InfiniteData<APIPaginatedResponse<ICart>>
-      >('get current user cart');
+      >(['get current user cart', axios]);
 
       const previous_cart_item_data = queryClient.getQueryData<'' | ICart>([
         'get cart item by product ID',
         product._id,
+        axios,
       ]);
 
-      const previous_cart_summary_data =
-        queryClient.getQueryData<ICartSummary>('get cart summary');
+      const previous_cart_summary_data = queryClient.getQueryData<ICartSummary>(
+        ['get cart summary', axios]
+      );
 
       queryClient.setQueryData(
-        'get current user cart',
+        ['get current user cart', axios],
         // @ts-ignore
         (
           previous_cart_data:
@@ -88,7 +97,7 @@ const useAddItemToCart = () => {
       );
 
       queryClient.setQueryData(
-        ['get cart item by product ID', product._id],
+        ['get cart item by product ID', product._id, axios],
         // @ts-ignore
         (previous_cart_item_data: ICart) => {
           return {
@@ -103,7 +112,7 @@ const useAddItemToCart = () => {
       );
 
       queryClient.setQueryData(
-        'get cart summary',
+        ['get cart summary', axios],
         // @ts-ignore
         (previous_cart_summary_data: ICartSummary | undefined) => {
           if (!previous_cart_summary_data) return previous_cart_summary_data;
@@ -144,13 +153,14 @@ const useAddItemToCart = () => {
         context?.previous_cart_summary_data
       );
     },
-    onSettled: async (data, error, product) => {
-      await queryClient.invalidateQueries('get current user cart');
+    onSettled: async (data, error, { axios, product }) => {
+      await queryClient.invalidateQueries(['get current user cart', axios]);
       await queryClient.invalidateQueries([
         'get cart item by product ID',
         product._id,
+        axios,
       ]);
-      await queryClient.invalidateQueries('get cart summary');
+      await queryClient.invalidateQueries(['get cart summary', axios]);
     },
   });
 };

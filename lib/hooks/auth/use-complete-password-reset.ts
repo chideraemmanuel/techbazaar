@@ -1,15 +1,21 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const completePasswordReset = async (data: {
+interface IData {
   email: string;
   OTP: string;
   new_password: string;
-}) => {
+}
+
+interface IParams {
+  axios: AxiosInstance;
+  data: IData;
+}
+
+const completePasswordReset = async ({ axios, data }: IParams) => {
   const response = await axios.put('/auth/reset-password', data);
 
   return response.data;

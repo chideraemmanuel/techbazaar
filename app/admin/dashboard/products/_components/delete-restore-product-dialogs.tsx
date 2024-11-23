@@ -17,6 +17,7 @@ import { cn } from '@/lib/cn';
 import { ProductTypes } from '@/types/product';
 import useDeleteProduct from '@/lib/hooks/product/use-delete-product';
 import useRestoreProduct from '@/lib/hooks/product/use-restore-product';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type DeleteProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -30,6 +31,8 @@ export const DeleteProductDialog = React.forwardRef<
   DeleteProductDialogTriggerRef,
   DeleteProductDialogTriggerProps
 >(({ product, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -79,7 +82,7 @@ export const DeleteProductDialog = React.forwardRef<
 
             <Button
               variant={'destructive'}
-              onClick={() => deleteProduct(product._id)}
+              onClick={() => deleteProduct({ axios, id: product._id })}
               disabled={isDeletingProduct}
             >
               {isDeletingProduct && (
@@ -106,6 +109,8 @@ export const RestoreProductDialog = React.forwardRef<
   RestoreProductDialogTriggerRef,
   RestoreProductDialogTriggerProps
 >(({ product, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -149,7 +154,7 @@ export const RestoreProductDialog = React.forwardRef<
             <AlertDialogCancel>Cancel</AlertDialogCancel>
 
             <Button
-              onClick={() => restoreProduct(product._id)}
+              onClick={() => restoreProduct({ axios, id: product._id })}
               disabled={isRestoringProduct}
             >
               {isRestoringProduct && (

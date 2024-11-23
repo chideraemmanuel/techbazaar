@@ -5,6 +5,7 @@ import FullScreenSpinner from '@/components/full-screen-spinner';
 import { Button } from '@/components/ui/button';
 import { PASSWORD_REQUIREMENTS, PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import useUpdateProfile from '@/lib/hooks/user/use-update-profile';
 import validatePasswordRequirement from '@/lib/validate-password-requirement';
 import { PasswordRequirement } from '@/types';
@@ -20,6 +21,8 @@ interface IForm {
 interface Props {}
 
 const PasswordUpdateForm: FC<Props> = () => {
+  const axios = useAxiosPrivate();
+
   const {
     mutate: updateProfile,
     isLoading: isUpdatingProfile,
@@ -40,7 +43,7 @@ const PasswordUpdateForm: FC<Props> = () => {
   const watched = watch();
 
   const onSubmit: SubmitHandler<IForm> = async (data, e) => {
-    updateProfile({ password: data.password });
+    updateProfile({ axios, updates: { password: data.password } });
   };
 
   React.useEffect(() => {

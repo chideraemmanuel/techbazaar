@@ -11,6 +11,7 @@ import useLoginUser from '@/lib/hooks/auth/use-login-user';
 import GoogleSignInButton from './google-sign-in-button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {}
 
@@ -20,6 +21,7 @@ interface LoginFormTypes {
 }
 
 const UserLoginForm: FC<Props> = () => {
+  const axios = useAxiosPrivate();
   const { mutate: loginUser, isLoading: isLoggingUserIn } = useLoginUser();
 
   const form = useForm<LoginFormTypes>();
@@ -31,7 +33,7 @@ const UserLoginForm: FC<Props> = () => {
   } = form;
 
   const onSubmit: SubmitHandler<LoginFormTypes> = (data, e) => {
-    loginUser(data);
+    loginUser({ axios, credentials: data });
   };
 
   const router = useRouter();

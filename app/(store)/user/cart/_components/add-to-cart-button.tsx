@@ -1,6 +1,7 @@
 'use client';
 
 import useAddItemToCart from '@/lib/hooks/cart/use-add-item-to-cart';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { IAvailableProduct } from '@/types/product';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
@@ -17,6 +18,8 @@ const AddToCartButton = React.forwardRef<
 >(({ product, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: addItemToCart } = useAddItemToCart();
 
   return (
@@ -24,7 +27,7 @@ const AddToCartButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          addItemToCart(product);
+          addItemToCart({ axios, product });
           onClick?.(e);
         }}
         ref={ref}

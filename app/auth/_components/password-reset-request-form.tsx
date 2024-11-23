@@ -7,10 +7,13 @@ import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
 import FormInput from '../../../components/form-input';
 import useRequestPasswordReset from '@/lib/hooks/auth/use-request-password-reset';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {}
 
 const PasswordResetRequestForm: FC<Props> = () => {
+  const axios = useAxiosPrivate();
+
   const { mutate: requestPasswordReset, isLoading: isRequestingPasswordReset } =
     useRequestPasswordReset();
 
@@ -23,7 +26,7 @@ const PasswordResetRequestForm: FC<Props> = () => {
   } = form;
 
   const onSubmit: SubmitHandler<{ email: string }> = (data, e) => {
-    requestPasswordReset(data.email);
+    requestPasswordReset({ axios, email: data.email });
   };
 
   return (

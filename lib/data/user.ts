@@ -21,7 +21,8 @@ export const getAllUsers = async (searchParams: ISearchParams = {}) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users?${params.toString()}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -52,7 +53,8 @@ export const getUserById = async (id: string) => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
     {
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );
@@ -77,8 +79,10 @@ export const getCurrentUser = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/me`,
     {
+      credentials: 'include',
       headers: {
-        Cookie: `session_id=${session_id}`,
+        // Cookie: `session_id=${session_id}`,
+        Authorization: `Bearer ${session_id}`,
       },
     }
   );

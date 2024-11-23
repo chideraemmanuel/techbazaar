@@ -1,11 +1,16 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const cancelOrder = async (orderId: string) => {
+const cancelOrder = async ({
+  axios,
+  orderId,
+}: {
+  axios: AxiosInstance;
+  orderId: string;
+}) => {
   const response = await axios.delete<{ message: string }>(
     `/users/me/orders/${orderId}`
   );

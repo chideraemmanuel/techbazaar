@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import useCancelOrder from '@/lib/hooks/order/use-cancel-order';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { IOrder } from '@/types/cart';
 import { Loader2 } from 'lucide-react';
 import React, { ComponentPropsWithoutRef, ElementRef, FC } from 'react';
@@ -28,6 +29,8 @@ export const CancelOrderDialog = React.forwardRef<
   CancelOrderDialogTriggerRef,
   CancelOrderDialogTriggerProps
 >(({ order, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -67,7 +70,7 @@ export const CancelOrderDialog = React.forwardRef<
 
             <Button
               variant={'destructive'}
-              onClick={() => cancelOrder(order._id)}
+              onClick={() => cancelOrder({ axios, orderId: order._id })}
               disabled={isCancellingOrder}
             >
               {isCancellingOrder && (

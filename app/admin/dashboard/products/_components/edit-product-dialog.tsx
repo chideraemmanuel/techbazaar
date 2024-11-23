@@ -28,6 +28,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import ComboBoxInput, { ComboboxItem } from '@/components/combobox-input';
 import { IProductData } from '@/lib/hooks/product/use-add-product';
 import useEditProduct from '@/lib/hooks/product/use-edit-product';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type EditProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger
@@ -98,6 +99,8 @@ const EditProductForm: FC<EditProductFormProps> = ({
   brands,
   setDialogOpen,
 }) => {
+  const axios = useAxiosPrivate();
+
   const [brandsComboboxOpen, setBrandsComboboxOpen] = React.useState(false);
   const [formChanged, setFormChanged] = React.useState(false);
 
@@ -235,6 +238,7 @@ const EditProductForm: FC<EditProductFormProps> = ({
     }
 
     editProduct({
+      axios,
       id: product._id,
       data: updates,
     });

@@ -34,7 +34,7 @@ The web application includes all the basic features of a typical e-commerce web 
 
 ## Techologies Used
 
-- **Frontend & Backend**:
+- **Frontend**:
 
   - **Next.js**: Fullstack framework used for both the application's frontend, and backend APIs. It offers features such as server-side rendering, static generation, and API routes for efficient data fetching.
 

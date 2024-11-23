@@ -24,3 +24,5 @@ export const setCookie = (
   const expires = '; expires=' + date.toUTCString();
   document.cookie = name + '=' + value + expires + '; path=/';
 };
+
+export const ONE_DAY = 60 * 60 * 24 * 1000;

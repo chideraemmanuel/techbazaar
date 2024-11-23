@@ -1,6 +1,7 @@
 'use client';
 
 import useDecrementCartItem from '@/lib/hooks/cart/use-decrement-cart-item';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { ICart } from '@/types/cart';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
@@ -17,6 +18,8 @@ const DecrementCartItemButton = React.forwardRef<
 >(({ cartItem, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: decrementCartItem } = useDecrementCartItem();
 
   return (
@@ -24,7 +27,7 @@ const DecrementCartItemButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          decrementCartItem(cartItem);
+          decrementCartItem({ axios, cartItem });
           onClick?.(e);
         }}
         ref={ref}

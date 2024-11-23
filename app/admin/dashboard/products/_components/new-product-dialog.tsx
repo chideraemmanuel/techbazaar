@@ -25,6 +25,7 @@ import ComboBoxInput from '@/components/combobox-input';
 import useAddProduct, {
   IProductData,
 } from '@/lib/hooks/product/use-add-product';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type NewProductDialogTriggerProps = ComponentPropsWithoutRef<
   typeof SheetTrigger
@@ -85,6 +86,8 @@ interface NewProductFormProps {
 }
 
 const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
+  const axios = useAxiosPrivate();
+
   const [brandsComboboxOpen, setBrandsComboboxOpen] = React.useState(false);
 
   const {
@@ -142,10 +145,13 @@ const NewProductForm: FC<NewProductFormProps> = ({ brands, setDialogOpen }) => {
 
   const onSubmit: SubmitHandler<IProductForm> = (data, e) => {
     addProduct({
-      ...data,
-      price: +data.price.toFixed(2),
-      stock: +data.stock,
-      ...(data.image && { image: data.image?.[0] }),
+      axios,
+      data: {
+        ...data,
+        price: +data.price.toFixed(2),
+        stock: +data.stock,
+        ...(data.image && { image: data.image?.[0] }),
+      },
     });
   };
 

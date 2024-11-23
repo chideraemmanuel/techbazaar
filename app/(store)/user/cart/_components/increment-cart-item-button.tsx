@@ -1,6 +1,7 @@
 'use client';
 
 import useIncrementCartItem from '@/lib/hooks/cart/use-increment-cart-item';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import { ICart } from '@/types/cart';
 import { Slot } from '@radix-ui/react-slot';
 import React, { ComponentPropsWithoutRef, ElementRef } from 'react';
@@ -17,6 +18,8 @@ const IncrementCartItemButton = React.forwardRef<
 >(({ cartItem, asChild, onClick, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
+  const axios = useAxiosPrivate();
+
   const { mutate: incrementCartItem } = useIncrementCartItem();
 
   return (
@@ -24,7 +27,7 @@ const IncrementCartItemButton = React.forwardRef<
       <Comp
         {...props}
         onClick={(e) => {
-          incrementCartItem(cartItem);
+          incrementCartItem({ axios, cartItem });
           onClick?.(e);
         }}
         ref={ref}

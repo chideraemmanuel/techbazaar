@@ -16,6 +16,7 @@ import { Loader2, UserCheck, UserX } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import useUpdateUserStatus from '@/lib/hooks/user/use-update-user-status';
 import { UserTypes } from '@/types/user';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 type EnableUserDialogTriggerProps = ComponentPropsWithoutRef<
   typeof AlertDialogTrigger
@@ -29,6 +30,8 @@ export const EnableUserDialog = React.forwardRef<
   EnableUserDialogTriggerRef,
   EnableUserDialogTriggerProps
 >(({ user, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -76,6 +79,7 @@ export const EnableUserDialog = React.forwardRef<
               disabled={isUpdatingUserStatus}
               onClick={() =>
                 updateUserStatus({
+                  axios,
                   userId: user._id,
                   updates: { disabled: false },
                 })
@@ -105,6 +109,8 @@ export const DisableUserDialog = React.forwardRef<
   DisableUserDialogTriggerRef,
   DisableUserDialogTriggerProps
 >(({ user, className, ...props }, ref) => {
+  const axios = useAxiosPrivate();
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const {
@@ -155,6 +161,7 @@ export const DisableUserDialog = React.forwardRef<
               disabled={isUpdatingUserStatus}
               onClick={() =>
                 updateUserStatus({
+                  axios,
                   userId: user._id,
                   updates: { disabled: true },
                 })

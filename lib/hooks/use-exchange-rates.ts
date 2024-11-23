@@ -27,6 +27,7 @@ const useExchangeRates = () => {
       return response.data.rates;
     },
     retry: false,
+    refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 60 * 24, // 24 hours
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });

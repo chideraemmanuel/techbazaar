@@ -1,16 +1,25 @@
-import axios from '@/config/axios';
+import { ONE_DAY, setCookie } from '@/lib/cookie';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { UserTypes } from '@/types/user';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const loginUser = async (credentials: { email: string; password: string }) => {
-  const response = await axios.post<APISuccessResponse<UserTypes>>(
-    '/auth/login',
-    credentials
-  );
+interface ICredentials {
+  email: string;
+  password: string;
+}
+
+interface IParams {
+  axios: AxiosInstance;
+  credentials: ICredentials;
+}
+
+const loginUser = async ({ axios, credentials }: IParams) => {
+  const response = await axios.post<
+    APISuccessResponse<{ user: UserTypes; session_id: string }>
+  >('/auth/login', credentials);
 
   return response.data;
 };
@@ -24,6 +33,8 @@ const useLoginUser = () => {
     mutationFn: loginUser,
     onSuccess: (data) => {
       toast.success('Login successful');
+
+      setCookie('session_id', data.data?.session_id as string, ONE_DAY);
 
       return_to
         ? router.replace(decodeURIComponent(return_to))

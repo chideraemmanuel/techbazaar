@@ -1,11 +1,16 @@
-import axios from '@/config/axios';
 import { APIErrorResponse } from '@/types';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
-const deleteProduct = async (id: string) => {
+const deleteProduct = async ({
+  axios,
+  id,
+}: {
+  axios: AxiosInstance;
+  id: string;
+}) => {
   const response = await axios.delete<{ message: string }>(`/products/${id}`);
 
   return response.data;

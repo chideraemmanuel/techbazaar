@@ -1,12 +1,12 @@
-import axios from '@/config/axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { UserRole, UserTypes } from '@/types/user';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
 
 interface Params {
+  axios: AxiosInstance;
   userId: string;
   updates: {
     role?: UserRole;
@@ -14,7 +14,7 @@ interface Params {
   };
 }
 
-const updateUserStatus = async ({ userId, updates }: Params) => {
+const updateUserStatus = async ({ axios, userId, updates }: Params) => {
   const response = await axios.put<APISuccessResponse<UserTypes>>(
     `users/${userId}`,
     updates

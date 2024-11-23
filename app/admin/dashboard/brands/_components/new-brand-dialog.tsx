@@ -15,6 +15,7 @@ import useAddBrand, { IBrandData } from '@/lib/hooks/brand/use-add-brand';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '@/components/form-input';
 import ImageInput from '@/components/image-input';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 const NewBrandDialog: FC = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -53,6 +54,8 @@ interface IBrandForm extends Omit<IBrandData, 'logo'> {
 const NewBrandForm: FC<{
   setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ setDialogOpen }) => {
+  const axios = useAxiosPrivate();
+
   const {
     mutate: addBrand,
     isLoading: isAddingBrand,
@@ -92,8 +95,12 @@ const NewBrandForm: FC<{
 
   const onSubmit: SubmitHandler<IBrandForm> = (data, e) => {
     addBrand({
-      name: data.name,
-      ...(data.logo && { logo: data.logo?.[0] }),
+      axios,
+
+      data: {
+        name: data.name,
+        ...(data.logo && { logo: data.logo?.[0] }),
+      },
     });
   };
 

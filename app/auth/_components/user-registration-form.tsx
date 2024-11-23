@@ -11,6 +11,7 @@ import useRegisterUser from '@/lib/hooks/auth/use-register-user';
 import GoogleSignInButton from './google-sign-in-button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {}
 
@@ -23,6 +24,8 @@ interface RegistrationFormTypes {
 }
 
 const UserRegistrationForm: FC<Props> = () => {
+  const axios = useAxiosPrivate();
+
   const { mutate: registerUser, isLoading: isRegisteringUser } =
     useRegisterUser();
 
@@ -36,7 +39,7 @@ const UserRegistrationForm: FC<Props> = () => {
   } = form;
 
   const onSubmit: SubmitHandler<RegistrationFormTypes> = (data, e) => {
-    registerUser(data);
+    registerUser({ axios, credentials: data });
   };
 
   const router = useRouter();

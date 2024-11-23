@@ -8,12 +8,15 @@ import React, { FC } from 'react';
 import AddToWishlistButton from '../app/(store)/user/wishlist/_components/add-to-wishlist-button';
 import RemoveFromWishlistButton from '../app/(store)/user/wishlist/_components/remove-from-wishlist-button';
 import useAddItemToWishlist from '@/lib/hooks/wishlist/use-add-item-to-wishlist';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 
 interface Props {
   product: ProductTypes;
 }
 
 const WishlistAction: FC<Props> = ({ product }) => {
+  const axios = useAxiosPrivate();
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -22,7 +25,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
 
   const { mutate: addItemToWishlist } = useAddItemToWishlist();
 
-  const { data, isLoading, error } = useWishlistItem(product._id);
+  const { data, isLoading, error } = useWishlistItem(product._id, axios);
 
   React.useEffect(() => {
     if (
@@ -31,7 +34,7 @@ const WishlistAction: FC<Props> = ({ product }) => {
       wishlistProductID &&
       wishlistProductID === product._id
     ) {
-      addItemToWishlist(product as IAvailableProduct);
+      addItemToWishlist({ axios, product: product as IAvailableProduct });
       router.replace(pathname);
     }
   }, [data, isLoading]);

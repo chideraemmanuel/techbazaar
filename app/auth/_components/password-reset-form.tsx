@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { PASSWORD_REQUIREMENTS, PASSWORD_VALIDATION } from '@/constants';
 import { cn } from '@/lib/cn';
 import useCompletePasswordReset from '@/lib/hooks/auth/use-complete-password-reset';
+import useAxiosPrivate from '@/lib/hooks/use-axios-private';
 import validatePasswordRequirement from '@/lib/validate-password-requirement';
 import { decode } from '@/lib/xor-base64-cipher';
 import { PasswordRequirement } from '@/types';
@@ -23,6 +24,8 @@ interface Props {
 }
 
 const PasswordResetForm: FC<Props> = ({ email, encryptedOTP }) => {
+  const axios = useAxiosPrivate();
+
   const {
     mutate: completePasswordReset,
     isLoading: isCompletingPasswordReset,
@@ -47,9 +50,12 @@ const PasswordResetForm: FC<Props> = ({ email, encryptedOTP }) => {
     );
 
     completePasswordReset({
-      email,
-      OTP: decryptedOTP as string,
-      new_password: data.password,
+      axios,
+      data: {
+        email,
+        OTP: decryptedOTP as string,
+        new_password: data.password,
+      },
     });
   };
 

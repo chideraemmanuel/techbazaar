@@ -1,7 +1,6 @@
-import axios from '@/config/axios';
 import { APIErrorResponse, APISuccessResponse } from '@/types';
 import { ProductCategory, ProductTypes } from '@/types/product';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
@@ -17,7 +16,13 @@ export interface IProductData {
   is_featured?: boolean;
 }
 
-const addProduct = async (data: IProductData) => {
+const addProduct = async ({
+  axios,
+  data,
+}: {
+  axios: AxiosInstance;
+  data: IProductData;
+}) => {
   const response = await axios.post<APISuccessResponse<ProductTypes>>(
     '/products',
     data,
