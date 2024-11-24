@@ -164,14 +164,13 @@ const BrandsTable: FC<{ searchParams: ISearchParams }> = async ({
                     className="flex items-center gap-3 min-w-[200px] sm:min-w-[300px]"
                     title={brand.name}
                   >
-                    <div className="w-[70px] h-[70px] object-cover bg-secondary p-2 rounded">
+                    <div className="w-[70px] h-[70px] object-cover bg-secondary p-2 rounded relative">
                       {brand.logo ? (
                         <Image
-                          className="w-full h-full"
                           src={brand.logo}
                           alt={brand.name}
-                          width={426}
-                          height={585}
+                          fill={true}
+                          className="object-contain transition-transform group-hover:scale-110 !max-w-[80%] !max-h-[80%] !top-1/2 !left-1/2 -translate-x-1/2 -translate-y-1/2"
                         />
                       ) : (
                         <span className="h-full flex items-center justify-center text-xl">

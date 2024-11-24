@@ -303,14 +303,13 @@ const Brands: FC = async () => {
             className="group rounded-lg"
           >
             <Card className="px-3 sm:px-5 py-3 sm:py-5 flex items-center space-x-2 sm:space-x-3 group-hover:border-foreground/20 group-hover:bg-secondary/50 transition-colors">
-              <div className="w-[50px] h-[50px] bg-secondary p-2 rounded">
+              <div className="w-[50px] h-[50px] bg-secondary p-2 rounded relative">
                 {brand.logo ? (
                   <Image
                     src={brand.logo}
-                    alt="#"
-                    width={426}
-                    height={585}
-                    className="w-full h-full object-contain transition-transform group-hover:scale-110"
+                    alt={brand.name}
+                    fill={true}
+                    className="object-contain transition-transform group-hover:scale-110 !max-w-[80%] !max-h-[80%] !top-1/2 !left-1/2 -translate-x-1/2 -translate-y-1/2"
                   />
                 ) : (
                   <span className="h-full flex items-center justify-center text-xl">

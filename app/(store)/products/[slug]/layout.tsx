@@ -14,7 +14,6 @@ interface Props {
 export async function generateStaticParams() {
   const { data } = await getAvailableProducts();
 
-  // return data.map((product) => product.slug);
   return data.map((product) => ({
     slug: product.slug,
   }));
@@ -37,8 +36,8 @@ export async function generateMetadata(
       images: [
         {
           url: product.image,
-          width: 1200,
-          height: 630,
+          width: 'auto',
+          height: 'auto',
           alt: product.name,
         },
       ],

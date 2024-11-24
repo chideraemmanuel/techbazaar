@@ -14,7 +14,7 @@ const getCurrentUserCart = async ({
   const axios: AxiosInstance = queryKey[1];
 
   const response = await axios.get<APIPaginatedResponse<ICart>>(
-    `/users/me/cart?page=${pageParam}&limit=2`
+    `/users/me/cart?page=${pageParam}&limit=7`
   );
 
   return response.data;

@@ -12,14 +12,14 @@ const ErrorComponentWithHeader: FC<Props> = () => {
     <>
       <div
         className={cn(
-          'flex flex-col items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
+          'flex flex-col gap-5 items-center justify-center min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]'
         )}
       >
-        <p className="text-center text-base md:text-lg w-[90%] mb-1 tracking-wide">
-          Oops! An error occured.
-        </p>
+        <h1 className="text-center text-3xl md:text-4xl md:w-[90%] tracking-wide">
+          Oops! An error occured
+        </h1>
 
-        <p className="text-center text-sm md:text-base w-[90%] tracking-wide">
+        <p className="text-center text-muted-foreground text-sm sm:text-base md:text-lg w-[90%]">
           You can{' '}
           <Button
             onClick={() => location.reload()}

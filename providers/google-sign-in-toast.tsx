@@ -16,8 +16,6 @@ const GoogleSignInToast: FC<Props> = () => {
   const session_id = searchParams.get('session_id');
 
   React.useEffect(() => {
-    console.log('Effect triggered:', { new_account, session_id, pathname });
-
     if (new_account === 'true' && session_id) {
       toast.success('Account created successfully');
 
